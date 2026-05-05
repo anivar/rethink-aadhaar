@@ -4,8 +4,9 @@ import { link } from '~/lib/link';
 ---
 
 <div id="rta-banner" class="bg-button text-white" data-banner>
-  <div class="container-wide flex items-center justify-between gap-4 py-2">
-    <p class="caps text-[0.7rem] sm:text-xs">
+  <div class="container-wide grid grid-cols-[1fr_auto_1fr] items-center gap-4 py-2">
+    <span aria-hidden="true"></span>
+    <p class="caps text-[0.7rem] sm:text-xs text-center">
       Rethink Aadhaar.
       <span class="hidden sm:inline">Opt-out from Aadhaar.</span>
       <a href={link('/take-action')} class="underline underline-offset-2 hover:text-accent">Take action now →</a>
@@ -14,7 +15,7 @@ import { link } from '~/lib/link';
       type="button"
       aria-label="Dismiss announcement"
       data-dismiss
-      class="w-7 h-7 inline-flex items-center justify-center text-base hover:text-accent transition-colors"
+      class="w-7 h-7 inline-flex items-center justify-center text-base hover:text-accent transition-colors justify-self-end"
     >
       <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
