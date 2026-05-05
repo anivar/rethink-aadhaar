@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/emit-legacy-redirects.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "new": "node scripts/new.mjs",
@@ -29,5 +29,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }
