@@ -20,6 +20,8 @@ interface Props {
   ogImage?: string;
   /** Set to true on long-form article pages so OG type is "article". */
   article?: boolean;
+  /** Site-relative path of the LCP image to <link rel="preload"> for CWV. */
+  preloadImage?: string;
 }
 
 const {
@@ -30,6 +32,7 @@ const {
   jsonLd,
   ogImage = '/og-default.png',
   article = false,
+  preloadImage,
 } = Astro.props;
 
 const fullTitle = title === 'Rethink Aadhaar'
@@ -51,6 +54,9 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
     <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/x-icon" href={link('/favicon.ico')} />
     <link rel="apple-touch-icon" sizes="180x180" href={link('/apple-touch-icon.png')} />
+    {preloadImage && (
+      <link rel="preload" as="image" href={link(preloadImage)} fetchpriority="high" />
+    )}
     <link rel="canonical" href={canonical} />
     <link rel="alternate" type="application/rss+xml" title="Rethink Aadhaar — Updates" href={link('/rss.xml')} />
     <link rel="alternate" type="text/plain" title="LLM-readable index" href={link('/llms.txt')} />

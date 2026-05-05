@@ -24,6 +24,7 @@ const dateStr = formatDate(entry.data.date, 'long');
 
 const jsonLd = [
   article({
+    type: 'ReportageNewsArticle',
     url: new URL(href, Astro.site).toString(),
     title: entry.data.title,
     description: entry.data.summary,

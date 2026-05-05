@@ -49,22 +49,22 @@ export async function GET(context: APIContext) {
   lines.push('');
 
   lines.push(`## Updates (${updates.length})`);
-  lines.push(`Latest 30. Full archive: ${abs(site, '/blog')}`);
-  for (const u of updates.slice(0, 30)) {
+  lines.push(`All entries, newest first. Index: ${abs(site, '/blog')}`);
+  for (const u of updates) {
     lines.push(`- [${formatDate(u.data.date, 'medium')} — ${u.data.title}](${new URL(entryHref('update', u), site).toString()})`);
   }
   lines.push('');
 
   lines.push(`## Exclusion stories (${exclusions.length})`);
-  lines.push(`Latest 30. Full archive: ${abs(site, '/testimonials')}`);
-  for (const e of exclusions.slice(0, 30)) {
+  lines.push(`All entries, newest first. Index: ${abs(site, '/testimonials')}`);
+  for (const e of exclusions) {
     lines.push(`- [${formatDate(e.data.date, 'medium')} — ${e.data.title}](${new URL(entryHref('exclusion', e), site).toString()})${e.data.location ? ` _(${e.data.location})_` : ''}`);
   }
   lines.push('');
 
   lines.push(`## Press coverage (${press.length})`);
-  lines.push(`Latest 30. Full archive: ${abs(site, '/press-coverage')}`);
-  for (const p of press.slice(0, 30)) {
+  lines.push(`All entries, newest first. Index: ${abs(site, '/press-coverage')}`);
+  for (const p of press) {
     lines.push(`- [${formatDate(p.data.date, 'medium')} — ${p.data.title} (${p.data.publication})](${p.data.href})`);
   }
   lines.push('');

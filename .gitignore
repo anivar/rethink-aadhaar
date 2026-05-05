@@ -10,6 +10,9 @@ dist/
 content-source/raw/
 content-source/crawl-tmp/
 
+# local design / debug screenshots (kept out of repo — large binaries)
+design/screenshots/
+
 # editor
 .vscode/
 .idea/

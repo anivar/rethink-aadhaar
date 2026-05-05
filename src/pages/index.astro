@@ -25,7 +25,12 @@ const description = "The Aadhaar project, with its fundamental weaknesses and da
 const jsonLd = collectionPage({ name: 'Rethink Aadhaar', url: '/', description });
 ---
 
-<BaseLayout title="Rethink Aadhaar" description={description} jsonLd={jsonLd}>
+<BaseLayout
+  title="Rethink Aadhaar"
+  description={description}
+  jsonLd={jsonLd}
+  preloadImage="/media/1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg"
+>
   <HeroTitle align="center">Rethink<br/>Aadhaar</HeroTitle>
 
   <!-- Centred intro paragraph at a comfortable measure (~65ch). -->
@@ -39,7 +44,8 @@ const jsonLd = collectionPage({ name: 'Rethink Aadhaar', url: '/', description }
       <img
         src={link('/media/1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg')}
         alt="A worker's hand holding an Aadhaar enrolment slip — fingertips worn smooth from years of manual labour."
-        loading="lazy"
+        loading="eager"
+        fetchpriority="high"
         decoding="async"
         width="1200"
         height="800"

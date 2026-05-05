@@ -1,15 +1,20 @@
-// llms-full.txt — full text of all on-site content (myths, FAQs, statements,
-// page bodies). Excludes migrated blog/exclusion stubs which only carry
-// excerpts and links to the original. Re-generated at build time.
+// llms-full.txt — full text of all on-site content for LLM crawlers.
+// Now that migrated stubs no longer carry the "Migrated from the live
+// site…" boilerplate (see scripts/scrub-boilerplate.mjs), update and
+// exclusion bodies are meaningful editorial summaries and worth indexing.
+// Re-generated at build time from the content collections.
 
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
-import { byOrder } from '~/lib/entries';
+import { byDateDesc, byOrder, notDraft } from '~/lib/entries';
+import { formatDate } from '~/lib/format';
 
 export async function GET(_: APIContext) {
-  const myths = (await getCollection('myth')).sort(byOrder);
-  const faqs  = (await getCollection('faq')).sort(byOrder);
-  const pages = await getCollection('page');
+  const pages      = await getCollection('page');
+  const myths      = (await getCollection('myth')).sort(byOrder);
+  const faqs       = (await getCollection('faq')).sort(byOrder);
+  const updates    = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
+  const exclusions = (await getCollection('exclusion')).sort(byDateDesc);
 
   const out: string[] = [];
   out.push('# Rethink Aadhaar — full content');
@@ -38,6 +43,46 @@ export async function GET(_: APIContext) {
     out.push(`### ${f.data.question}`);
     out.push('');
     out.push(f.body?.trim() ?? '');
+    out.push('');
+  }
+
+  out.push('## Updates');
+  out.push('');
+  for (const u of updates) {
+    out.push(`### ${formatDate(u.data.date, 'medium')} — ${u.data.title}`);
+    if (u.data.excerpt) {
+      out.push('');
+      out.push(`> ${u.data.excerpt}`);
+    }
+    if (u.data.sourceUrl) {
+      out.push('');
+      out.push(`Original: ${u.data.sourceUrl}`);
+    }
+    const body = u.body?.trim();
+    if (body) {
+      out.push('');
+      out.push(body);
+    }
+    out.push('');
+  }
+
+  out.push('## Exclusion stories');
+  out.push('');
+  for (const e of exclusions) {
+    out.push(`### ${formatDate(e.data.date, 'medium')} — ${e.data.title}${e.data.location ? ` (${e.data.location})` : ''}`);
+    if (e.data.summary) {
+      out.push('');
+      out.push(`> ${e.data.summary}`);
+    }
+    if (e.data.sourceUrl) {
+      out.push('');
+      out.push(`Original: ${e.data.sourceUrl}`);
+    }
+    const body = e.body?.trim();
+    if (body) {
+      out.push('');
+      out.push(body);
+    }
     out.push('');
   }
 

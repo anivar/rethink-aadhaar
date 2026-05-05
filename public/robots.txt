@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
 
 Sitemap: https://rethinkaadhaar.in/sitemap-index.xml
 

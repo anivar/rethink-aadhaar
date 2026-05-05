@@ -61,20 +61,21 @@ export function article(input: {
   authorName?: string;
   section?: string;
 }): JsonLd {
-  return {
+  const out: JsonLd = {
     '@context': 'https://schema.org',
     '@type': input.type ?? 'Article',
     mainEntityOfPage: input.url,
     headline: input.title,
-    description: input.description,
     datePublished: input.datePublished.toISOString(),
     dateModified: (input.dateModified ?? input.datePublished).toISOString(),
-    image: input.image ? (input.image.startsWith('http') ? input.image : `${SITE_URL}${input.image}`) : undefined,
     author: { '@type': 'Organization', name: input.authorName ?? SITE_NAME },
     publisher: org(),
-    articleSection: input.section,
     inLanguage: 'en-IN',
   };
+  if (input.description) out.description = input.description;
+  if (input.image) out.image = input.image.startsWith('http') ? input.image : `${SITE_URL}${input.image}`;
+  if (input.section) out.articleSection = input.section;
+  return out;
 }
 
 export function faqPage(items: { question: string; answer: string }[]): JsonLd {
