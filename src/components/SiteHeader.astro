@@ -1,5 +1,6 @@
 ---
 import LogoMark from '~/components/LogoMark.astro';
+import ThemeToggle from '~/components/ThemeToggle.astro';
 import { link } from '~/lib/link';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -57,34 +58,37 @@ function isActive(href: string) {
       <span class="sr-only md:not-sr-only caps text-sm md:text-base font-bold tracking-caps text-ink whitespace-nowrap">Rethink Aadhaar</span>
     </a>
 
-    <!-- RIGHT NAV (desktop only) -->
-    <nav class="hidden lg:flex justify-start" aria-label="Primary (right)">
-      <ul class="flex items-center gap-5 xl:gap-7">
-        {right.map((item) => (
-          <li>
-            <a
-              href={item.hrefAbs}
-              class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
-              aria-current={isActive(item.href) ? 'page' : undefined}
-            >{item.label}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <!-- RIGHT GROUP: nav (desktop) + theme toggle (always) + hamburger (mobile) -->
+    <div class="justify-self-end flex items-center gap-3 lg:gap-5 xl:gap-7">
+      <nav class="hidden lg:flex" aria-label="Primary (right)">
+        <ul class="flex items-center gap-5 xl:gap-7">
+          {right.map((item) => (
+            <li>
+              <a
+                href={item.hrefAbs}
+                class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-    <!-- MOBILE TOGGLE (right) -->
-    <button
-      type="button"
-      class="lg:hidden justify-self-end inline-flex items-center justify-center w-10 h-10 border border-ink/20 hover:border-accent transition-colors"
-      aria-label="Open menu"
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-      data-menu-toggle
-    >
-      <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
+      <ThemeToggle />
+
+      <button
+        type="button"
+        class="lg:hidden inline-flex items-center justify-center w-10 h-10 border border-ink/20 hover:border-accent transition-colors"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-toggle
+      >
+        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
   </div>
 
   <!-- MOBILE PANEL -->

@@ -1,8 +1,22 @@
 ---
-import ThemeToggle from '~/components/ThemeToggle.astro';
 import LogoMark from '~/components/LogoMark.astro';
 import { link } from '~/lib/link';
 const year = new Date().getFullYear();
+
+// Black starburst — 60 rays sweeping -180° to 0°, woodblock-style mark
+// matching the canonical rethinkaadhaar.in footer image.
+const RAYS = 60;
+const cx = 600, cy = 400;
+const rays = Array.from({ length: RAYS }, (_, i) => {
+  const t = i / (RAYS - 1);
+  const angle = ((-180 + t * 180) * Math.PI) / 180;
+  const len = 900 + Math.sin(t * Math.PI) * 220;
+  return {
+    x2: cx + Math.cos(angle) * len,
+    y2: cy + Math.sin(angle) * len,
+    w: 1 + (i % 5 === 0 ? 1.2 : 0),
+  };
+});
 ---
 
 <footer class="mt-24 border-t border-ink/10 bg-bg">
@@ -52,17 +66,20 @@ const year = new Date().getFullYear();
           </a>
         </li>
       </ul>
-      <div class="mt-6 flex items-center gap-3">
-        <ThemeToggle />
-        <span class="caps text-[0.65rem] text-ink/50">Theme</span>
-      </div>
     </div>
   </div>
 
-  <div class="border-t border-ink/10">
-    <div class="container-wide py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-sm font-body text-ink/70">
-      <p>© {year} Rethink Aadhaar · Original content under <a class="underline underline-offset-2 hover:text-accent" href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener">CC BY 4.0</a>.</p>
-      <p class="caps text-[0.65rem] text-ink/50">Built with Astro · Hosted on GitHub Pages</p>
-    </div>
+  <!-- Canonical-style starburst band — black with white rays sweeping -180° to 0°. -->
+  <div class="relative w-full overflow-hidden bg-[#0E0E0E]">
+    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice" class="block w-full h-[220px] md:h-[300px]" aria-hidden="true">
+      <rect width="1200" height="400" fill="#0E0E0E"/>
+      <g stroke="#FFFFFF" stroke-linecap="square" opacity="0.95">
+        {rays.map((r) => <line x1={cx} y1={cy} x2={r.x2} y2={r.y2} stroke-width={r.w} />)}
+      </g>
+      <circle cx={cx} cy={cy} r="14" fill="#0E0E0E"/>
+    </svg>
+    <p class="absolute inset-x-0 bottom-3 text-center text-xs text-white/80 caps">
+      © {year} Rethink Aadhaar · CC BY 4.0 · Built with Astro · Hosted on GitHub Pages
+    </p>
   </div>
 </footer>
