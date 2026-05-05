@@ -1,0 +1,29 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import FAQItem from '~/components/FAQItem.astro';
+import { byOrder } from '~/lib/entries';
+import { faqPage } from '~/lib/seo';
+
+const faqs = (await getCollection('faq')).sort(byOrder);
+const rendered = await Promise.all(faqs.map(async (f) => ({ ...f, ...(await render(f)) })));
+
+// Build FAQPage JSON-LD from the short answer (or first 280 chars of body if no short).
+const jsonLd = faqPage(faqs.map((f) => ({
+  question: f.data.question,
+  answer: f.data.short ?? f.body?.replace(/\s+/g, ' ').trim().slice(0, 280) ?? '',
+})));
+---
+
+<BaseLayout title="FAQs" description="Common questions about Aadhaar, privacy, welfare, and the Indian context." jsonLd={jsonLd}>
+  <HeroTitle eyebrow="Common questions">FAQs</HeroTitle>
+
+  <section class="container-prose mt-12 mb-24">
+    {rendered.map((f) => (
+      <FAQItem question={f.data.question}>
+        <f.Content />
+      </FAQItem>
+    ))}
+  </section>
+</BaseLayout>

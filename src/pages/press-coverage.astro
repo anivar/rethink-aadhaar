@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import { byDateDesc, groupByYear } from '~/lib/entries';
+import { formatDate } from '~/lib/format';
+import { itemList } from '~/lib/seo';
+
+const all = (await getCollection('press')).sort(byDateDesc);
+const byYear = groupByYear(all);
+const years = [...byYear.keys()].sort((a, b) => b - a);
+
+const description = "External press coverage of Aadhaar — exclusion stories, surveillance concerns, judgments and analysis.";
+const jsonLd = itemList({
+  name: 'Press coverage',
+  url: '/press-coverage',
+  items: all.slice(0, 25).map((p) => ({ name: p.data.title, url: p.data.href, description: p.data.publication })),
+});
+---
+
+<BaseLayout title="Press coverage" description={description} jsonLd={jsonLd}>
+  <HeroTitle eyebrow="External coverage">Press coverage</HeroTitle>
+
+  <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
+    A chronological index of significant external reporting and analysis on Aadhaar — from front-line exclusion stories to surveillance investigations and Supreme Court judgements. Each entry links out to the original publication.
+  </p>
+
+  {years.map((y) => (
+    <section class="container-prose mt-14">
+      <h2 class="caps text-accent text-sm mb-4">{y}</h2>
+      <ul class="divide-y divide-ink/10">
+        {byYear.get(y)!.map((p) => (
+          <li class="py-5 grid md:grid-cols-[7rem_1fr] gap-4">
+            <p class="caps text-xs text-ink/55">{formatDate(p.data.date, 'monthYear')} · {p.data.publication}</p>
+            <a href={p.data.href} target="_blank" rel="noopener" class="font-display font-bold text-lg leading-snug text-balance hover:text-accent">
+              {p.data.title} <span class="text-accent" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <p class="container-prose mt-16 mb-24 text-sm text-ink/60">
+    Looking for older coverage? Ram Krishnaswamy's <a class="underline" href="http://aadhaar-articles.blogspot.in/">archive of UID-critical articles since 2010</a> is the most comprehensive index.
+  </p>
+</BaseLayout>

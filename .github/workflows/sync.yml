@@ -1,0 +1,36 @@
+name: Weekly upstream content sync
+
+# Runs every Monday at 06:00 UTC. Crawls rethinkaadhaar.in/sitemap.xml,
+# writes new updates/exclusion entries as draft Markdown files, and opens
+# a pull request for editors to review and merge.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/sync.mjs --write
+      - name: Open PR if anything new
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: chore/upstream-sync
+          commit-message: "chore: sync new upstream content"
+          title: "Upstream sync — new updates / exclusion stories"
+          body: |
+            Automated sync from `rethinkaadhaar.in/sitemap.xml`.
+
+            New entries land as **drafts** under `src/content/update/` and
+            `src/content/exclusion/`. Review each, edit the body, then flip
+            `draft: true` → `draft: false` on update entries to publish.
+          delete-branch: true

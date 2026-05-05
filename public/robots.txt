@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rethinkaadhaar.in/sitemap-index.xml
+
+# LLM-readable site index (https://llmstxt.org/)
+# Index:    https://rethinkaadhaar.in/llms.txt
+# Full text: https://rethinkaadhaar.in/llms-full.txt

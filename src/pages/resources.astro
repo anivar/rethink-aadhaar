@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import ResourceList from '~/components/ResourceList.astro';
+import { itemList } from '~/lib/seo';
+
+const all = await getCollection('resource');
+const sections = ['Primers', 'Government documents', 'Hunger deaths 2015–18', 'Case documents', 'Templates', 'Articles archive'] as const;
+const grouped = sections.map((s) => ({
+  section: s,
+  items: all.filter((r) => r.data.section === s).map((r) => r.data),
+}));
+
+const jsonLd = itemList({
+  name: 'Resources',
+  url: '/resources',
+  items: all.slice(0, 50).map((r) => ({ name: r.data.title, url: r.data.href, description: r.data.description })),
+});
+---
+
+<BaseLayout title="Resources" description="Primers, court documents, hunger-death reports, letter templates and an articles archive." jsonLd={jsonLd}>
+  <HeroTitle eyebrow="For organisers, journalists, lawyers and litigants">Resources</HeroTitle>
+
+  <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
+    Primers on the law, court documents, government notifications, reports on Aadhaar-linked hunger deaths, and ready-to-use letter templates. Most files are hosted on the original campaign Drive.
+  </p>
+
+  <section class="container-prose mt-10 mb-24">
+    {grouped.map((g) => g.items.length > 0 && (
+      <ResourceList section={g.section} items={g.items} />
+    ))}
+  </section>
+</BaseLayout>

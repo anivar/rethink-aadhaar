@@ -1,0 +1,18 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import { breadcrumb } from '~/lib/seo';
+
+const page = await getEntry('page', 'campaign2025');
+const { Content } = await render(page!);
+const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'Campaign 2025', url: '/campaign2025' }]);
+---
+
+<BaseLayout title="Campaign 2025" description="Beware of Aadhaar — a collective statement endorsed by 50+ Indian organisations and many individual signatories, released on Human Rights Day 2025." article jsonLd={jsonLd}>
+  <HeroTitle eyebrow="Released 10 December 2025 · Human Rights Day">Campaign 2025</HeroTitle>
+
+  <article class="container-prose mt-10 mb-24 prose dark:prose-invert font-body text-pretty fade-up">
+    <Content />
+  </article>
+</BaseLayout>

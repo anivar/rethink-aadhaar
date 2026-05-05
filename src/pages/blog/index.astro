@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import PostCard from '~/components/PostCard.astro';
+import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
+import { itemList } from '~/lib/seo';
+
+const posts = (await getCollection('update'))
+  .filter(notDraft)
+  .sort(byDateDesc);
+
+const description = "Press releases, statements, news commentary and analysis from the Rethink Aadhaar campaign.";
+
+const jsonLd = itemList({
+  name: 'Updates',
+  url: '/blog',
+  items: posts.slice(0, 25).map((p) => ({
+    name: p.data.title,
+    url: entryHref('update', p),
+    description: p.data.excerpt,
+  })),
+});
+---
+
+<BaseLayout title="Updates" description={description} jsonLd={jsonLd}>
+  <HeroTitle eyebrow="Statements, press releases, analysis">Updates</HeroTitle>
+
+  <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
+    {posts.length} posts from the campaign archive — newest first. <a class="text-accent underline" href="/rss.xml">Subscribe via RSS</a>.
+  </p>
+
+  <section class="container-prose mt-12 mb-24 grid sm:grid-cols-2 gap-6">
+    {posts.map((p) => (
+      <PostCard
+        href={entryHref('update', p)}
+        title={p.data.title}
+        date={p.data.date}
+        excerpt={p.data.excerpt}
+        hero={p.data.hero}
+      />
+    ))}
+  </section>
+</BaseLayout>

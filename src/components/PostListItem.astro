@@ -1,0 +1,18 @@
+---
+import { formatDate } from '~/lib/format';
+interface Props { href: string; title: string; date: Date; location?: string; excerpt?: string; }
+const { href, title, date, location, excerpt } = Astro.props;
+const dateStr = formatDate(date, 'medium');
+---
+<article class="grid md:grid-cols-[1fr_2fr] gap-6 md:gap-12 py-8 md:py-10 border-t border-ink/15 first:border-t-0">
+  <header>
+    <h3 class="caps text-accent text-base md:text-lg leading-snug font-bold text-balance">
+      <a href={href} class="hover:underline">{title}</a>
+    </h3>
+    <p class="mt-3 text-xs text-ink/60 caps">{dateStr}{location ? ` · ${location}` : ''}</p>
+  </header>
+  <div class="font-body text-base md:text-lg leading-relaxed text-ink/85 text-pretty">
+    {excerpt && <p>{excerpt}</p>}
+    <p class="mt-3"><a class="caps text-xs text-accent" href={href}>Read full story →</a></p>
+  </div>
+</article>

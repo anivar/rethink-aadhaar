@@ -1,0 +1,9 @@
+---
+title: "KYC Epidemic in Jharkhand Deprives Poor People of their Own Money"
+date: 2024-12-12
+excerpt: "Press Release    KYC Epidemic in Jharkhand Deprives Poor People of their Own Money    (and also affects Jharkhand’s new “Maiya Yojana)   Countless people in Jharkhand are unable to withdraw money from their bank accounts because the accounts have been frozen until they complete “KYC” formal"
+sourceUrl: "https://rethinkaadhaar.in/blog/2024/12/12/kycnbspepidemic-in-jharkhand-deprives-poor-people-of-their-own-money"
+---
+Press Release    KYC Epidemic in Jharkhand Deprives Poor People of their Own Money    (and also affects Jharkhand’s new “Maiya Yojana)   Countless people in Jharkhand are unable to withdraw money from their bank accounts because the accounts have been frozen until they complete “KYC” formal
+
+> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2024/12/12/kycnbspepidemic-in-jharkhand-deprives-poor-people-of-their-own-money](https://rethinkaadhaar.in/blog/2024/12/12/kycnbspepidemic-in-jharkhand-deprives-poor-people-of-their-own-money).

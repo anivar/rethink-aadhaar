@@ -1,0 +1,84 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { SEO } from 'astro-seo';
+import '~/styles/global.css';
+import SiteHeader from '~/components/SiteHeader.astro';
+import SiteFooter from '~/components/SiteFooter.astro';
+import AnnouncementBar from '~/components/AnnouncementBar.astro';
+import { website, org } from '~/lib/seo';
+import type { JsonLd } from '~/lib/seo';
+
+interface Props {
+  title: string;
+  description?: string;
+  bg?: 'white' | 'myth';
+  bodyClass?: string;
+  /** Page-specific structured data — appended after the global WebSite + Organization graph. */
+  jsonLd?: JsonLd | JsonLd[];
+  /** OG image absolute or site-relative URL. */
+  ogImage?: string;
+  /** Set to true on long-form article pages so OG type is "article". */
+  article?: boolean;
+}
+
+const {
+  title,
+  description = "The Aadhaar project, with its fundamental weaknesses and dangerous effects, continues to grow. Let's Rethink Aadhaar.",
+  bg = 'white',
+  bodyClass = '',
+  jsonLd,
+  ogImage = '/og-default.png',
+  article = false,
+} = Astro.props;
+
+const fullTitle = title === 'Rethink Aadhaar' ? title : `${title} — Rethink Aadhaar`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageAbs = new URL(ogImage, Astro.site).toString();
+
+// Always emit WebSite + Organization on every page; append page-specific graph.
+const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [])];
+---
+
+<!doctype html>
+<html lang="en-IN" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#D62636" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="Rethink Aadhaar — Updates" href="/rss.xml" />
+    <link rel="alternate" type="text/plain" title="LLM-readable index" href="/llms.txt" />
+    <SEO
+      title={fullTitle}
+      description={description}
+      openGraph={{
+        basic: { title: fullTitle, type: article ? 'article' : 'website', image: ogImageAbs },
+        optional: { siteName: 'Rethink Aadhaar', description },
+      }}
+      twitter={{ card: 'summary_large_image', site: '@no2uid', creator: '@no2uid' }}
+    />
+    {blocks.map((block) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+    <script is:inline>
+      // Avoid FOUC on dark mode
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch {}
+    </script>
+    <ClientRouter />
+  </head>
+  <body class={`min-h-screen ${bg === 'myth' ? 'bg-myth' : 'bg-bg'} ${bodyClass}`}>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-button focus:text-white focus:px-4 focus:py-2">Skip to content</a>
+    <AnnouncementBar />
+    <SiteHeader />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

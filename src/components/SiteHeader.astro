@@ -1,0 +1,91 @@
+---
+import LogoMark from '~/components/LogoMark.astro';
+import ThemeToggle from '~/components/ThemeToggle.astro';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  { label: 'Myths', href: '/myths' },
+  { label: 'Exclusion', href: '/testimonials' },
+  { label: 'Updates', href: '/blog' },
+  { label: 'Take action', href: '/take-action' },
+  { label: 'FAQs', href: '/faqs' },
+  { label: 'Resources', href: '/resources' },
+  { label: 'Press', href: '/press-coverage' },
+  { label: 'About', href: '/about' },
+  { label: 'Campaign 2025', href: '/campaign2025' },
+];
+function isActive(href: string) {
+  if (href === '/') return path === '/';
+  return path === href || path.startsWith(href + '/');
+}
+---
+
+<header class="sticky top-0 z-40 border-b border-ink/10 bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/65">
+  <div class="container-wide flex items-center justify-between gap-4 py-3 md:py-4">
+    <a href="/" class="flex items-center gap-3 group" aria-label="Rethink Aadhaar — home">
+      <LogoMark class="h-9 w-9 md:h-10 md:w-10 transition-transform group-hover:rotate-[-4deg]" />
+      <span class="caps text-sm md:text-base font-bold tracking-caps text-ink">Rethink Aadhaar</span>
+    </a>
+
+    <nav class="hidden lg:block" aria-label="Primary">
+      <ul class="flex items-center gap-5">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <ThemeToggle />
+      <button
+        type="button"
+        class="lg:hidden inline-flex items-center justify-center w-10 h-10 border border-ink/20 hover:border-accent transition-colors"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-toggle
+      >
+        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="lg:hidden hidden border-t border-ink/10 bg-bg" data-mobile-nav>
+    <nav class="container-wide py-4" aria-label="Mobile">
+      <ul class="flex flex-col gap-3">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={`nav-link block py-2 ${isActive(item.href) ? 'active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function init() {
+    const btn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', () => {
+      panel.classList.toggle('hidden');
+      const open = !panel.classList.contains('hidden');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  }
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>

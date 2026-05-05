@@ -1,0 +1,36 @@
+---
+// Black bar with the campaign's Take Action call.
+// Dismissible (localStorage flag: rta-banner-dismissed-1).
+---
+
+<div id="rta-banner" class="bg-button text-white" data-banner>
+  <div class="container-wide flex items-center justify-between gap-4 py-2">
+    <p class="caps text-[0.7rem] sm:text-xs">
+      <span class="hidden sm:inline">Beware of Aadhaar — </span>
+      <a href="/campaign2025" class="underline underline-offset-2 hover:text-accent">Read our 2025 Collective Statement →</a>
+    </p>
+    <button
+      type="button"
+      aria-label="Dismiss announcement"
+      data-dismiss
+      class="w-7 h-7 inline-flex items-center justify-center text-base hover:text-accent transition-colors"
+    >
+      <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'rta-banner-dismissed-1';
+  function init() {
+    const el = document.querySelector<HTMLElement>('[data-banner]');
+    if (!el) return;
+    if (localStorage.getItem(KEY) === '1') { el.style.display = 'none'; return; }
+    el.querySelector<HTMLButtonElement>('[data-dismiss]')?.addEventListener('click', () => {
+      localStorage.setItem(KEY, '1');
+      el.style.display = 'none';
+    });
+  }
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>

@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# crawl artefacts (kept locally for re-runs but not committed — too large)
+content-source/raw/
+content-source/crawl-tmp/
+
+# editor
+.vscode/
+.idea/
+*.swp

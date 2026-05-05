@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import MythCard from '~/components/MythCard.astro';
+import { byOrder } from '~/lib/entries';
+import { itemList } from '~/lib/seo';
+
+const myths = (await getCollection('myth')).sort(byOrder);
+const rendered = await Promise.all(myths.map(async (m) => ({ ...m, ...(await render(m)) })));
+
+const jsonLd = itemList({
+  name: 'Myths about Aadhaar',
+  url: '/myths',
+  items: myths.map((m) => ({ name: m.data.myth, url: '/myths', description: m.data.fact })),
+});
+---
+
+<BaseLayout title="Myths" bg="myth" description="Common myths about Aadhaar, and the facts behind them." jsonLd={jsonLd}>
+  <HeroTitle eyebrow="Common claims, examined">Myths</HeroTitle>
+
+  <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
+    Claims about Aadhaar that are often repeated in policy circles and in the press — and what the evidence actually shows.
+  </p>
+
+  <section class="container-prose mt-12 mb-24">
+    {rendered.map((m, i) => (
+      <MythCard myth={m.data.myth} fact={m.data.fact} index={i + 1} total={rendered.length}>
+        <m.Content />
+      </MythCard>
+    ))}
+  </section>
+</BaseLayout>

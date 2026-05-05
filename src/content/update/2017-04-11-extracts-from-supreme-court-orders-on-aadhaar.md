@@ -1,0 +1,9 @@
+---
+title: "Extracts from Supreme Court Orders on Aadhaar"
+date: 2017-04-11
+excerpt: "September 23, 2013 [Until final hearing of the Constitution Bench] “…no person should suffer fornotgetting the Adhaar card inspite of the fact that some authority hadissued a circular making it mandatory”.  November 26, 2013  [States/UTs impleaded.]  March 24, 2014  “… no person shall be deprived of"
+sourceUrl: "https://rethinkaadhaar.in/blog/2017/4/11/extracts-from-supreme-court-orders-on-aadhaar"
+---
+September 23, 2013 [Until final hearing of the Constitution Bench] “…no person should suffer fornotgetting the Adhaar card inspite of the fact that some authority hadissued a circular making it mandatory”.  November 26, 2013  [States/UTs impleaded.]  March 24, 2014  “… no person shall be deprived of
+
+> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2017/4/11/extracts-from-supreme-court-orders-on-aadhaar](https://rethinkaadhaar.in/blog/2017/4/11/extracts-from-supreme-court-orders-on-aadhaar).

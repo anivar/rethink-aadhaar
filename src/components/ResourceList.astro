@@ -1,0 +1,19 @@
+---
+interface Item { title: string; href: string; description?: string; order?: number; }
+interface Props { section: string; items: Item[]; }
+const { section, items } = Astro.props;
+const sorted = [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+---
+<section class="py-10 border-t border-ink/15 first:border-t-0">
+  <h2 class="caps text-accent text-sm mb-6">{section}</h2>
+  <ul class="space-y-5">
+    {sorted.map((item) => (
+      <li>
+        <a href={item.href} target="_blank" rel="noopener" class="font-display font-bold text-xl md:text-2xl text-balance leading-snug hover:text-accent">
+          {item.title} <span class="text-accent" aria-hidden="true">↗</span>
+        </a>
+        {item.description && <p class="font-body text-base text-ink/75 mt-2 text-pretty">{item.description}</p>}
+      </li>
+    ))}
+  </ul>
+</section>

@@ -1,0 +1,115 @@
+@import "@fontsource/roboto/500.css";
+@import "@fontsource/roboto/700.css";
+@import "@fontsource/roboto/900.css";
+@import "@fontsource/source-serif-pro/400.css";
+@import "@fontsource/source-serif-pro/400-italic.css";
+@import "@fontsource/source-serif-pro/600.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 255 255 255;
+    --ink: 28 28 28;
+    --rule: 28 28 28;
+    --surface: 250 248 244;     /* warm paper */
+  }
+  .dark {
+    --bg: 12 12 12;
+    --ink: 240 240 240;
+    --rule: 240 240 240;
+    --surface: 22 22 22;
+  }
+  html {
+    background: rgb(var(--bg));
+    color: rgb(var(--ink));
+    font-family: "Source Serif Pro", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body { min-height: 100vh; }
+  ::selection { background: #D62636; color: #fff; }
+  :focus-visible {
+    outline: 2px solid #D62636;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  h1, h2, h3, h4, h5, .display { font-family: Roboto, system-ui, sans-serif; }
+  .caps { text-transform: uppercase; letter-spacing: 0.08em; font-family: Roboto, sans-serif; font-weight: 700; }
+
+  /* Hero — slightly tighter leading + a soft red rule to anchor the title block. */
+  .hero-title {
+    font-family: Roboto, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    line-height: 0.92;
+    font-size: clamp(2.75rem, 9vw, 7rem);
+  }
+  .hero-rule { width: 4rem; height: 4px; background: #D62636; margin-bottom: 1.5rem; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-up { opacity: 0; transform: translateY(12px); animation: fadeUp .7s cubic-bezier(.2,.7,.2,1) forwards; }
+    .fade-up.delay-1 { animation-delay: .08s; }
+    .fade-up.delay-2 { animation-delay: .16s; }
+    .fade-up.delay-3 { animation-delay: .24s; }
+    @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  }
+}
+
+@layer components {
+  .container-prose { max-width: 56rem; margin-inline: auto; padding-inline: 1.5rem; }
+  .container-wide  { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
+
+  .nav-link {
+    @apply caps text-[0.78rem] py-2 relative inline-block transition-colors;
+    color: rgb(var(--ink));
+  }
+  .nav-link:hover { color: #D62636; }
+  .nav-link[aria-current="page"]::after,
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    height: 2px;
+    background: #D62636;
+  }
+
+  /* Buttons — three variants. */
+  .btn {
+    @apply caps text-base md:text-lg px-8 md:px-10 py-4 md:py-5 inline-flex items-center justify-center gap-2 transition-all duration-200;
+  }
+  .btn-dark {
+    @apply btn bg-button text-white;
+    border-left: 4px solid #D62636;
+  }
+  .btn-dark:hover { background: #D62636; transform: translateY(-1px); }
+  .btn-dark:active { transform: translateY(0); }
+
+  .btn-outline {
+    @apply btn bg-transparent;
+    color: rgb(var(--ink));
+    border: 2px solid rgb(var(--ink));
+    border-left: 4px solid #D62636;
+  }
+  .btn-outline:hover { background: rgb(var(--ink)); color: rgb(var(--bg)); transform: translateY(-1px); }
+
+  .btn-ghost {
+    @apply caps text-xs inline-flex items-center gap-2 hover:text-accent transition-colors;
+  }
+
+  .eyebrow {
+    @apply caps text-xs;
+    color: #D62636;
+  }
+  .hairline { border-top: 1px solid rgb(var(--ink) / 0.15); }
+
+  /* Subtle paper panel (cream surface that adapts to dark mode). */
+  .surface-paper {
+    background: rgb(var(--surface));
+    border-top: 1px solid rgb(var(--ink) / 0.08);
+    border-bottom: 1px solid rgb(var(--ink) / 0.08);
+  }
+}

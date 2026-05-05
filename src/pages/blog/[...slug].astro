@@ -1,0 +1,69 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import ShareRow from '~/components/ShareRow.astro';
+import StickyAction from '~/components/StickyAction.astro';
+import { entryHref } from '~/lib/entries';
+import { formatDate } from '~/lib/format';
+import { article, breadcrumb } from '~/lib/seo';
+
+export async function getStaticPaths() {
+  const items = await getCollection('update');
+  return items.map((entry) => ({
+    params: { slug: entry.id.replace(/\.md$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const href = entryHref('update', entry);
+const dateStr = formatDate(entry.data.date, 'long');
+
+const jsonLd = [
+  article({
+    type: 'NewsArticle',
+    url: new URL(href, Astro.site).toString(),
+    title: entry.data.title,
+    description: entry.data.excerpt,
+    datePublished: entry.data.date,
+    image: entry.data.hero,
+    section: 'Updates',
+  }),
+  breadcrumb([
+    { name: 'Home', url: '/' },
+    { name: 'Updates', url: '/blog' },
+    { name: entry.data.title, url: href },
+  ]),
+];
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.excerpt} ogImage={entry.data.hero} article jsonLd={jsonLd}>
+  <HeroTitle eyebrow={`Update · ${dateStr}`}>{entry.data.title}</HeroTitle>
+
+  {entry.data.hero && (
+    <figure class="container-prose mt-10">
+      <img src={entry.data.hero} alt="" loading="lazy" decoding="async" class="w-full h-auto" />
+    </figure>
+  )}
+
+  <article class="container-prose mt-10 prose dark:prose-invert font-body text-pretty fade-up">
+    <Content />
+  </article>
+
+  {entry.data.sourceUrl && (
+    <aside class="container-prose mt-10">
+      <a href={entry.data.sourceUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 caps text-xs text-accent border border-accent/40 px-4 py-3 hover:bg-accent hover:text-white transition-colors">
+        Read the original at rethinkaadhaar.in <span aria-hidden="true">↗</span>
+      </a>
+    </aside>
+  )}
+
+  <div class="container-prose">
+    <ShareRow title={entry.data.title} />
+    <p class="mt-12 mb-12"><a class="caps text-xs text-accent" href="/blog">← Back to Updates</a></p>
+  </div>
+
+  <StickyAction />
+</BaseLayout>

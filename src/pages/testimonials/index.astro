@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import PostListItem from '~/components/PostListItem.astro';
+import { byDateDesc, entryHref } from '~/lib/entries';
+import { itemList } from '~/lib/seo';
+
+const stories = (await getCollection('exclusion')).sort(byDateDesc);
+const description = "Stories from the ground: what Aadhaar exclusion looks like in practice.";
+
+const jsonLd = itemList({
+  name: 'Exclusion stories',
+  url: '/testimonials',
+  items: stories.slice(0, 25).map((s) => ({
+    name: s.data.title,
+    url: entryHref('exclusion', s),
+    description: s.data.summary,
+  })),
+});
+---
+
+<BaseLayout title="Exclusion" description={description} jsonLd={jsonLd}>
+  <HeroTitle eyebrow="Stories from the ground">Exclusion</HeroTitle>
+
+  <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
+    Aadhaar promised inclusion. The lived reality has been exclusion — from rations and pensions, from school admissions and bank accounts, from medical treatment and voting rolls. These are some of the documented cases.
+  </p>
+
+  <section class="container-prose mt-12 mb-24">
+    {stories.map((s) => (
+      <PostListItem
+        href={entryHref('exclusion', s)}
+        title={s.data.title}
+        date={s.data.date}
+        location={s.data.location}
+        excerpt={s.data.summary}
+      />
+    ))}
+  </section>
+</BaseLayout>

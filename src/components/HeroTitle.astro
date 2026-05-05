@@ -1,0 +1,9 @@
+---
+interface Props { eyebrow?: string; class?: string; rule?: boolean; }
+const { eyebrow, class: cls = '', rule = true } = Astro.props;
+---
+<header class={`container-prose pt-12 md:pt-20 fade-up ${cls}`}>
+  {rule && <div class="hero-rule" aria-hidden="true"></div>}
+  {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+  <h1 class="hero-title text-balance"><slot /></h1>
+</header>

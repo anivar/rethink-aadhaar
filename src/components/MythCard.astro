@@ -1,0 +1,24 @@
+---
+interface Props { myth: string; fact?: string; index: number; total: number; }
+const { myth, fact, index, total } = Astro.props;
+const nn = String(index).padStart(2, '0');
+---
+<article class="border-t-2 border-ink py-10 md:py-14 grid md:grid-cols-[5rem_1fr] gap-6 md:gap-10">
+  <div class="md:pt-1">
+    <p class="font-display font-black text-5xl md:text-6xl leading-none text-accent">{nn}</p>
+    <p class="caps text-[0.65rem] text-ink/60 mt-1">/ {String(total).padStart(2, '0')}</p>
+  </div>
+  <div>
+    <p class="caps text-accent text-sm mb-3">Myth</p>
+    <p class="font-display font-bold text-2xl md:text-3xl text-balance leading-snug mb-8">{myth}</p>
+    {fact && (
+      <>
+        <p class="caps text-ink/60 text-sm mb-3">Fact</p>
+        <p class="font-display font-bold text-xl md:text-2xl text-balance leading-snug mb-8">{fact}</p>
+      </>
+    )}
+    <div class="prose font-body text-pretty">
+      <slot />
+    </div>
+  </div>
+</article>

@@ -1,0 +1,8 @@
+---
+interface Props { href: string; external?: boolean; class?: string; variant?: 'dark' | 'outline'; }
+const { href, external = false, class: cls = '', variant = 'dark' } = Astro.props;
+const rel = external ? 'noopener' : undefined;
+const target = external ? '_blank' : undefined;
+const klass = variant === 'outline' ? 'btn-outline' : 'btn-dark';
+---
+<a href={href} target={target} rel={rel} class={`${klass} w-full sm:w-auto ${cls}`}><slot /></a>

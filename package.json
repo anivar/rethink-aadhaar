@@ -1,0 +1,31 @@
+{
+  "name": "rethink-aadhaar",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "new": "node scripts/new.mjs",
+    "sync": "node scripts/sync.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.2.6",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/tailwind": "^6.0.2",
+    "@fontsource/roboto": "^5.2.6",
+    "@fontsource/source-serif-pro": "^5.2.5",
+    "astro": "^5.13.0",
+    "astro-seo": "^0.8.4",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16"
+  }
+}

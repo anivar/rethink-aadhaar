@@ -1,0 +1,35 @@
+{
+  "logo": {
+    "src": "/logo.svg",
+    "alt": "Rethink Aadhaar — red square with white eye/sun mark",
+    "where_used": "site header (all pages)",
+    "note": "Re-created as inline SVG from the original Squarespace logo asset; the original was raster (PNG)."
+  },
+  "footer_rays": {
+    "src": "/footer-rays.svg",
+    "alt": "Black field with white sun-rays / starburst radiating up from bottom-centre",
+    "where_used": "site footer (all pages)",
+    "note": "Re-created as inline SVG so it scales cleanly. 60 thin rays."
+  },
+  "favicon": {
+    "src": "/favicon.ico",
+    "source_url": "https://images.squarespace-cdn.com/content/v1/58b545dc59cc68c59cb75b8e/1489978871210-I6K94JSWW9F2Z6XGW26W/favicon.ico"
+  },
+  "take_action_icon": {
+    "src": "/media/noun_1067645.png",
+    "source_url": "https://images.squarespace-cdn.com/content/v1/58b545dc59cc68c59cb75b8e/1501143464367-72QK8G9CYTG48Q7A6Y2O/noun_1067645.png",
+    "alt": "Fist with network nodes — take action icon",
+    "where_used": "/take-action hero",
+    "credit": "Icon by The Noun Project"
+  },
+  "media_directory": {
+    "path": "/public/media",
+    "count": 303,
+    "size": "95 MB",
+    "note": "All squarespace-cdn images from the live site, downloaded once. Filenames preserve their CDN hash so they can be cross-referenced with the raw HTML in /content-source/raw."
+  },
+  "fonts": {
+    "display_ui": "Roboto 500 / 700 / 900 (self-hosted via @fontsource/roboto)",
+    "body": "Source Serif Pro 400 / 400 italic (self-hosted via @fontsource/source-serif-pro)"
+  }
+}

@@ -1,0 +1,29 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SignupForm from '~/components/SignupForm.astro';
+import { breadcrumb } from '~/lib/seo';
+
+const page = await getEntry('page', 'take-action');
+const { Content } = await render(page!);
+const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'Take action', url: '/take-action' }]);
+---
+
+<BaseLayout title="Take action" description="Sign on, opt out, launch a local campaign — concrete ways to push back against coercive Aadhaar mandates." jsonLd={jsonLd}>
+  <div class="container-prose pt-12 md:pt-20 grid md:grid-cols-[1fr_auto] items-end gap-6">
+    <div>
+      <p class="eyebrow mb-4">What can I do? What can't we do?</p>
+      <h1 class="hero-title text-balance">Take action</h1>
+    </div>
+    <img src="/media/1501143464367-72QK8G9CYTG48Q7A6Y2O-noun_1067645.png" alt="Fist with network nodes" class="w-32 md:w-40 dark:invert" loading="eager" />
+  </div>
+
+  <article class="container-prose mt-10 prose dark:prose-invert font-body text-pretty fade-up">
+    <Content />
+  </article>
+
+  <section class="container-prose mt-16 mb-24 hairline pt-10">
+    <h2 class="caps text-accent text-sm mb-4">Subscribe to the mailing list</h2>
+    <SignupForm />
+  </section>
+</BaseLayout>
