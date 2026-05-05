@@ -24,7 +24,7 @@ interface Props {
 
 const {
   title,
-  description = "The Aadhaar project, with its fundamental weaknesses and dangerous effects, continues to grow. Let's Rethink Aadhaar.",
+  description = "Rethink Aadhaar — Opt-out from Aadhaar. Take action now.",
   bg = 'white',
   bodyClass = '',
   jsonLd,
@@ -32,7 +32,9 @@ const {
   article = false,
 } = Astro.props;
 
-const fullTitle = title === 'Rethink Aadhaar' ? title : `${title} — Rethink Aadhaar`;
+const fullTitle = title === 'Rethink Aadhaar'
+  ? 'Rethink Aadhaar — Opt-out from Aadhaar. Take action now.'
+  : `${title} — Rethink Aadhaar`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageAbs = ogImage.startsWith('http') ? ogImage : absoluteUrl(ogImage, Astro.site!);
 
@@ -45,8 +47,10 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#D62636" />
+    <meta name="theme-color" content="#F7F2E8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/x-icon" href={link('/favicon.ico')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={link('/apple-touch-icon.png')} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" type="application/rss+xml" title="Rethink Aadhaar — Updates" href={link('/rss.xml')} />
     <link rel="alternate" type="text/plain" title="LLM-readable index" href={link('/llms.txt')} />
@@ -63,10 +67,11 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
       <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />
     ))}
     <script is:inline>
-      // Avoid FOUC on dark mode
+      // Light is the default. Dark mode is opt-in via the toggle and persisted
+      // in localStorage. We deliberately do NOT auto-pick dark from OS pref —
+      // brand parity with rethinkaadhaar.in (cream paper) wins over OS theme.
       try {
-        const t = localStorage.getItem('theme');
-        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (localStorage.getItem('theme') === 'dark') {
           document.documentElement.classList.add('dark');
         }
       } catch {}

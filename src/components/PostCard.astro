@@ -3,7 +3,7 @@ import { formatDate } from '~/lib/format';
 interface Props { href: string; title: string; date: Date; excerpt?: string; hero?: string; }
 const { href, title, date, excerpt, hero } = Astro.props;
 ---
-<article class="group flex flex-col h-full border border-ink/10 hover:border-accent hover:shadow-[0_8px_24px_-12px_rgba(214,38,54,0.25)] transition-all duration-200">
+<article class="group flex flex-col h-full card-surface hover:border-accent hover:shadow-[0_8px_24px_-12px_rgba(215,40,47,0.25)] transition-all duration-200">
   {hero && (
     <a href={href} class="block aspect-[16/10] overflow-hidden bg-ink/5" tabindex="-1" aria-hidden="true">
       <img src={hero} alt="" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out" />
@@ -15,8 +15,11 @@ const { href, title, date, excerpt, hero } = Astro.props;
       <a href={href} class="group-hover:text-accent transition-colors">{title}</a>
     </h3>
     {excerpt && <p class="font-body text-base text-ink/80 leading-relaxed text-pretty line-clamp-4">{excerpt}</p>}
-    <a href={href} class="caps text-xs mt-auto pt-4 text-accent inline-flex items-center gap-1 group/link">
-      Read <span class="transition-transform group-hover/link:translate-x-0.5">→</span>
+    <a href={href} class="caps text-xs mt-auto pt-4 text-accent inline-flex items-center gap-1.5 group/link">
+      Read
+      <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
     </a>
   </div>
 </article>

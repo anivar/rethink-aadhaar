@@ -26,17 +26,36 @@ const jsonLd = collectionPage({ name: 'Rethink Aadhaar', url: '/', description }
 ---
 
 <BaseLayout title="Rethink Aadhaar" description={description} jsonLd={jsonLd}>
-  <HeroTitle>Rethink<br/>Aadhaar</HeroTitle>
+  <HeroTitle align="center">Rethink<br/>Aadhaar</HeroTitle>
 
-  <div class="container-prose mt-10 md:mt-14 prose font-body text-pretty fade-up">
+  <!-- Centred intro paragraph at a comfortable measure (~65ch). -->
+  <div class="container-prose mt-10 md:mt-14 prose font-body text-pretty text-center mx-auto fade-up" style="max-width: 65ch;">
     <p>The Aadhaar project, to provide a unique number to all residents in India, was packaged as a welfare-enabling programme. It was sold as an initiative for greater inclusiveness in welfare, a tool against corruption, greater efficiency and so on.</p>
-    <p>More than a decade later, evidence and testimony show the continuing destruction of welfare programmes due to their Aadhaar linkage. The Aadhaar project also presents the potential to enable mass surveillance, which threatens privacy and democratic practice. Indian residents and citizens have been lulled into believing that their privacy is the price they have to pay for better implementation of welfare programmes. In fact, the Aadhaar project threatens both our welfare, and right to privacy; and yet, even with its fundamental weaknesses and dangerous effects, it continues to grow.</p>
   </div>
 
+  <!-- Two-column block: canonical worn fingerprint hand image + serif paragraph. -->
+  <section class="container-prose mt-16 md:mt-20 grid gap-8 md:gap-12 md:grid-cols-2 items-start fade-up delay-1">
+    <figure class="m-0">
+      <img
+        src={link('/media/1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg')}
+        alt="A worker's hand holding an Aadhaar enrolment slip — fingertips worn smooth from years of manual labour."
+        loading="lazy"
+        decoding="async"
+        width="1200"
+        height="800"
+        class="w-full h-auto block"
+      />
+    </figure>
+    <div class="prose font-body text-pretty">
+      <p>More than a decade later, evidence and testimony show the continuing destruction of welfare programmes due to their Aadhaar linkage. The Aadhaar project also presents the potential to enable mass surveillance, which threatens privacy and democratic practice.</p>
+      <p>Indian residents and citizens have been lulled into believing that their privacy is the price they have to pay for better implementation of welfare programmes. In fact, the Aadhaar project threatens both our welfare, and right to privacy; and yet, even with its fundamental weaknesses and dangerous effects, it continues to grow.</p>
+    </div>
+  </section>
+
   <section class="container-prose mt-20 md:mt-28 fade-up delay-1">
-    <p class="eyebrow mb-3">Collective statement · 10 December 2025</p>
-    <h2 class="font-display font-black text-3xl md:text-5xl text-balance leading-tight tracking-tight uppercase">{statement!.data.title}</h2>
-    <div class="prose dark:prose-invert font-body mt-8 text-pretty">
+    <p class="eyebrow mb-3 text-center">Collective statement · 10 December 2025</p>
+    <h2 class="font-display text-3xl md:text-5xl text-balance leading-tight tracking-tight uppercase text-center">{statement!.data.title}</h2>
+    <div class="prose dark:prose-invert font-body mt-10 text-pretty mx-auto" style="max-width: 65ch;">
       <StatementBody />
     </div>
   </section>

@@ -1,5 +1,24 @@
 # Changes vs. the live rethinkaadhaar.in
 
+## Visual (May 2026 — brand parity pass)
+
+- **Canonical mark restored.** The third-eye / fingerprint-eye logo (sourced from rethinkaadhaar.in, CC BY 4.0) now lives at `public/brand/logo-mark.png` (1024px master) and `public/brand/logo-mark.svg`. The earlier red-square placeholder mark has been retired.
+- **Centred logo, split nav.** Header restructured to match canonical: `Myths · Exclusion · Updates · Take Action  | LOGO |  FAQs · Resources · Press · About · Campaign 2025`. Mobile collapses to logo-centre + hamburger right. Dark-mode toggle moved out of the nav into the footer's utility area.
+- **Cream paper palette.** Page background switched to canonical warm cream `#F7F2E8`; ink `#111111`; primary red retuned to `#D7282F`; muted `#555555`. Cards are now white-on-cream in light mode (`.card-surface` token) and dark paper in dark mode. The `/myths` page no longer uses a yellow override — it reads on cream like every other page.
+- **Hero refreshed.** `RETHINK AADHAAR` is centred, with the 4 px primary-red rule above. Type clamps to `clamp(2.5rem, 11vw, 9rem)`. Intro paragraph centred at ~65 ch. A two-column block (canonical worn-fingerprint hand on the left, serif paragraph on the right) sits below.
+- **Statement section centred.** "Beware of Aadhaar — A warning on India's biometric identity model" heading is now centre-aligned and uppercase, matching canonical.
+- **Typography upgraded.** Display = Archivo Black; body = Source Serif 4; UI/labels = Roboto. All self-hosted via `@fontsource/*`, `font-display: swap`. The legacy Source Serif Pro package has been dropped.
+- **Light is the default.** First-visit auto-dark via `prefers-color-scheme` removed; dark is opt-in via the toggle and persisted in `localStorage`. Brand parity wins over OS theme.
+- **Real social SVGs.** Footer now uses inline SVG icons for Email, Twitter / X, Facebook and RSS instead of pipe-separated text links. Card "Read →" affordances use a real arrow SVG that translates on hover.
+- **Default `<title>` and og:image.** Title default: "Rethink Aadhaar — Opt-out from Aadhaar. Take action now." OG image default: `/og-default.png` (1200×630, mark + wordmark on cream). Organization JSON-LD `logo` points at the new mark.
+- **Announcement copy** retuned: "Rethink Aadhaar. Opt-out from Aadhaar. Take action now →".
+
+### TODOs requiring confirmation before merge
+- The canonical mark is **PNG-only** on the upstream Squarespace CDN. `public/brand/logo-mark.svg` wraps the PNG via `<image>` so an SVG file exists at the requested path, but it is not a true vector. Replace with a hand-traced vector when one is available.
+- The hand-photo asset (`public/media/1489594687018-…-image-asset.jpeg`) was already present from the initial migration. Licensing follows the upstream CC BY 4.0 attribution preserved on home content.
+
+---
+
 This rebuild preserves the editorial voice, IA, palette, and typography of the original Squarespace site, while modernising the front-end. Every change below is intentional — content meaning is unchanged.
 
 ## Platform

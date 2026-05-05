@@ -15,8 +15,11 @@ const dateStr = date ? formatDate(date, 'medium') : null;
       <div class="prose font-body text-pretty">
         <slot />
       </div>
-      <p class="mt-6"><a href={href} class="caps text-xs text-accent inline-flex items-center gap-1 group">
-        Read full story <span class="transition-transform group-hover:translate-x-0.5">→</span>
+      <p class="mt-6"><a href={href} class="caps text-xs text-accent inline-flex items-center gap-1.5 group">
+        Read full story
+        <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
       </a></p>
     </div>
   </div>

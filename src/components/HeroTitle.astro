@@ -1,9 +1,10 @@
 ---
-interface Props { eyebrow?: string; class?: string; rule?: boolean; }
-const { eyebrow, class: cls = '', rule = true } = Astro.props;
+interface Props { eyebrow?: string; class?: string; rule?: boolean; align?: 'center' | 'left'; }
+const { eyebrow, class: cls = '', rule = true, align = 'center' } = Astro.props;
+const alignCls = align === 'center' ? 'text-center' : 'text-left';
 ---
-<header class={`container-prose pt-12 md:pt-20 fade-up ${cls}`}>
-  {rule && <div class="hero-rule" aria-hidden="true"></div>}
+<header class={`container-prose pt-12 md:pt-20 fade-up ${alignCls} ${cls}`}>
+  {rule && <div class={`hero-rule ${align === 'left' ? '!ml-0' : ''}`} aria-hidden="true"></div>}
   {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
   <h1 class="hero-title text-balance"><slot /></h1>
 </header>

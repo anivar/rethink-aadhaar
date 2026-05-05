@@ -1,36 +1,41 @@
 ---
 import LogoMark from '~/components/LogoMark.astro';
-import ThemeToggle from '~/components/ThemeToggle.astro';
 import { link } from '~/lib/link';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const nav = [
-  { label: 'Myths', href: '/myths' },
-  { label: 'Exclusion', href: '/testimonials' },
-  { label: 'Updates', href: '/blog' },
+
+// Canonical layout: Myths · Exclusion · Updates · Take Action  | LOGO |
+//                   FAQs · Resources · Press · About · Campaign 2025
+const navLeft = [
+  { label: 'Myths',       href: '/myths' },
+  { label: 'Exclusion',   href: '/testimonials' },
+  { label: 'Updates',     href: '/blog' },
   { label: 'Take action', href: '/take-action' },
-  { label: 'FAQs', href: '/faqs' },
-  { label: 'Resources', href: '/resources' },
-  { label: 'Press', href: '/press-coverage' },
-  { label: 'About', href: '/about' },
-  { label: 'Campaign 2025', href: '/campaign2025' },
-].map((n) => ({ ...n, hrefAbs: link(n.href) }));
+];
+const navRight = [
+  { label: 'FAQs',         href: '/faqs' },
+  { label: 'Resources',    href: '/resources' },
+  { label: 'Press',        href: '/press-coverage' },
+  { label: 'About',        href: '/about' },
+  { label: 'Campaign 2025',href: '/campaign2025' },
+];
+const all = [...navLeft, ...navRight].map((n) => ({ ...n, hrefAbs: link(n.href) }));
+const left  = navLeft.map((n)  => ({ ...n, hrefAbs: link(n.href) }));
+const right = navRight.map((n) => ({ ...n, hrefAbs: link(n.href) }));
+
 function isActive(href: string) {
   if (href === '/') return path === '/';
   return path === href || path.startsWith(href + '/');
 }
 ---
 
-<header class="sticky top-0 z-40 border-b border-ink/10 bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/65">
-  <div class="container-wide flex items-center justify-between gap-4 py-3 md:py-4">
-    <a href={link('/')} class="flex items-center gap-3 group" aria-label="Rethink Aadhaar — home">
-      <LogoMark class="h-9 w-9 md:h-10 md:w-10 transition-transform group-hover:rotate-[-4deg]" />
-      <span class="caps text-sm md:text-base font-bold tracking-caps text-ink">Rethink Aadhaar</span>
-    </a>
+<header class="sticky top-0 z-40 border-b border-ink/10 bg-bg/85 backdrop-blur supports-[backdrop-filter]:bg-bg/70">
+  <div class="container-wide grid grid-cols-[auto_1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-4 py-3 md:py-4">
 
-    <nav class="hidden lg:block" aria-label="Primary">
-      <ul class="flex items-center gap-5">
-        {nav.map((item) => (
+    <!-- LEFT NAV (desktop only) -->
+    <nav class="hidden lg:flex justify-end" aria-label="Primary (left)">
+      <ul class="flex items-center gap-5 xl:gap-7">
+        {left.map((item) => (
           <li>
             <a
               href={item.hrefAbs}
@@ -42,27 +47,51 @@ function isActive(href: string) {
       </ul>
     </nav>
 
-    <div class="flex items-center gap-2">
-      <ThemeToggle />
-      <button
-        type="button"
-        class="lg:hidden inline-flex items-center justify-center w-10 h-10 border border-ink/20 hover:border-accent transition-colors"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="mobile-nav"
-        data-menu-toggle
-      >
-        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
+    <!-- CENTERED LOGO -->
+    <a
+      href={link('/')}
+      class="justify-self-center flex items-center gap-3 group"
+      aria-label="Rethink Aadhaar — home"
+    >
+      <LogoMark class="h-12 w-12 md:h-14 md:w-14 transition-transform group-hover:rotate-[-3deg]" />
+      <span class="sr-only md:not-sr-only caps text-sm md:text-base font-bold tracking-caps text-ink whitespace-nowrap">Rethink Aadhaar</span>
+    </a>
+
+    <!-- RIGHT NAV (desktop only) -->
+    <nav class="hidden lg:flex justify-start" aria-label="Primary (right)">
+      <ul class="flex items-center gap-5 xl:gap-7">
+        {right.map((item) => (
+          <li>
+            <a
+              href={item.hrefAbs}
+              class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- MOBILE TOGGLE (right) -->
+    <button
+      type="button"
+      class="lg:hidden justify-self-end inline-flex items-center justify-center w-10 h-10 border border-ink/20 hover:border-accent transition-colors"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      data-menu-toggle
+    >
+      <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
   </div>
 
+  <!-- MOBILE PANEL -->
   <div id="mobile-nav" class="lg:hidden hidden border-t border-ink/10 bg-bg" data-mobile-nav>
     <nav class="container-wide py-4" aria-label="Mobile">
       <ul class="flex flex-col gap-3">
-        {nav.map((item) => (
+        {all.map((item) => (
           <li>
             <a
               href={item.hrefAbs}

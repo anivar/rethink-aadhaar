@@ -1,14 +1,14 @@
 ---
 import { link } from '~/lib/link';
-// Black bar with the campaign's Take Action call.
-// Dismissible (localStorage flag: rta-banner-dismissed-1).
+// Black bar above the header, dismissible (localStorage flag).
 ---
 
 <div id="rta-banner" class="bg-button text-white" data-banner>
   <div class="container-wide flex items-center justify-between gap-4 py-2">
     <p class="caps text-[0.7rem] sm:text-xs">
-      <span class="hidden sm:inline">Beware of Aadhaar — </span>
-      <a href={link('/campaign2025')} class="underline underline-offset-2 hover:text-accent">Read our 2025 Collective Statement →</a>
+      Rethink Aadhaar.
+      <span class="hidden sm:inline">Opt-out from Aadhaar.</span>
+      <a href={link('/take-action')} class="underline underline-offset-2 hover:text-accent">Take action now →</a>
     </p>
     <button
       type="button"

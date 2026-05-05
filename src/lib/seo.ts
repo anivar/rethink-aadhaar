@@ -18,7 +18,7 @@ export function org(): JsonLd {
       'https://twitter.com/no2uid',
       'https://www.facebook.com/no2uid/',
     ],
-    logo: `${SITE_URL}/favicon.ico`,
+    logo: `${SITE_URL}/brand/logo-mark.png`,
   };
 }
 
