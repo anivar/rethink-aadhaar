@@ -3,11 +3,13 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
-// Site URL is overridden in CI for the GH Pages build (see .github/workflows/deploy.yml).
+// Site URL + base path are overridden in CI for GH Pages (see .github/workflows/deploy.yml).
 const SITE = process.env.SITE_URL ?? 'https://rethinkaadhaar.in';
+const BASE = process.env.BASE_PATH ?? '/';
 
 export default defineConfig({
   site: SITE,
+  base: BASE,
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [

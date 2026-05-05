@@ -6,9 +6,10 @@ import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
 import { byDateDesc, byOrder, entryHref, notDraft } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
+import { link } from '~/lib/link';
 
 function abs(site: URL, path: string): string {
-  return new URL(path, site).toString();
+  return new URL(link(path), site).toString();
 }
 
 export async function GET(context: APIContext) {
@@ -50,14 +51,14 @@ export async function GET(context: APIContext) {
   lines.push(`## Updates (${updates.length})`);
   lines.push(`Latest 30. Full archive: ${abs(site, '/blog')}`);
   for (const u of updates.slice(0, 30)) {
-    lines.push(`- [${formatDate(u.data.date, 'medium')} — ${u.data.title}](${abs(site, entryHref('update', u))})`);
+    lines.push(`- [${formatDate(u.data.date, 'medium')} — ${u.data.title}](${new URL(entryHref('update', u), site).toString()})`);
   }
   lines.push('');
 
   lines.push(`## Exclusion stories (${exclusions.length})`);
   lines.push(`Latest 30. Full archive: ${abs(site, '/testimonials')}`);
   for (const e of exclusions.slice(0, 30)) {
-    lines.push(`- [${formatDate(e.data.date, 'medium')} — ${e.data.title}](${abs(site, entryHref('exclusion', e))})${e.data.location ? ` _(${e.data.location})_` : ''}`);
+    lines.push(`- [${formatDate(e.data.date, 'medium')} — ${e.data.title}](${new URL(entryHref('exclusion', e), site).toString()})${e.data.location ? ` _(${e.data.location})_` : ''}`);
   }
   lines.push('');
 

@@ -1,6 +1,7 @@
 ---
+import { link } from '~/lib/link';
 // Floating "Take action" pill on long pages.
 ---
-<a href="/take-action" class="fixed bottom-6 right-6 z-30 caps text-xs px-4 py-3 bg-accent text-white shadow-lg shadow-accent/30 hover:bg-button transition-colors">
+<a href={link('/take-action')} class="fixed bottom-6 right-6 z-30 caps text-xs px-4 py-3 bg-accent text-white shadow-lg shadow-accent/30 hover:bg-button transition-colors">
   Take action <span aria-hidden="true">→</span>
 </a>

@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
+import { link } from '~/lib/link';
 ---
 
 <BaseLayout title="Not found" description="The page you were looking for is not here.">
   <HeroTitle eyebrow="404">Not found</HeroTitle>
   <div class="container-prose mt-8 mb-24">
     <p class="font-body text-lg text-ink/80">
-      The page you were looking for is not here. Try the <a class="underline text-accent" href="/blog">updates</a>, the <a class="underline text-accent" href="/myths">myths</a> page, or the <a class="underline text-accent" href="/">home page</a>.
+      The page you were looking for is not here. Try the <a class="underline text-accent" href={link('/blog')}>updates</a>, the <a class="underline text-accent" href={link('/myths')}>myths</a> page, or the <a class="underline text-accent" href={link('/')}>home page</a>.
     </p>
   </div>
 </BaseLayout>

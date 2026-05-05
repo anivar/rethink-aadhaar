@@ -1,6 +1,7 @@
 ---
 import LogoMark from '~/components/LogoMark.astro';
 import ThemeToggle from '~/components/ThemeToggle.astro';
+import { link } from '~/lib/link';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const nav = [
@@ -13,7 +14,7 @@ const nav = [
   { label: 'Press', href: '/press-coverage' },
   { label: 'About', href: '/about' },
   { label: 'Campaign 2025', href: '/campaign2025' },
-];
+].map((n) => ({ ...n, hrefAbs: link(n.href) }));
 function isActive(href: string) {
   if (href === '/') return path === '/';
   return path === href || path.startsWith(href + '/');
@@ -22,7 +23,7 @@ function isActive(href: string) {
 
 <header class="sticky top-0 z-40 border-b border-ink/10 bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/65">
   <div class="container-wide flex items-center justify-between gap-4 py-3 md:py-4">
-    <a href="/" class="flex items-center gap-3 group" aria-label="Rethink Aadhaar — home">
+    <a href={link('/')} class="flex items-center gap-3 group" aria-label="Rethink Aadhaar — home">
       <LogoMark class="h-9 w-9 md:h-10 md:w-10 transition-transform group-hover:rotate-[-4deg]" />
       <span class="caps text-sm md:text-base font-bold tracking-caps text-ink">Rethink Aadhaar</span>
     </a>
@@ -32,7 +33,7 @@ function isActive(href: string) {
         {nav.map((item) => (
           <li>
             <a
-              href={item.href}
+              href={item.hrefAbs}
               class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
               aria-current={isActive(item.href) ? 'page' : undefined}
             >{item.label}</a>
@@ -64,7 +65,7 @@ function isActive(href: string) {
         {nav.map((item) => (
           <li>
             <a
-              href={item.href}
+              href={item.hrefAbs}
               class={`nav-link block py-2 ${isActive(item.href) ? 'active' : ''}`}
               aria-current={isActive(item.href) ? 'page' : undefined}
             >{item.label}</a>

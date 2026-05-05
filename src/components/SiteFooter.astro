@@ -1,4 +1,5 @@
 ---
+import { link } from '~/lib/link';
 const year = new Date().getFullYear();
 const RAYS = 60;
 const cx = 600, cy = 400;
@@ -13,7 +14,7 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
 <footer class="mt-24">
   <div class="container-prose pb-10">
     <p class="font-body text-base text-ink/85 leading-relaxed">
-      <a class="underline underline-offset-2" href="/about">About</a>
+      <a class="underline underline-offset-2" href={link('/about')}>About</a>
       <span aria-hidden="true"> | </span>
       <a class="underline underline-offset-2" href="mailto:contact@rethinkaadhaar.in">Email</a>
       <span aria-hidden="true"> | </span>

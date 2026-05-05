@@ -2,6 +2,7 @@
 // One place that knows how to turn an entry id into a URL.
 
 import type { CollectionEntry } from 'astro:content';
+import { link } from '~/lib/link';
 
 const URL_PREFIX = {
   update:    '/blog/',
@@ -16,7 +17,7 @@ export function entryHref<C extends RoutedCollection>(
   entry: { id: string },
 ): string {
   const slug = entry.id.replace(/\.md$/, '').replace(/\.mdx$/, '');
-  return `${URL_PREFIX[collection]}${slug}/`;
+  return link(`${URL_PREFIX[collection]}${slug}/`);
 }
 
 export function bySlugDesc<T extends { id: string }>(a: T, b: T): number {

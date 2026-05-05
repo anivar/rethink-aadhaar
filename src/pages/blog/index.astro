@@ -5,6 +5,7 @@ import HeroTitle from '~/components/HeroTitle.astro';
 import PostCard from '~/components/PostCard.astro';
 import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
 import { itemList } from '~/lib/seo';
+import { link } from '~/lib/link';
 
 const posts = (await getCollection('update'))
   .filter(notDraft)
@@ -27,7 +28,7 @@ const jsonLd = itemList({
   <HeroTitle eyebrow="Statements, press releases, analysis">Updates</HeroTitle>
 
   <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
-    {posts.length} posts from the campaign archive — newest first. <a class="text-accent underline" href="/rss.xml">Subscribe via RSS</a>.
+    {posts.length} posts from the campaign archive — newest first. <a class="text-accent underline" href={link('/rss.xml')}>Subscribe via RSS</a>.
   </p>
 
   <section class="container-prose mt-12 mb-24 grid sm:grid-cols-2 gap-6">

@@ -8,6 +8,7 @@ import SignupForm from '~/components/SignupForm.astro';
 import FeaturedStory from '~/components/FeaturedStory.astro';
 import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
 import { collectionPage } from '~/lib/seo';
+import { link } from '~/lib/link';
 
 const statement = await getEntry('page', 'home-statement');
 const { Content: StatementBody } = await render(statement!);
@@ -49,7 +50,7 @@ const jsonLd = collectionPage({ name: 'Rethink Aadhaar', url: '/', description }
   <section class="container-prose mt-20 fade-up delay-2">
     <div class="flex items-baseline justify-between gap-4 mb-8">
       <h2 class="caps text-accent text-sm">Latest updates</h2>
-      <a href="/blog" class="caps text-xs hover:text-accent">All updates →</a>
+      <a href={link('/blog')} class="caps text-xs hover:text-accent">All updates →</a>
     </div>
     <div class="grid sm:grid-cols-2 gap-6">
       {grid.map((u) => (
@@ -69,8 +70,8 @@ const jsonLd = collectionPage({ name: 'Rethink Aadhaar', url: '/', description }
     <h2 class="hero-title text-balance">Let's rethink Aadhaar</h2>
     <SignupForm />
     <div class="mt-8 flex flex-col sm:flex-row sm:justify-center gap-3">
-      <DarkCTA href="/take-action">Take action now!</DarkCTA>
-      <a href="/campaign2025" class="btn-outline w-full sm:w-auto">Read Campaign 2025</a>
+      <DarkCTA href={link('/take-action')}>Take action now!</DarkCTA>
+      <a href={link('/campaign2025')} class="btn-outline w-full sm:w-auto">Read Campaign 2025</a>
     </div>
   </section>
 </BaseLayout>

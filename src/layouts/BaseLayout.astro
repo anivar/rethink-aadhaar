@@ -7,6 +7,7 @@ import SiteFooter from '~/components/SiteFooter.astro';
 import AnnouncementBar from '~/components/AnnouncementBar.astro';
 import { website, org } from '~/lib/seo';
 import type { JsonLd } from '~/lib/seo';
+import { link, absoluteUrl } from '~/lib/link';
 
 interface Props {
   title: string;
@@ -33,7 +34,7 @@ const {
 
 const fullTitle = title === 'Rethink Aadhaar' ? title : `${title} — Rethink Aadhaar`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const ogImageAbs = new URL(ogImage, Astro.site).toString();
+const ogImageAbs = ogImage.startsWith('http') ? ogImage : absoluteUrl(ogImage, Astro.site!);
 
 // Always emit WebSite + Organization on every page; append page-specific graph.
 const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [])];
@@ -45,10 +46,10 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#D62636" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href={link('/favicon.ico')} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title="Rethink Aadhaar — Updates" href="/rss.xml" />
-    <link rel="alternate" type="text/plain" title="LLM-readable index" href="/llms.txt" />
+    <link rel="alternate" type="application/rss+xml" title="Rethink Aadhaar — Updates" href={link('/rss.xml')} />
+    <link rel="alternate" type="text/plain" title="LLM-readable index" href={link('/llms.txt')} />
     <SEO
       title={fullTitle}
       description={description}
@@ -73,7 +74,7 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
     <ClientRouter />
   </head>
   <body class={`min-h-screen ${bg === 'myth' ? 'bg-myth' : 'bg-bg'} ${bodyClass}`}>
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-button focus:text-white focus:px-4 focus:py-2">Skip to content</a>
+    <a href="#main" class="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:bg-button focus-visible:text-white focus-visible:px-4 focus-visible:py-2">Skip to content</a>
     <AnnouncementBar />
     <SiteHeader />
     <main id="main">

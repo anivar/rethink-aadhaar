@@ -1,6 +1,8 @@
 # Rethink Aadhaar — Astro rebuild
 
-A static, accessibility-first rebuild of [rethinkaadhaar.in](https://rethinkaadhaar.in) on Astro 5 with Tailwind, MDX content collections, view transitions, and dark mode. Content from the original site is reproduced under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) with attribution.
+A static, accessibility-first rebuild of [rethinkaadhaar.in](https://rethinkaadhaar.in) on Astro 5 with Tailwind, MDX content collections, view transitions and dark mode. Content is mirrored from the original site under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) with attribution.
+
+> **Live preview:** https://anivar.github.io/rethink-aadhaar/ (GH Pages, auto-deployed from `main`)
 
 ## Stack
 
@@ -8,7 +10,7 @@ A static, accessibility-first rebuild of [rethinkaadhaar.in](https://rethinkaadh
 - **Tailwind 3.4** + `@tailwindcss/typography`
 - **MDX** content via Astro Content Collections (Zod-typed)
 - **astro-seo**, **@astrojs/sitemap**, **@astrojs/rss**
-- **@fontsource/roboto** (display) + **@fontsource/source-serif-pro** (body), self-hosted
+- **@fontsource/roboto** + **@fontsource/source-serif-pro** (self-hosted)
 - View transitions via `<ClientRouter />`; dark mode via `class` strategy + `localStorage`
 
 ## Local development
@@ -16,132 +18,172 @@ A static, accessibility-first rebuild of [rethinkaadhaar.in](https://rethinkaadh
 ```sh
 npm install
 npm run dev          # http://localhost:4321
-npm run build        # runs `astro check && astro build`
+npm run build        # astro check && astro build
 npm run preview      # serve dist/
 ```
 
-Node 20+ is required.
+Node 20+ required.
 
 ## Project layout
 
 ```
 src/
-  components/        16 small Astro components (no client JS unless noted)
+  lib/                 ← single source of truth — edit one file, every page picks it up
+    format.ts          5 standardised date styles (medium / long / short / monthYear / iso)
+    entries.ts         entryHref(), sort/filter helpers, collection types
+    categories.ts      which collections get regular updates (used by scripts/)
+    seo.ts             JSON-LD builders (Organization, WebSite, Article, FAQPage, ItemList, Breadcrumb…)
+    link.ts            base-path-aware link() for portable internal hrefs
   content/
-    config.ts        Zod schemas for the 7 collections
-    myth/            Numbered myth + fact entries
-    update/          Press releases, statements, analysis (the "blog")
-    exclusion/       First-person exclusion stories ("Exclusion" nav label)
-    faq/             FAQ entries
-    resource/        External primers, govt docs, templates, articles
-    press/           External media coverage index
-    page/            One-off long-form pages (about, take-action, campaign2025, home statement)
-  layouts/
-    BaseLayout.astro SEO, ClientRouter, dark-mode bootstrap, header/footer slots
-  pages/             14 routes (see IA below)
-  styles/global.css  Design tokens + .hero-title / .caps / .btn-dark / .nav-link / fade-up
+    config.ts          Zod schemas for the 7 collections
+    myth/  faq/  resource/  page/                  (curated, edited by hand)
+    update/  exclusion/  press/                    (the three updateable categories)
+  components/          15 small Astro components
+  layouts/BaseLayout.astro
+  pages/               14 routes (see IA below)
+  styles/global.css    Design tokens + .hero-title / .caps / .btn / .nav-link / fade-up
 public/
-  media/             Migrated images (303 files, ~95 MB)
+  media/               Migrated images
+  robots.txt  .nojekyll
 scripts/
-  migrate-posts.mjs  One-time HTML → MD migration (kept for re-runs)
-  seed-press.mjs     Seeds the press collection from a curated list
-content-source/      Original HTML crawl (kept out of build)
-design/              Tokens + reference assets
+  new.mjs              Scaffold a new content entry (npm run new -- update "Title")
+  sync.mjs             Crawl rethinkaadhaar.in/sitemap.xml, write new entries as drafts
+  _categories.mjs      Mirror of src/lib/categories.ts for node scripts
+  migrate-posts.mjs    Original one-time HTML→MD migration (kept for re-runs)
+  seed-press.mjs       Seeded the press collection from a curated list
+.github/workflows/
+  deploy.yml           Build & publish to GH Pages on every push to main
+  sync.yml             Weekly cron (Mon 06:00 UTC) — opens a PR with new upstream content
 ```
 
 ## Information architecture
 
 | Route | Source |
 |---|---|
-| `/` | `page/home-statement.md` + 3 latest `update/` entries |
-| `/myths` | `myth/` collection, ordered |
-| `/testimonials` (nav: "Exclusion") | `exclusion/` collection |
+| `/` | `page/home-statement.md` + 4 latest `update/` entries |
+| `/myths` | `myth/` (ordered) |
+| `/testimonials` (nav: "Exclusion") | `exclusion/` |
 | `/testimonials/[slug]` | individual exclusion stories |
-| `/blog` (nav: "Updates") | `update/` collection |
+| `/blog` (nav: "Updates") | `update/` |
 | `/blog/[slug]` | individual updates |
 | `/take-action` | `page/take-action.md` |
-| `/faqs` | `faq/` collection |
+| `/faqs` | `faq/` |
 | `/resources` | `resource/` grouped by `section` enum |
 | `/press-coverage` | `press/` grouped by year |
 | `/about` | `page/about.md` |
 | `/campaign2025` | `page/campaign2025.md` |
 | `/rss.xml` | latest non-draft `update/` entries |
-| `/sitemap-index.xml` | auto via `@astrojs/sitemap` |
+| `/sitemap-index.xml` | auto via `@astrojs/sitemap` (with priority + lastmod) |
+| `/llms.txt` | LLM-friendly index of every page (auto-derived from collections) |
+| `/llms-full.txt` | Full text of myths, FAQs and `page/` bodies |
+| `/robots.txt` | Allow all, references sitemap and llms.txt |
 | `/404` | static not-found |
-
-The nav-label / `<h1>` mismatches from the original (e.g. nav "Exclusion" → URL `/testimonials` → h1 "Testimonies of exclusion") are preserved deliberately — they reflect editorial intent.
 
 ## Adding content
 
-Drop a Markdown file into the right collection directory. Front-matter is validated by `src/content/config.ts` at build time — a missing or wrong-shape field will fail the build with a clear error.
+### The fast path — `npm run new`
 
-### A new myth
+Three updatable categories. Always works:
 
-`src/content/myth/06-something.md`
+```sh
+npm run new -- update    "Statement on the latest exclusion incident"
+npm run new -- exclusion "Aadhaar-linked pension denial in Khunti" --location "Khunti, Jharkhand"
+npm run new -- press     "Headline of the article" --publication "The Wire" --href https://example.com/article
+```
+
+This drops a Markdown file with valid front-matter. `update` entries are written as `draft: true` so they don't ship until you flip the flag.
+
+### Auto-sync from the live site — `npm run sync`
+
+Pulls `rethinkaadhaar.in/sitemap.xml`, finds URLs not yet represented locally, fetches each page, extracts metadata (og:title / og:description / og:image / datePublished), and writes draft Markdown.
+
+```sh
+npm run sync                 # dry-run: list new URLs
+npm run sync -- --write      # write the files
+npm run sync -- --since 2026-01-01 --write   # only entries on/after this date
+```
+
+Press coverage is **not** auto-synced — it's curated third-party publications. Use `npm run new -- press …`.
+
+### CI sync (every Monday)
+
+The `sync.yml` workflow runs `npm run sync -- --write` weekly and opens a PR titled "Upstream sync — new updates / exclusion stories". Reviewing and merging the PR publishes the new content.
+
+### By hand
+
+Drop a Markdown file into the right collection directory. Front-matter is validated by `src/content/config.ts` at build — wrong shape fails the build.
 
 ```md
 ---
-myth: "Aadhaar is the only proof of identity recognised by banks."
-fact: "Banks accept passport, voter ID, driving license and others under KYC norms."
+title: "A new myth"
+fact: "What the evidence actually says"
 order: 6
 ---
-
-Optional longer explanation in Markdown.
+Optional Markdown body.
 ```
 
-### A new update / press release
+See existing files in each collection for the exact field shape, or read `src/content/config.ts`.
 
-`src/content/update/2026-05-05-some-slug.md`
+## SEO architecture
 
-```md
----
-title: "Statement on the latest exclusion incident"
-date: 2026-05-05
-hero: /media/your-image.jpg     # optional, drop file in public/media/
-excerpt: "One-line summary used in cards and RSS."
-sourceUrl: https://...           # optional, links back to original if migrated
-draft: false
----
+Everything is generated from collections — when a content file is added, every SEO surface updates automatically:
 
-Markdown body.
+| Surface | How it stays current |
+|---|---|
+| `<title>`, `<meta description>`, OG, Twitter | `BaseLayout` props per page |
+| Canonical URL | derived from `Astro.url` + `site` |
+| **JSON-LD** | `src/lib/seo.ts` builders called per page; `WebSite` + `Organization` graph on every page, plus type-specific (`NewsArticle`, `Article`, `FAQPage`, `ItemList`, `BreadcrumbList`) |
+| **Sitemap** | `@astrojs/sitemap` walks all generated pages; priority customised in `astro.config.mjs` |
+| **RSS** | `src/pages/rss.xml.ts` reads `update/` |
+| **`/llms.txt`** | `src/pages/llms.txt.ts` reads every collection at build |
+| **`/llms-full.txt`** | full text of myths, FAQs, page-collection entries |
+| **`robots.txt`** | static, references sitemap + both llms files |
+
+Add a new update / FAQ / myth / resource → it appears in the sitemap, in `/llms.txt`, in the relevant index page's `ItemList` JSON-LD, and (for updates) in RSS. **No SEO file is hand-maintained.**
+
+## Date formatting
+
+There are exactly five `DateStyle`s in `src/lib/format.ts`. Use `formatDate(d, style)`:
+
+| Style | Example | Where |
+|---|---|---|
+| `short` | `12/03/2024` | rare, machine-ish |
+| `medium` | `12 Mar 2024` | every listing, card, list item |
+| `long` | `12 March 2024` | hero eyebrows, detail pages |
+| `monthYear` | `Mar 2024` | year-grouped lists |
+| `iso` | `2024-03-12T…Z` | RSS, sitemap, JSON-LD |
+
+Don't write `toLocaleDateString` or `padStart` calls in templates.
+
+## Internal links
+
+Always wrap with `link()` from `~/lib/link`:
+
+```astro
+import { link } from '~/lib/link';
+<a href={link('/blog')}>All updates</a>
 ```
 
-### A new FAQ, resource, exclusion story, press entry
-
-Each follows the same pattern — see existing files in the matching collection for the exact front-matter shape, or read the Zod schema in `src/content/config.ts`.
-
-### A new long-form page
-
-Either add a `.astro` route under `src/pages/` and pull a `page/` collection entry, or just add a fully-static `.astro` file.
+This makes the site portable between root deploys (rethinkaadhaar.in) and sub-path deploys (anivar.github.io/rethink-aadhaar). The build is driven by `SITE_URL` and `BASE_PATH` env vars.
 
 ## Deploying
 
-The build outputs a fully static `dist/` directory. Any static host works.
+### GitHub Pages (already wired)
 
-### Cloudflare Pages
+Pushing to `main` triggers `.github/workflows/deploy.yml`. The action computes the Pages base URL automatically; no manual config needed.
 
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Node version: `20`
+### Cloudflare Pages / Netlify / Vercel / S3
 
-### Netlify
+```
+Build command: npm run build
+Output dir:    dist
+Node version:  20
+```
 
-- Build command: `npm run build`
-- Publish directory: `dist`
-- A `netlify.toml` is not required; the defaults work.
-
-### Vercel
-
-- Framework preset: Astro (auto-detected)
-- Build command: `npm run build`
-- Output directory: `dist`
-
-### Static / S3 / GitHub Pages
-
-`npm run build` then upload `dist/` to any bucket or static host. Set the `site` URL in `astro.config.mjs` so canonical URLs and sitemap entries are correct.
+For a custom domain (e.g. `rethinkaadhaar.in`), no env vars needed — `astro.config.mjs` defaults to that origin and root path.
 
 ## License
 
 - **Code:** MIT
-- **Content** (text in `src/content/` and curated pages): mirrored under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) from the original Rethink Aadhaar site, with attribution preserved on each migrated entry via a `sourceUrl` field linking back to the original publication.
+- **Content** (text in `src/content/`): mirrored under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) from the original Rethink Aadhaar site, with attribution preserved on each migrated entry via a `sourceUrl` field linking back to the original publication.
 - **Press coverage entries** index third-party reporting and link out to the original publishers; only title, outlet, date and URL are reproduced.
