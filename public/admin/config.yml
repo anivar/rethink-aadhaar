@@ -1,0 +1,194 @@
+# Sveltia CMS — content config for Rethink Aadhaar
+#
+# Reviewers, editors: see ./README.md for setup, security notes, and how
+# the editorial-workflow PR flow ties into deploys.
+#
+# This file is committed to a PUBLIC repo. It contains NO secrets:
+#   - The repo and branch are public information.
+#   - `backend.base_url` is the public address of the OAuth proxy worker.
+#   - The OAuth client_id / client_secret live ONLY in that worker's env.
+#
+# The CMS at /admin/ does nothing useful until base_url is set to a working
+# OAuth proxy and a GitHub OAuth App is registered against it.
+
+backend:
+  name: github
+  repo: anivar/rethink-aadhaar
+  branch: main
+  # ▼▼▼ EDIT THIS BEFORE LAUNCHING THE CMS ▼▼▼
+  # Either point at the official Sveltia auth proxy (fast start, third-party
+  # dependency) OR your own Cloudflare Worker (recommended for production).
+  # See README.md → "Auth proxy options".
+  base_url: https://auth.sveltia.dev
+  # ▲▲▲
+  auth_scope: public_repo   # minimal scope for a public repo
+
+# Every CMS save creates a PR against `main`, never a direct commit.
+# Merging the PR triggers .github/workflows/deploy.yml → live in ~2 min.
+publish_mode: editorial_workflow
+
+# Image uploads land in public/media/ and become publicly visible the
+# moment the PR is merged. Editors must NOT upload anything sensitive.
+media_folder: public/media
+public_folder: /media
+
+# Cosmetic.
+site_url: https://anivar.github.io/rethink-aadhaar
+display_url: https://anivar.github.io/rethink-aadhaar
+logo_url: /brand/logo-mark.png
+
+# ----------------------------------------------------------------------
+# COLLECTIONS
+# Field names + types must match src/content/config.ts (Zod) exactly.
+# Astro's astro check fails the CI build if anything mismatches —
+# belt-and-braces validation.
+# ----------------------------------------------------------------------
+collections:
+
+  # ---- UPDATES (blog posts) ------------------------------------------
+  - name: update
+    label: Updates
+    label_singular: Update
+    folder: src/content/update
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    delete: true
+    slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
+    summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{title}}{{#draft}} (DRAFT){{/draft}}'
+    sortable_fields: [date, title]
+    view_filters:
+      - label: Drafts only
+        field: draft
+        pattern: true
+    fields:
+      - { name: title,     label: Title,           widget: string }
+      - { name: date,      label: Date,            widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+      - { name: excerpt,   label: Excerpt,         widget: text,    required: false, hint: 'Short summary used on cards and OG tags.' }
+      - { name: hero,      label: Hero image,      widget: image,   required: false, choose_url: false }
+      - { name: sourceUrl, label: Original URL,    widget: string,  required: false, pattern: ['^https?://', 'Must be a full http(s) URL'], hint: 'If this re-publishes a post from rethinkaadhaar.in or elsewhere, paste the canonical URL.' }
+      - { name: draft,     label: Draft,           widget: boolean, default: true,    hint: 'Drafts are excluded from the home page, blog index, and RSS feed.' }
+      - { name: body,      label: Body,            widget: markdown }
+
+  # ---- EXCLUSION STORIES (testimonials) -------------------------------
+  - name: exclusion
+    label: Exclusion stories
+    label_singular: Exclusion story
+    folder: src/content/exclusion
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    delete: true
+    slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
+    summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{title}}'
+    sortable_fields: [date, title, location]
+    fields:
+      - { name: title,      label: Title,           widget: string }
+      - { name: date,       label: Date,            widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+      - { name: location,   label: Location,        widget: string,   required: false, hint: 'District, state — e.g. "Khunti, Jharkhand".' }
+      - { name: summary,    label: Summary,         widget: text,     required: false }
+      - { name: shareImage, label: Share image,     widget: image,    required: false, choose_url: false }
+      - { name: sourceUrl,  label: Original URL,    widget: string,   required: false, pattern: ['^https?://', 'Must be a full http(s) URL'] }
+      - { name: body,       label: Body,            widget: markdown }
+
+  # ---- PRESS COVERAGE (link-only entries; no body) --------------------
+  - name: press
+    label: Press coverage
+    label_singular: Press entry
+    folder: src/content/press
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    delete: true
+    slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
+    summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{publication}} — {{title}}'
+    sortable_fields: [date, publication, title]
+    fields:
+      - { name: title,       label: Headline,       widget: string }
+      - { name: publication, label: Publication,    widget: string,  hint: 'e.g. "The Wire", "Scroll", "The Hindu".' }
+      - { name: date,        label: Date,           widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+      - { name: href,        label: Article URL,    widget: string,  pattern: ['^https?://', 'Must be a full http(s) URL'] }
+      # No body field — press is link-only by editorial decision (we do
+      # not mirror third-party article text).
+
+  # ---- MYTHS ---------------------------------------------------------
+  - name: myth
+    label: Myths
+    label_singular: Myth
+    folder: src/content/myth
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    delete: true
+    slug: '{{order | int}}-{{slug}}'
+    summary: 'Myth {{order}} — {{myth}}'
+    sortable_fields: [order]
+    fields:
+      - { name: order, label: Order,           widget: number, value_type: int, min: 1, hint: 'Sequence position on /myths.' }
+      - { name: myth,  label: Myth (claim),    widget: string }
+      - { name: fact,  label: Fact (rebuttal), widget: string, required: false }
+      - { name: body,  label: Long-form body,  widget: markdown }
+
+  # ---- FAQs ----------------------------------------------------------
+  - name: faq
+    label: FAQs
+    label_singular: FAQ
+    folder: src/content/faq
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    delete: true
+    slug: '{{order | int}}-{{slug}}'
+    summary: 'FAQ {{order}} — {{question}}'
+    sortable_fields: [order]
+    fields:
+      - { name: order,    label: Order,         widget: number, value_type: int, min: 1 }
+      - { name: question, label: Question,      widget: string }
+      - { name: short,    label: Short answer,  widget: string,  required: false, hint: 'One-line summary used in llms.txt.' }
+      - { name: body,     label: Full answer,   widget: markdown }
+
+  # ---- RESOURCES (typed link list) -----------------------------------
+  - name: resource
+    label: Resources
+    label_singular: Resource
+    folder: src/content/resource
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    delete: true
+    summary: '{{section}} — {{title}}'
+    sortable_fields: [section, order, title]
+    fields:
+      - { name: title,       label: Title,       widget: string }
+      - { name: section,     label: Section,     widget: select, options: ['Primers', 'Government documents', 'Hunger deaths 2015–18', 'Case documents', 'Templates', 'Articles archive'] }
+      - { name: href,        label: URL,         widget: string, pattern: ['^https?://', 'Must be a full http(s) URL'] }
+      - { name: description, label: Description, widget: text,   required: false }
+      - { name: order,       label: Order,       widget: number, value_type: int, default: 0, hint: 'Lower numbers appear first in their section.' }
+
+  # ---- PAGES (singletons: about / campaign / home statement) ---------
+  - name: page
+    label: Pages
+    label_singular: Page
+    delete: false
+    files:
+      - name: about
+        label: About
+        file: src/content/page/about.md
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: intro, label: Intro, widget: string,   required: false }
+          - { name: body,  label: Body,  widget: markdown }
+      - name: campaign2025
+        label: Campaign 2025
+        file: src/content/page/campaign2025.md
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: intro, label: Intro, widget: string,   required: false }
+          - { name: body,  label: Body,  widget: markdown }
+      - name: home_statement
+        label: Home — collective statement
+        file: src/content/page/home-statement.md
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: intro, label: Intro, widget: string,   required: false }
+          - { name: body,  label: Body,  widget: markdown }
