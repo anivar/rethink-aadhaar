@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import rehypeBaseHref from './src/lib/rehype-base-href.mjs';
 
 // Site URL + base path are overridden in CI for GH Pages (see .github/workflows/deploy.yml).
 const SITE = process.env.SITE_URL ?? 'https://rethinkaadhaar.in';
@@ -12,6 +13,9 @@ export default defineConfig({
   base: BASE,
   output: 'static',
   trailingSlash: 'ignore',
+  markdown: {
+    rehypePlugins: [[rehypeBaseHref, { base: BASE }]],
+  },
   integrations: [
     tailwind({ applyBaseStyles: false }),
     mdx(),
