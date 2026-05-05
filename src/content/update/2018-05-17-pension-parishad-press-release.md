@@ -5,5 +5,3 @@ excerpt: "Pension Parishad is releasing this statement in the behest of Mr. Jite
 sourceUrl: "https://rethinkaadhaar.in/blog/2018/5/17/pension-parishad-press-release"
 ---
 Pension Parishad is releasing this statement in the behest of Mr. Jitendra Singh's statement that aadhaar is not mandatory for senior government employees for pensions. by not extending the same courtesy, or option to the beneficiaries of the pension schemes of the NSAP smacks of discrimination, cal
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2018/5/17/pension-parishad-press-release](https://rethinkaadhaar.in/blog/2018/5/17/pension-parishad-press-release).

@@ -5,5 +5,3 @@ excerpt: "The Aadhaar project, to provide a unique number to all residents in In
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/2/28/aadhaar-an-assault-on-welfare-privacy-and-democracy-need-for-an-urgent-debate"
 ---
 The Aadhaar project, to provide a unique number to all residents in India, was packaged as a welfare-enabling programme. It was sold as an initiative for greater inclusiveness in welfare, a tool against corruption, greater efficiency and so on. Six years down the line, there is mounting evidence of
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2017/2/28/aadhaar-an-assault-on-welfare-privacy-and-democracy-need-for-an-urgent-debate](https://rethinkaadhaar.in/blog/2017/2/28/aadhaar-an-assault-on-welfare-privacy-and-democracy-need-for-an-urgent-debate).

@@ -5,5 +5,3 @@ excerpt: "Voter ID-Aadhaar linking is an outright assault on free and fair elect
 sourceUrl: "https://rethinkaadhaar.in/blog/2025/4/5/statement-on-the-proposal-to-link-voter-ids-epic-database-and-aadhaar"
 ---
 Voter ID-Aadhaar linking is an outright assault on free and fair elections and the right to vote     It violates Election Commission’s 2023 promise in court, and is yet another coercive enrolment scheme.   The right to vote lies at the heart of democracy. Yet, the Election Commission of India’s prop
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2025/4/5/statement-on-the-proposal-to-link-voter-ids-epic-database-and-aadhaar](https://rethinkaadhaar.in/blog/2025/4/5/statement-on-the-proposal-to-link-voter-ids-epic-database-and-aadhaar).

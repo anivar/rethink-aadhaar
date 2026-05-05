@@ -5,5 +5,3 @@ excerpt: "While we continue to  wait for a favorable review of the judgement uph
 sourceUrl: "https://rethinkaadhaar.in/blog/2019/3/6/letter-to-cbdt-protesting-pan-aadhaar-linking"
 ---
 While we continue to  wait for a favorable review of the judgement upholding PAN-Aadhaar  linking, many citizens are opposing this rule in the spirit of civil  disobedience against enrolling in a project which poses a lifelong  threat for one’s personal security. There is much evidence that raises
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2019/3/6/letter-to-cbdt-protesting-pan-aadhaar-linking](https://rethinkaadhaar.in/blog/2019/3/6/letter-to-cbdt-protesting-pan-aadhaar-linking).

@@ -5,5 +5,3 @@ excerpt: "Rethink Aadhaar and the Article 21 Trust condemn the  Aadhaar Authenti
 sourceUrl: "https://rethinkaadhaar.in/blog/2020/8/7/new-aadhaar-rules-for-good-governance-are-constitutionally-impermissible"
 ---
 Rethink Aadhaar and the Article 21 Trust condemn the  Aadhaar Authentication for Good Governance (Social Welfare, Innovation, Knowledge) Rules, 2020   released yesterday, which expand the permissible uses for Aadhaar authentication, for good governance, to "prevent dissipation of social welfare
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2020/8/7/new-aadhaar-rules-for-good-governance-are-constitutionally-impermissible](https://rethinkaadhaar.in/blog/2020/8/7/new-aadhaar-rules-for-good-governance-are-constitutionally-impermissible).

@@ -5,5 +5,3 @@ summary: "Babu Singh, a construction worker in Jawaja block in Ajmer, and his wi
 sourceUrl: "https://rethinkaadhaar.in/testimonials/2017/4/11/is-anyone-accountable-for-aadhaar-errors"
 ---
 Babu Singh, a construction worker in Jawaja block in Ajmer, and his wife Punni Devi, who has polio, have been "locked out" of food grains because of errors in Aadhaar numbers.
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/testimonials/2017/4/11/is-anyone-accountable-for-aadhaar-errors](https://rethinkaadhaar.in/testimonials/2017/4/11/is-anyone-accountable-for-aadhaar-errors).

@@ -5,5 +5,3 @@ excerpt: "In a shocking security breach of Aadhaar, India’s biometric ID proje
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/9/11/concerned-citizens-call-for-independent-audit-of-aadhaar-database"
 ---
 In a shocking security breach of Aadhaar, India’s biometric ID project for residents, the police have arrested 10 men in Uttar Pradesh in North India for successfully creating fake biometrics identities in the Aadhaar database, by cloning fingerprints.  On September 11, the Uttar Pradesh Special Tas
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2017/9/11/concerned-citizens-call-for-independent-audit-of-aadhaar-database](https://rethinkaadhaar.in/blog/2017/9/11/concerned-citizens-call-for-independent-audit-of-aadhaar-database).

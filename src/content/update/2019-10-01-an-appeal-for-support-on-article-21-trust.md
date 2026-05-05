@@ -5,5 +5,3 @@ excerpt: "Last year, we created the Article 21 Trust as an engine that could pow
 sourceUrl: "https://rethinkaadhaar.in/blog/2019/10/1/an-appeal-for-support-on-article-21-trust"
 ---
 Last year, we created the Article 21 Trust as an engine that could power further struggles to counter the impact of Aadhaar and other civil technologies on human rights – in particular the right to life, liberty, and livelihood (as the name of the Trust might suggest). Article 21 will support Rethin
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2019/10/1/an-appeal-for-support-on-article-21-trust](https://rethinkaadhaar.in/blog/2019/10/1/an-appeal-for-support-on-article-21-trust).

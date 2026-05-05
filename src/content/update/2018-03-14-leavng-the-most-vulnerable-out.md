@@ -5,5 +5,3 @@ excerpt: "The Interim Order issued by the Supreme Court today has come as a grav
 sourceUrl: "https://rethinkaadhaar.in/blog/2018/3/14/leavng-the-most-vulnerable-out"
 ---
 The Interim Order issued by the Supreme Court today has come as a grave disappointment, given the large scale exclusion and cases of starvation deaths reported due to Aadhaar, the biometrics-linked resident ID, from the poorest districts of the country.
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2018/3/14/leavng-the-most-vulnerable-out](https://rethinkaadhaar.in/blog/2018/3/14/leavng-the-most-vulnerable-out).

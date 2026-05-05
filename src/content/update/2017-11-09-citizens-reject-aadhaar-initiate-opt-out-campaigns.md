@@ -5,5 +5,3 @@ excerpt: "The Government recently claimed in the Supreme Court that 118 crore In
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/11/9/citizens-reject-aadhaar-initiate-opt-out-campaigns"
 ---
 The Government recently claimed in the Supreme Court that 118 crore Indians would be hurt if the Court passed an order against Aadhaar. What this claims ignores is that people have been coerced to enroll for and “seed” or link Aadhaar to various schemes. The consequences of such coercion are terribl
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2017/11/9/citizens-reject-aadhaar-initiate-opt-out-campaigns](https://rethinkaadhaar.in/blog/2017/11/9/citizens-reject-aadhaar-initiate-opt-out-campaigns).

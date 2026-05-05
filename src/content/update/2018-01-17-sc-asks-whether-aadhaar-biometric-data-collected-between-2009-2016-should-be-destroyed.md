@@ -5,5 +5,3 @@ excerpt: "Constitution Bench hearings on Aadhaar begin: SC asks whether biometri
 sourceUrl: "https://rethinkaadhaar.in/blog/2018/1/17/sc-asks-whether-aadhaar-biometric-data-collected-between-2009-2016-should-be-destroyed"
 ---
 Constitution Bench hearings on Aadhaar begin: SC asks whether biometric data collected between 2009-2016 should be destroyed   After about seven years since the first challenges to the Aadhaar project, on Wednesday, a Constitution bench began hearing the arguments to decide the legal validity of the
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2018/1/17/sc-asks-whether-aadhaar-biometric-data-collected-between-2009-2016-should-be-destroyed](https://rethinkaadhaar.in/blog/2018/1/17/sc-asks-whether-aadhaar-biometric-data-collected-between-2009-2016-should-be-destroyed).

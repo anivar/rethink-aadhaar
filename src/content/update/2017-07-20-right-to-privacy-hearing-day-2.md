@@ -5,5 +5,3 @@ excerpt: "The bench of nine SC judges continued hearing arguments for a second d
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/7/20/right-to-privacy-hearing-day-2"
 ---
 The bench of nine SC judges continued hearing arguments for a second day, to settle the question of whether Indian citizens have a fundamental right to privacy, in the ongoing Aadhaar case. Several petitioners had questioned whether the government can mandatorily link the 12-digit, biometrics linked
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2017/7/20/right-to-privacy-hearing-day-2](https://rethinkaadhaar.in/blog/2017/7/20/right-to-privacy-hearing-day-2).

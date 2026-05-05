@@ -5,5 +5,3 @@ summary: "Bhubaneswar, 5th April, 2023   On 3rd March 2023, 11-year-old Arjun He
 sourceUrl: "https://rethinkaadhaar.in/testimonials/2023/4/9/statement-condemining-the-malnourishment-death-of-a-child-in-jajpur-district-odisha"
 ---
 Bhubaneswar, 5th April, 2023   On 3rd March 2023, 11-year-old Arjun Hembram, known to his family as Juna Hembram, from the Keonjhar district of Odisha, passed away in the early hours of the morning, because of severe malnourishment. The child, who was born with a disability, had not had any rice to
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/testimonials/2023/4/9/statement-condemining-the-malnourishment-death-of-a-child-in-jajpur-district-odisha](https://rethinkaadhaar.in/testimonials/2023/4/9/statement-condemining-the-malnourishment-death-of-a-child-in-jajpur-district-odisha).

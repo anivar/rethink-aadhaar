@@ -5,5 +5,3 @@ excerpt: "Despite the Supreme Court's order, the use of Aadhaar continues to pro
 sourceUrl: "https://rethinkaadhaar.in/blog/2020/9/28/5tesn475qe4vwaepok94t876vkuwpd"
 ---
 Despite the Supreme Court's order, the use of Aadhaar continues to proliferate, causing hardship, exclusion and shoring up the surveillance capabilities of the state.
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2020/9/28/5tesn475qe4vwaepok94t876vkuwpd](https://rethinkaadhaar.in/blog/2020/9/28/5tesn475qe4vwaepok94t876vkuwpd).

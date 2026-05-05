@@ -5,5 +5,3 @@ excerpt: "As Indian government tries to promote its model of biometric ID model 
 sourceUrl: "https://rethinkaadhaar.in/blog/2025/10/24/a-warning-on-indias-biometric-identity-model"
 ---
 As Indian government tries to promote its model of biometric ID model to other regions, a growing list of articles and reports documenting the risks of Aadhaar :
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2025/10/24/a-warning-on-indias-biometric-identity-model](https://rethinkaadhaar.in/blog/2025/10/24/a-warning-on-indias-biometric-identity-model).

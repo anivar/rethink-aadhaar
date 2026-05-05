@@ -5,5 +5,3 @@ excerpt: "In 2016, some of us came together to formulate a response to the Aadha
 sourceUrl: "https://rethinkaadhaar.in/blog/2018/5/14/rethink-aadhaar-campaign-update-on-the-uid-hearing-in-the-supreme-court"
 ---
 In 2016, some of us came together to formulate a response to the Aadhaar onslaught and attempted to organise resources to challenge Aadhaar. We also worked to raise awareness and developed resources to help others understand - and critique - the project. We thought we would be focused on both “welfa
-
-> Migrated from the live site. The full original post is at [https://rethinkaadhaar.in/blog/2018/5/14/rethink-aadhaar-campaign-update-on-the-uid-hearing-in-the-supreme-court](https://rethinkaadhaar.in/blog/2018/5/14/rethink-aadhaar-campaign-update-on-the-uid-hearing-in-the-supreme-court).
