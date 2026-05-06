@@ -2,12 +2,31 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
-import PostListItem from '~/components/PostListItem.astro';
 import { byDateDesc, entryHref } from '~/lib/entries';
 import { itemList } from '~/lib/seo';
+import { link } from '~/lib/link';
+import { formatDate } from '~/lib/format';
 
 const stories = (await getCollection('exclusion')).sort(byDateDesc);
 const description = "Stories from the ground: what Aadhaar exclusion looks like in practice.";
+
+// Pull the first inline image out of the body (we converted all media to raw
+// <img> tags during migration). Falls back to undefined for text-only entries.
+function firstImage(body: string | undefined): string | undefined {
+  if (!body) return undefined;
+  const m = body.match(/<img\s+[^>]*src="([^"]+)"/i);
+  return m ? m[1] : undefined;
+}
+
+// Group descending by year so the page reads as a timeline.
+const grouped = new Map<number, typeof stories>();
+for (const s of stories) {
+  const y = s.data.date.getFullYear();
+  if (!grouped.has(y)) grouped.set(y, []);
+  grouped.get(y)!.push(s);
+}
+const years = [...grouped.keys()].sort((a, b) => b - a);
+const span = `${years[years.length - 1]}–${years[0]}`;
 
 const jsonLd = itemList({
   name: 'Exclusion stories',
@@ -27,15 +46,70 @@ const jsonLd = itemList({
     Aadhaar promised inclusion. The lived reality has been exclusion — from rations and pensions, from school admissions and bank accounts, from medical treatment and voting rolls. These are some of the documented cases.
   </p>
 
-  <section class="container-prose mt-12 mb-24">
-    {stories.map((s) => (
-      <PostListItem
-        href={entryHref('exclusion', s)}
-        title={s.data.title}
-        date={s.data.date}
-        location={s.data.location}
-        excerpt={s.data.summary}
-      />
-    ))}
-  </section>
+  {/* Counter strip */}
+  <div class="container-prose mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-2 fade-up delay-1">
+    <span class="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-accent">{stories.length}</span>
+    <span class="caps text-xs text-ink/60">documented exclusions</span>
+    <span class="caps text-xs text-ink/40">·</span>
+    <span class="caps text-xs text-ink/60">{span}</span>
+  </div>
+
+  {years.map((year) => (
+    <section class="container-prose mt-16 md:mt-20 fade-up">
+      <header class="flex items-baseline gap-3 mb-6 sticky top-0 bg-bg/95 backdrop-blur py-3 -mx-6 px-6 z-10">
+        <h2 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">{year}</h2>
+        <span class="caps text-xs text-ink/50">{grouped.get(year)!.length} {grouped.get(year)!.length === 1 ? 'story' : 'stories'}</span>
+      </header>
+
+      <ul class="list-none p-0 space-y-6">
+        {grouped.get(year)!.map((s) => {
+          const img = firstImage(s.body);
+          const detail = entryHref('exclusion', s);
+          return (
+            <li class="card-surface overflow-hidden transition-colors hover:border-accent/60">
+              <article class="grid sm:grid-cols-[160px_1fr] gap-0 sm:gap-6">
+                {img && (
+                  <a href={detail} class="block aspect-[4/3] sm:aspect-square overflow-hidden bg-ink/5">
+                    <img
+                      src={link(img)}
+                      alt=""
+                      loading="lazy"
+                      class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </a>
+                )}
+                <div class={`p-5 md:p-6 ${img ? '' : 'sm:col-span-2'}`}>
+                  <p class="caps text-xs text-ink/55 mb-2">
+                    {formatDate(s.data.date, 'medium')}{s.data.location ? ` · ${s.data.location}` : ''}
+                  </p>
+                  <h3 class="font-display text-lg md:text-xl font-extrabold tracking-tight leading-snug text-balance">
+                    <a href={detail} class="hover:text-accent transition-colors">{s.data.title}</a>
+                  </h3>
+                  {s.data.summary && (
+                    <p class="mt-3 font-body text-base text-ink/85 leading-relaxed text-pretty">
+                      {s.data.summary}
+                    </p>
+                  )}
+                  {s.data.sourceUrl && (
+                    <p class="mt-4">
+                      <a
+                        href={s.data.sourceUrl}
+                        target="_blank"
+                        rel="noopener"
+                        class="caps text-xs text-accent hover:underline inline-flex items-center gap-1.5"
+                      >
+                        Read at rethinkaadhaar.in <span aria-hidden="true">↗</span>
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </article>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+
+  <div class="mb-24"></div>
 </BaseLayout>
