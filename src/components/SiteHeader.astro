@@ -58,9 +58,11 @@ function isActive(href: string) {
       <span class="sr-only">Rethink Aadhaar</span>
     </a>
 
-    <!-- RIGHT GROUP: nav (desktop) + theme toggle (always) + hamburger (mobile) -->
-    <div class="justify-self-end flex items-center gap-3 lg:gap-5 xl:gap-7">
-      <nav class="hidden lg:flex" aria-label="Primary (right)">
+    <!-- RIGHT GROUP: nav (desktop) sits flush against the logo; theme toggle
+         + hamburger drift to the far right so the nav is symmetrical with the
+         left side. -->
+    <div class="justify-self-end lg:justify-self-stretch flex items-center w-full gap-3 lg:gap-5 xl:gap-7">
+      <nav class="hidden lg:flex lg:flex-1 lg:justify-start" aria-label="Primary (right)">
         <ul class="flex items-center gap-5 xl:gap-7">
           {right.map((item) => (
             <li>
@@ -74,6 +76,7 @@ function isActive(href: string) {
         </ul>
       </nav>
 
+      <div class="lg:ml-auto flex items-center gap-3 lg:gap-5 xl:gap-7">
       <ThemeToggle />
 
       <button
@@ -88,6 +91,7 @@ function isActive(href: string) {
           <path d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
+      </div>
     </div>
   </div>
 
