@@ -60,6 +60,10 @@ export function article(input: {
   image?: string;
   authorName?: string;
   section?: string;
+  /** Baseline schema.org entities discussed by the page. */
+  mentions?: JsonLd[];
+  /** Voice-assistant readable selectors. */
+  speakable?: string[];
 }): JsonLd {
   const out: JsonLd = {
     '@context': 'https://schema.org',
@@ -75,17 +79,112 @@ export function article(input: {
   if (input.description) out.description = input.description;
   if (input.image) out.image = input.image.startsWith('http') ? input.image : `${SITE_URL}${input.image}`;
   if (input.section) out.articleSection = input.section;
+  if (input.mentions?.length) out.mentions = input.mentions;
+  if (input.speakable?.length) {
+    out.speakable = { '@type': 'SpeakableSpecification', cssSelector: input.speakable };
+  }
   return out;
+}
+
+/** Canonical entities referenced across the site. Attached as `mentions`
+ *  on every article so answer engines (ChatGPT, Perplexity, Google AI
+ *  Overviews) can disambiguate "Aadhaar" / "UIDAI" / the privacy ruling
+ *  via Wikidata + Wikipedia identifiers. */
+export const MENTIONS: JsonLd[] = [
+  {
+    '@type': 'Thing',
+    name: 'Aadhaar',
+    sameAs: [
+      'https://en.wikipedia.org/wiki/Aadhaar',
+      'https://www.wikidata.org/wiki/Q1815901',
+    ],
+  },
+  {
+    '@type': 'GovernmentOrganization',
+    name: 'Unique Identification Authority of India',
+    alternateName: 'UIDAI',
+    sameAs: [
+      'https://en.wikipedia.org/wiki/Unique_Identification_Authority_of_India',
+      'https://www.wikidata.org/wiki/Q7889036',
+      'https://uidai.gov.in/',
+    ],
+  },
+  {
+    '@type': 'GovernmentOrganization',
+    name: 'Supreme Court of India',
+    sameAs: [
+      'https://en.wikipedia.org/wiki/Supreme_Court_of_India',
+      'https://www.wikidata.org/wiki/Q11602',
+    ],
+  },
+  {
+    '@type': 'Legislation',
+    name: 'Aadhaar (Targeted Delivery of Financial and Other Subsidies, Benefits and Services) Act, 2016',
+    sameAs: 'https://en.wikipedia.org/wiki/Aadhaar_Act,_2016',
+  },
+  {
+    '@type': 'CreativeWork',
+    name: 'Justice K. S. Puttaswamy (Retd.) v. Union of India',
+    sameAs: 'https://en.wikipedia.org/wiki/Justice_K._S._Puttaswamy_(Retd.)_v._Union_of_India',
+  },
+];
+
+/** ClaimReview JSON-LD per myth — schema.org/ClaimReview gives Google
+ *  fact-check rich results and tells answer engines that this page
+ *  reviewed the claim and reached a verdict. Each myth becomes one
+ *  ClaimReview block on the /myths page. */
+export function claimReview(input: {
+  url: string;
+  claim: string;
+  verdict: string;
+  ratingName?: string;       // "False" | "Misleading" | "Mostly False"
+  ratingValue?: number;      // 1 = false, 5 = true; we use 2 = mostly false
+  datePublished?: Date;
+}): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ClaimReview',
+    url: input.url.startsWith('http') ? input.url : `${SITE_URL}${input.url}`,
+    datePublished: (input.datePublished ?? new Date()).toISOString().slice(0, 10),
+    author: org(),
+    claimReviewed: input.claim,
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: input.ratingValue ?? 2,
+      bestRating: 5,
+      worstRating: 1,
+      alternateName: input.ratingName ?? 'Misleading',
+    },
+    itemReviewed: {
+      '@type': 'Claim',
+      datePublished: '2009-09-28',
+      appearance: 'https://uidai.gov.in/',
+      author: { '@type': 'Organization', name: 'Various' },
+      text: input.claim,
+    },
+    reviewBody: input.verdict,
+  };
 }
 
 export function faqPage(items: { question: string; answer: string }[]): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.faq-question', '.faq-answer'],
+    },
     mainEntity: items.map((q) => ({
       '@type': 'Question',
       name: q.question,
-      acceptedAnswer: { '@type': 'Answer', text: q.answer },
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: q.answer,
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['.faq-answer'],
+        },
+      },
     })),
   };
 }

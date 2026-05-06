@@ -4,16 +4,26 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import MythCard from '~/components/MythCard.astro';
 import { byOrder } from '~/lib/entries';
-import { itemList } from '~/lib/seo';
+import { itemList, claimReview } from '~/lib/seo';
 
 const myths = (await getCollection('myth')).sort(byOrder);
 const rendered = await Promise.all(myths.map(async (m) => ({ ...m, ...(await render(m)) })));
 
-const jsonLd = itemList({
-  name: 'Myths about Aadhaar',
-  url: '/myths',
-  items: myths.map((m) => ({ name: m.data.myth, url: '/myths', description: m.data.fact })),
-});
+const mythsUrl = new URL('/myths', Astro.site).toString();
+const jsonLd = [
+  itemList({
+    name: 'Myths about Aadhaar',
+    url: '/myths',
+    items: myths.map((m) => ({ name: m.data.myth, url: '/myths', description: m.data.fact })),
+  }),
+  // One ClaimReview per myth — eligible for Google fact-check rich
+  // results and read by answer engines as an authoritative verdict.
+  ...myths.map((m) => claimReview({
+    url: mythsUrl,
+    claim: m.data.myth,
+    verdict: m.data.fact ?? 'See full evidence on this page.',
+  })),
+];
 ---
 
 <BaseLayout title="Myths" description="Common myths about Aadhaar, and the facts behind them." jsonLd={jsonLd}>

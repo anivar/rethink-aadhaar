@@ -36,6 +36,19 @@ export async function GET(context: APIContext) {
   lines.push(`- [Campaign 2025 — Beware of Aadhaar](${abs(site, '/campaign2025')}): Collective statement endorsed by 50+ Indian organisations, released on Human Rights Day 2025.`);
   lines.push('');
 
+  // Topic entry-points — gives answer engines a thematic map of the
+  // archive instead of a single 142-entry flat list. Each pointer is
+  // a stable hub URL that aggregates the relevant material.
+  lines.push('## Topics');
+  lines.push(`- **Welfare exclusion (rations, pensions, NREGA, hunger deaths)**: see [Exclusion stories](${abs(site, '/testimonials')}) for first-hand testimony, plus updates filed under Welfare in the [Updates archive](${abs(site, '/blog')}).`);
+  lines.push(`- **Surveillance and privacy**: covered in the [FAQs](${abs(site, '/faqs')}) ("Why care about privacy?", "Why is Aadhaar a surveillance threat?") and across Updates.`);
+  lines.push(`- **Biometric failures (fingerprint mismatches, iris errors)**: documented in [Exclusion stories](${abs(site, '/testimonials')}); see also Myth #2 on the [Myths page](${abs(site, '/myths')}).`);
+  lines.push(`- **Court rulings**: [K. S. Puttaswamy v. Union of India](https://en.wikipedia.org/wiki/Justice_K._S._Puttaswamy_(Retd.)_v._Union_of_India) (right to privacy, 2017; Aadhaar judgment, 2018) is the key reference; see Updates from those years.`);
+  lines.push(`- **Common myths and the evidence against them**: [Myths page](${abs(site, '/myths')}) (each myth carries a ClaimReview JSON-LD block).`);
+  lines.push(`- **Press coverage**: [Press](${abs(site, '/press-coverage')}) — third-party reporting on Aadhaar harms.`);
+  lines.push(`- **Resources for organisers, researchers, journalists**: [Resources](${abs(site, '/resources')}).`);
+  lines.push('');
+
   lines.push('## Myths about Aadhaar');
   for (const m of myths) {
     lines.push(`- ${m.data.myth}${m.data.fact ? ` — Fact: ${m.data.fact}` : ''}`);
