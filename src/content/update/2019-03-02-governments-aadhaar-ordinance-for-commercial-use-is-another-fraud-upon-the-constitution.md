@@ -5,3 +5,5 @@ excerpt: "Late  in the evening of February 28, 2019, in the midst of a critical 
 sourceUrl: "https://rethinkaadhaar.in/blog/2019/3/2/governments-aadhaar-ordinance-for-commercial-use-is-another-fraud-upon-the-constitution"
 ---
 Late  in the evening of February 28, 2019, in the midst of a critical  situation at the Indian border, the Central Government issued the  Aadhaar and Other Laws (Amendment) Ordinance, 2019 ,  which seeks to revive the commercial use of the biometrics-linked  12-digit Aadhaar number which the Supreme
+
+<img src="/media/1632648668512-TTWPU4VNY2CRJHZZCDU5-common%2Bman-2.jpeg" alt="" loading="lazy" />

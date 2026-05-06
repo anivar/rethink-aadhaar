@@ -1,17 +1,23 @@
 ---
 // Canonical mark from rethinkaadhaar.in (CC BY 4.0 with attribution).
 // Source: public/brand/logo-mark.png — 1024px master.
+// Rendered via CSS mask so we can recolour: brand red on cream in light
+// mode, cream on dark in dark mode.
 import { link } from '~/lib/link';
 interface Props { class?: string }
 const { class: cls = '' } = Astro.props;
+const url = link('/brand/logo-mark.png');
 ---
-<img
-  src={link('/brand/logo-mark.png')}
-  alt=""
+<span
+  role="img"
   aria-hidden="true"
-  width="1024"
-  height="1024"
-  class={`block dark:invert ${cls}`}
-  loading="eager"
-  decoding="async"
-/>
+  class={`logo-mark block bg-accent dark:bg-cream ${cls}`}
+  style={`--logo-mask:url('${url}')`}
+></span>
+
+<style>
+  .logo-mark {
+    -webkit-mask: var(--logo-mask) center / contain no-repeat;
+            mask: var(--logo-mask) center / contain no-repeat;
+  }
+</style>

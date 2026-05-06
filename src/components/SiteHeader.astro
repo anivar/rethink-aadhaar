@@ -48,14 +48,14 @@ function isActive(href: string) {
       </ul>
     </nav>
 
-    <!-- CENTERED LOGO -->
+    <!-- CENTERED LOGO (mark only — wordmark lives in the H1 of the home page) -->
     <a
       href={link('/')}
-      class="justify-self-center flex items-center gap-3 group"
+      class="justify-self-center flex items-center group"
       aria-label="Rethink Aadhaar — home"
     >
       <LogoMark class="h-12 w-12 md:h-14 md:w-14 transition-transform group-hover:rotate-[-3deg]" />
-      <span class="sr-only md:not-sr-only caps text-sm md:text-base font-bold tracking-caps text-ink whitespace-nowrap">Rethink Aadhaar</span>
+      <span class="sr-only">Rethink Aadhaar</span>
     </a>
 
     <!-- RIGHT GROUP: nav (desktop) + theme toggle (always) + hamburger (mobile) -->

@@ -5,3 +5,5 @@ excerpt: "The following are links to, and text of discussion by members of parli
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/3/31/parliament-update-issues-raised-by-mps-on-aadhaar-in-parliament"
 ---
 The following are links to, and text of discussion by members of parliament in Lok Sabha and Rajya Sabha this week:   Bhupendra Yadav's private member resolution  to hold Lok Sabha and Assembly elections simultaneously to be taken up tomorrow in RS. He suggests linking of Aadhaar number with Electio
+
+<img src="/media/1493141054948-OEAO6HLFC192E8LPVYQI-image-asset.png" alt="" loading="lazy" />

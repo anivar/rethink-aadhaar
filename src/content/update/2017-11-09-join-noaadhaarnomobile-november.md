@@ -5,3 +5,5 @@ excerpt: "Switch off your mobiles at 11 am on 11/11    #NoMobile  #NoAaadhar Ear
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/11/9/join-noaadhaarnomobile-november"
 ---
 Switch off your mobiles at 11 am on 11/11    #NoMobile  #NoAaadhar Earlier this year, the government ordered us to link our mobile connections to our Aadhaar numbers or have our mobile connections cut off.  NO hesitation in jumping the gun even as the legal challenge to Aadhaar comes up for hearing
+
+<img src="/media/1510199784417-RW594J5JABPFEEAGFM27-constant-surveillance.jpg" alt="" loading="lazy" />

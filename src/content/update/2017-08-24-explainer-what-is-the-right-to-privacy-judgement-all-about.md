@@ -5,3 +5,5 @@ excerpt: "When is the judgement expected?  The Right to Privacy judgement is exp
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/8/24/explainer-what-is-the-right-to-privacy-judgement-all-about"
 ---
 When is the judgement expected?  The Right to Privacy judgement is expected today,  after a wait of over two years , or 744 days.  See timeline of orders .  How did we get here?  In 2015, Attorney General Mukul Rohatgi while defending the Aadhaar project that seeks to assign every resident a biometr
+
+<img src="/media/1503551262487-JVZN2HGEAG3WPVZVMSNL-UID_IdealBoy_HighRes_Final.jpg" alt="" loading="lazy" />

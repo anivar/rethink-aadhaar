@@ -5,3 +5,5 @@ excerpt: "During a heated short duration discussion on the Aadhaar project in th
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/4/10/in-the-rajya-sabha-today-what-sterilisation-was-to-the-emergency-aadhaar-seeding-is-becoming-to-your-government"
 ---
 During a heated short duration discussion on the Aadhaar project in the Rajya Sabha on Monday, MPs attacked the notifications making Aadhaar mandatory for essential services. Opposition MPs raised the issue of the violation of the Supreme Court’s orders and exclusions due to Aadhaar in many welfare
+
+<img src="/media/1493141054948-OEAO6HLFC192E8LPVYQI-image-asset.png" alt="" loading="lazy" />

@@ -5,3 +5,5 @@ excerpt: "The National Democratic Alliance has stated that the decision to withd
 sourceUrl: "https://rethinkaadhaar.in/blog/2017/3/1/citizens-aadhaar-data-and-digital-trails-to-be-used-to-go-cashless-but-for-whose-benefit-at-what-costs-to-citizens"
 ---
 The National Democratic Alliance has stated that the decision to withdraw Rs 500 and Rs 1,000 currency notes is aimed to make India a “cashless economy”.   Aadhaar, is being presented as a crucial tool in the hands of the government and financial institutions to enforce a transition to digi
+
+<img src="/media/1493141054948-OEAO6HLFC192E8LPVYQI-image-asset.png" alt="" loading="lazy" />

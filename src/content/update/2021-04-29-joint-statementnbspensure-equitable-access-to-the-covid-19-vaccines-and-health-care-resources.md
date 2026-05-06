@@ -5,3 +5,5 @@ excerpt: "COVID-19 has wreaked havoc on India, as the second wave of the pandemi
 sourceUrl: "https://rethinkaadhaar.in/blog/2021/4/29/joint-statementnbspensure-equitable-access-to-the-covid-19-vaccines-and-health-care-resources"
 ---
 COVID-19 has wreaked havoc on India, as the second wave of the pandemic continues to ravage India's health infrastructure. In such desperate times, ensuring equitable, fast and easy access to healthcare, medicines and the vaccines is fundamental. Rethink Aadhaar joins the   Internet Freedom Foundati
+
+<img src="/media/1619691970196-U0RBSNSU3P2KGBWAT7TL-Joint-statement---Vaccine-access-for-all.png" alt="" loading="lazy" />

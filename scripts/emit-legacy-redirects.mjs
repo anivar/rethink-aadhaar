@@ -39,6 +39,24 @@ function parseFrontMatter(src) {
   return fm;
 }
 
+// Expand a legacy path into every URL shape Squarespace might have served:
+// zero-padded vs unpadded month/day, with and without a trailing dash.
+function expandLegacyVariants(oldPath) {
+  // Match `/blog/YYYY/M/D/slug` or `/testimonials/YYYY/M/D/slug`
+  const m = oldPath.match(/^(\/(?:blog|testimonials))\/(\d{4})\/(\d{1,2})\/(\d{1,2})(\/.*)?$/);
+  if (!m) return [oldPath];
+  const [, prefix, y, mo, d, rest = ''] = m;
+  const months = new Set([mo, mo.padStart(2, '0')]);
+  const days   = new Set([d,  d.padStart(2, '0')]);
+  const out = new Set();
+  for (const mm of months) for (const dd of days) {
+    const base = `${prefix}/${y}/${mm}/${dd}${rest}`;
+    out.add(base);
+    if (!base.endsWith('-')) out.add(base + '-');
+  }
+  return [...out];
+}
+
 function legacyPathFromSourceUrl(sourceUrl) {
   try {
     const u = new URL(sourceUrl);
@@ -110,18 +128,21 @@ async function main() {
       if (!oldPath) { missing++; continue; }
 
       const newPath = newPathForEntry(name, newPrefix);
-      const stubDir = join(DIST, oldPath.replace(/^\//, ''));
-      const stubFile = join(stubDir, 'index.html');
 
-      if (existsSync(stubFile)) {
-        // Don't clobber a real built page (would be a routing collision).
-        collisions++;
-        continue;
+      // Squarespace served each post at multiple URL shapes. Emit a stub for
+      // every plausible variant so old inbound links survive the cutover:
+      //   • zero-padded vs unpadded month/day (e.g. /2017/11/3 and /2017/11/03)
+      //   • optional trailing dash (Squarespace's "duplicate slug" form)
+      const variants = expandLegacyVariants(oldPath);
+
+      for (const variant of variants) {
+        const stubDir = join(DIST, variant.replace(/^\//, ''));
+        const stubFile = join(stubDir, 'index.html');
+        if (existsSync(stubFile)) { collisions++; continue; }
+        await mkdir(stubDir, { recursive: true });
+        await writeFile(stubFile, stubHtml(newPath, fm.title ?? 'Rethink Aadhaar'));
+        written++;
       }
-
-      await mkdir(stubDir, { recursive: true });
-      await writeFile(stubFile, stubHtml(newPath, fm.title ?? 'Rethink Aadhaar'));
-      written++;
     }
   }
 
