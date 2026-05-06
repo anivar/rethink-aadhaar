@@ -5,14 +5,117 @@ import HeroTitle from '~/components/HeroTitle.astro';
 import { breadcrumb } from '~/lib/seo';
 
 const page = await getEntry('page', 'about');
+const data = page!.data;
 const { Content } = await render(page!);
 const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]);
+
+const contact = data.contact ?? {};
 ---
 
-<BaseLayout title="About" description="A non-partisan campaign concerned about India's Unique Identification (UID) or Aadhaar project." jsonLd={jsonLd}>
+<BaseLayout
+  title="About"
+  description="A non-partisan campaign concerned about India's Unique Identification (UID) or Aadhaar project."
+  jsonLd={jsonLd}
+>
   <HeroTitle eyebrow="A non-partisan campaign">About</HeroTitle>
 
-  <article class="container-prose mt-10 mb-24 prose dark:prose-invert font-body text-pretty fade-up">
-    <Content />
-  </article>
+  {/* Lead — intro line under the hero, centred. */}
+  {data.intro && (
+    <p class="container-prose mt-8 md:mt-10 text-center text-lg md:text-xl text-ink/85 max-w-[60ch] mx-auto fade-up">
+      {data.intro}
+    </p>
+  )}
+
+  {/* Tagline + hashtag strip — sits on a subtle band. */}
+  {(data.tagline || data.hashtags?.length) && (
+    <section class="mt-14 md:mt-20 surface-paper py-12 md:py-16 fade-up delay-1">
+      <div class="container-prose text-center">
+        {data.tagline && (
+          <p class="font-body italic text-lg md:text-xl text-ink/90 max-w-[55ch] mx-auto leading-relaxed">
+            {data.tagline}
+          </p>
+        )}
+        {data.hashtags?.length && (
+          <div class="mt-7 flex flex-wrap justify-center gap-2">
+            {data.hashtags.map((tag) => (
+              <span class="caps text-xs px-3 py-1.5 border border-accent/40 text-accent">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  {/* Friends */}
+  {data.friends?.length && (
+    <section class="container-prose mt-20 md:mt-28 fade-up">
+      <header class="flex items-baseline gap-3 mb-8">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold tracking-tight">Friends of Rethink Aadhaar</h2>
+        <span class="caps text-xs text-ink/50">{data.friends.length}</span>
+      </header>
+      <ul class="grid sm:grid-cols-2 gap-x-8 list-none p-0 border-t border-ink/10">
+        {data.friends.map((name) => (
+          <li class="font-body text-[1.05rem] md:text-base text-ink/90 leading-snug py-2.5 border-b border-ink/10 flex items-center gap-3">
+            <span class="block w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true"></span>
+            <span class="font-medium">{name}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {/* Interns */}
+  {data.interns?.length && (
+    <section class="container-prose mt-16 md:mt-20 fade-up">
+      <header class="flex items-baseline gap-3 mb-8">
+        <h2 class="text-2xl md:text-3xl font-display font-extrabold tracking-tight">Interns</h2>
+        <span class="caps text-xs text-ink/50">{data.interns.length}</span>
+      </header>
+      <ul class="grid sm:grid-cols-2 gap-x-8 list-none p-0 border-t border-ink/10">
+        {data.interns.map((name) => (
+          <li class="font-body text-[1.05rem] md:text-base text-ink/90 leading-snug py-2.5 border-b border-ink/10 flex items-center gap-3">
+            <span class="block w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden="true"></span>
+            <span class="font-medium">{name}</span>
+          </li>
+        ))}
+      </ul>
+      {data.internsNote && (
+        <p class="mt-5 font-body italic text-ink/70 text-base">{data.internsNote}</p>
+      )}
+    </section>
+  )}
+
+  {/* Code of Conduct — rendered from the markdown body, in a callout. */}
+  <section class="container-prose mt-20 md:mt-28 fade-up">
+    <div class="surface-paper p-7 md:p-10 border-l-4 border-accent">
+      <article class="prose dark:prose-invert font-body text-pretty max-w-none">
+        <Content />
+      </article>
+    </div>
+  </section>
+
+  {/* Get in touch — 3-card grid (mailing list signup lives in the footer) */}
+  <section class="container-prose mt-20 md:mt-28 mb-24 fade-up">
+    <h2 class="text-2xl md:text-3xl font-display font-extrabold tracking-tight mb-8">Get in touch</h2>
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">
+      {contact.email && (
+        <li class="card-surface p-5 hover:border-accent transition-colors">
+          <p class="caps text-xs text-ink/55 mb-2">Email</p>
+          <a href={`mailto:${contact.email}`} class="font-body text-base hover:text-accent break-all">{contact.email}</a>
+        </li>
+      )}
+      {contact.twitter && (
+        <li class="card-surface p-5 hover:border-accent transition-colors">
+          <p class="caps text-xs text-ink/55 mb-2">Twitter / X</p>
+          <a href={`https://twitter.com/${contact.twitter}`} class="font-body text-base hover:text-accent">@{contact.twitter}</a>
+        </li>
+      )}
+      {contact.facebook && (
+        <li class="card-surface p-5 hover:border-accent transition-colors">
+          <p class="caps text-xs text-ink/55 mb-2">Facebook</p>
+          <a href={`https://www.facebook.com/${contact.facebook}/`} class="font-body text-base hover:text-accent">/{contact.facebook}</a>
+        </li>
+      )}
+    </ul>
+  </section>
 </BaseLayout>

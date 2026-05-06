@@ -80,6 +80,18 @@ const page = defineCollection({
   schema: z.object({
     title: z.string(),
     intro: z.string().optional(),
+    /** Optional structured fields rendered by the about template. */
+    tagline: z.string().optional(),
+    hashtags: z.array(z.string()).optional(),
+    friends: z.array(z.string()).optional(),
+    interns: z.array(z.string()).optional(),
+    internsNote: z.string().optional(),
+    contact: z.object({
+      email: z.string().optional(),
+      twitter: z.string().optional(),
+      facebook: z.string().optional(),
+      mailingList: z.string().optional(),
+    }).optional(),
   }),
 });
 

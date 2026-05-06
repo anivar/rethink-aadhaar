@@ -20,7 +20,7 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
 ---
 
 <footer class="mt-24 border-t border-ink/10 bg-bg">
-  <div class="container-wide py-12 md:py-16 grid gap-10 md:grid-cols-[2fr_1fr_1fr] items-start">
+  <div class="container-wide py-12 md:py-16 grid gap-10 md:grid-cols-[2fr_1fr_1fr_1.2fr] items-start">
     <div>
       <div class="flex items-center gap-3">
         <LogoMark class="h-10 w-10" />
@@ -41,6 +41,8 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
           <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor" aria-hidden="true"><path d="M3.75 3a.75.75 0 0 0-.75.75v1.5c0 .414.336.75.75.75 8.25 0 15 6.75 15 15 0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75C21.75 12 12.75 3 3.75 3Zm0 6a.75.75 0 0 0-.75.75v1.5c0 .414.336.75.75.75A8.25 8.25 0 0 1 12 20.25c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75A11.25 11.25 0 0 0 3.75 9ZM6 16.5A1.5 1.5 0 1 0 6 19.5a1.5 1.5 0 0 0 0-3Z"/></svg>
           RSS
         </a></li>
+        <li><a class="hover:text-accent" href={link('/sitemap-index.xml')}>Sitemap</a></li>
+        <li><a class="hover:text-accent" href={link('/llms.txt')}>llms.txt</a></li>
       </ul>
     </nav>
 
@@ -67,6 +69,32 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
         </li>
       </ul>
     </div>
+
+    <div>
+      <p class="caps text-xs text-ink/60 mb-3">Mailing list</p>
+      <p class="font-body text-sm text-ink/75 mb-3 leading-relaxed">
+        Low-traffic updates. Hosted on Riseup; you'll get a confirmation email.
+      </p>
+      <form
+        action="https://lists.riseup.net/www/subscribe/rethink-aadhaar"
+        method="post"
+        class="flex flex-col gap-2"
+      >
+        <label class="sr-only" for="footer-subscribe-email">Email address</label>
+        <input
+          id="footer-subscribe-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="you@example.org"
+          class="font-body text-sm px-3 py-2.5 bg-surface border border-ink/25 focus:border-accent outline-none w-full"
+        />
+        <button type="submit" class="caps text-xs px-4 py-2.5 bg-button text-white border-l-4 border-accent hover:bg-accent transition-colors">
+          Subscribe
+        </button>
+      </form>
+    </div>
   </div>
 
   <!-- Canonical-style starburst band — black with white rays sweeping -180° to 0°. -->
@@ -79,7 +107,7 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
       <circle cx={cx} cy={cy} r="14" fill="#0E0E0E"/>
     </svg>
     <p class="absolute inset-x-0 bottom-3 text-center text-xs text-white/80 caps">
-      © {year} Rethink Aadhaar · CC BY 4.0 · Built with Astro · Hosted on GitHub Pages
+      © {year} Rethink Aadhaar · CC BY 4.0 · Built with Astro by <a href="https://anivar.net" rel="author noopener" class="underline hover:text-white">anivar</a> · Hosted on GitHub Pages
     </p>
   </div>
 </footer>
