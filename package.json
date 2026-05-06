@@ -3,6 +3,8 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
+  "author": "Anivar Aravind",
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

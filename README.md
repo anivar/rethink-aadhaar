@@ -1,6 +1,6 @@
 # Rethink Aadhaar — Astro rebuild
 
-A static, accessibility-first rebuild of [rethinkaadhaar.in](https://rethinkaadhaar.in) on Astro 5 with Tailwind, MDX content collections, view transitions and dark mode. Content is mirrored from the original site under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) with attribution.
+The official redesign of [rethinkaadhaar.in](https://rethinkaadhaar.in) — a static, accessibility-first build on Astro 5 with Tailwind, MDX content collections, view transitions and dark mode. Content is published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) by Rethink Aadhaar.
 
 > **Live preview:** https://anivar.github.io/rethink-aadhaar/ (GH Pages, auto-deployed from `main`)
 
@@ -184,6 +184,6 @@ For a custom domain (e.g. `rethinkaadhaar.in`), no env vars needed — `astro.co
 
 ## License
 
-- **Code:** MIT
-- **Content** (text in `src/content/`): mirrored under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) from the original Rethink Aadhaar site, with attribution preserved on each migrated entry via a `sourceUrl` field linking back to the original publication.
+- **Code:** MIT — see [`LICENSE`](./LICENSE). Copyright © 2025-2026 Anivar Aravind.
+- **Content** (text in `src/content/`): published by [Rethink Aadhaar](https://rethinkaadhaar.in) under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 - **Press coverage entries** index third-party reporting and link out to the original publishers; only title, outlet, date and URL are reproduced.
