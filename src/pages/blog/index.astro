@@ -2,16 +2,33 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
-import PostCard from '~/components/PostCard.astro';
 import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
 import { itemList } from '~/lib/seo';
 import { link } from '~/lib/link';
+import { formatDate } from '~/lib/format';
 
 const posts = (await getCollection('update'))
   .filter(notDraft)
   .sort(byDateDesc);
 
 const description = "Press releases, statements, news commentary and analysis from the Rethink Aadhaar campaign.";
+
+// Pull the first inline image out of the body when there's no hero set.
+function firstImage(body: string | undefined): string | undefined {
+  if (!body) return undefined;
+  const m = body.match(/<img\s+[^>]*src="([^"]+)"/i);
+  return m ? m[1] : undefined;
+}
+
+// Group descending by year so the page reads as a timeline.
+const grouped = new Map<number, typeof posts>();
+for (const p of posts) {
+  const y = p.data.date.getFullYear();
+  if (!grouped.has(y)) grouped.set(y, []);
+  grouped.get(y)!.push(p);
+}
+const years = [...grouped.keys()].sort((a, b) => b - a);
+const firstYear = years[years.length - 1];
 
 const jsonLd = itemList({
   name: 'Updates',
@@ -28,18 +45,56 @@ const jsonLd = itemList({
   <HeroTitle eyebrow="Statements, press releases, analysis">Updates</HeroTitle>
 
   <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
-    {posts.length} posts from the campaign archive — newest first. <a class="text-accent underline" href={link('/rss.xml')}>Subscribe via RSS</a>.
+    Press releases, statements, news commentary and analysis from the campaign archive — newest first. <a class="text-accent underline" href={link('/rss.xml')}>Subscribe via RSS</a>.
   </p>
 
-  <section class="container-prose mt-12 mb-24 grid sm:grid-cols-2 gap-6">
-    {posts.map((p) => (
-      <PostCard
-        href={entryHref('update', p)}
-        title={p.data.title}
-        date={p.data.date}
-        excerpt={p.data.excerpt}
-        hero={p.data.hero}
-      />
-    ))}
-  </section>
+  <p class="container-prose mt-8 caps text-xs text-ink/55 tracking-[0.18em] fade-up delay-1">
+    Posted from {firstYear} · ongoing
+  </p>
+
+  {years.map((year) => (
+    <section class="container-prose mt-16 md:mt-20 fade-up">
+      <header class="mb-6 sticky top-0 bg-bg/95 backdrop-blur py-3 -mx-6 px-6 z-10">
+        <h2 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">{year}</h2>
+      </header>
+
+      <ul class="list-none p-0 space-y-6">
+        {grouped.get(year)!.map((p) => {
+          const img = p.data.hero ?? firstImage(p.body);
+          const detail = entryHref('update', p);
+          return (
+            <li class="card-surface overflow-hidden transition-colors hover:border-accent/60">
+              <article class="grid sm:grid-cols-[160px_1fr] gap-0 sm:gap-6">
+                {img && (
+                  <a href={detail} class="block aspect-[4/3] sm:aspect-square overflow-hidden bg-ink/5">
+                    <img
+                      src={link(img)}
+                      alt=""
+                      loading="lazy"
+                      class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </a>
+                )}
+                <div class={`p-5 md:p-6 ${img ? '' : 'sm:col-span-2'}`}>
+                  <p class="caps text-xs text-ink/55 mb-2">
+                    {formatDate(p.data.date, 'medium')}
+                  </p>
+                  <h3 class="font-display text-lg md:text-xl font-extrabold tracking-tight leading-snug text-balance">
+                    <a href={detail} class="hover:text-accent transition-colors">{p.data.title}</a>
+                  </h3>
+                  {p.data.excerpt && (
+                    <p class="mt-3 font-body text-base text-ink/85 leading-relaxed text-pretty">
+                      {p.data.excerpt}
+                    </p>
+                  )}
+                </div>
+              </article>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+
+  <div class="mb-24"></div>
 </BaseLayout>

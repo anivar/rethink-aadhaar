@@ -35,7 +35,7 @@ const jsonLd = [
 
   <section class="container-prose mt-12 mb-24">
     {rendered.map((m, i) => (
-      <MythCard myth={m.data.myth} fact={m.data.fact} index={i + 1} total={rendered.length}>
+      <MythCard myth={m.data.myth} fact={m.data.fact} index={i + 1}>
         <m.Content />
       </MythCard>
     ))}

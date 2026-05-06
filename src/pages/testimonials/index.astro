@@ -26,7 +26,7 @@ for (const s of stories) {
   grouped.get(y)!.push(s);
 }
 const years = [...grouped.keys()].sort((a, b) => b - a);
-const span = `${years[years.length - 1]}–${years[0]}`;
+const firstYear = years[years.length - 1];
 
 const jsonLd = itemList({
   name: 'Exclusion stories',
@@ -46,19 +46,15 @@ const jsonLd = itemList({
     Aadhaar promised inclusion. The lived reality has been exclusion — from rations and pensions, from school admissions and bank accounts, from medical treatment and voting rolls. These are some of the documented cases.
   </p>
 
-  {/* Counter strip */}
-  <div class="container-prose mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-2 fade-up delay-1">
-    <span class="font-display text-4xl md:text-5xl font-extrabold tracking-tight text-accent">{stories.length}</span>
-    <span class="caps text-xs text-ink/60">documented exclusions</span>
-    <span class="caps text-xs text-ink/40">·</span>
-    <span class="caps text-xs text-ink/60">{span}</span>
-  </div>
+  {/* Timeline framing — ongoing campaign archive, no static counts. */}
+  <p class="container-prose mt-8 caps text-xs text-ink/55 tracking-[0.18em] fade-up delay-1">
+    Documented from {firstYear} · ongoing
+  </p>
 
   {years.map((year) => (
     <section class="container-prose mt-16 md:mt-20 fade-up">
-      <header class="flex items-baseline gap-3 mb-6 sticky top-0 bg-bg/95 backdrop-blur py-3 -mx-6 px-6 z-10">
+      <header class="mb-6 sticky top-0 bg-bg/95 backdrop-blur py-3 -mx-6 px-6 z-10">
         <h2 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">{year}</h2>
-        <span class="caps text-xs text-ink/50">{grouped.get(year)!.length} {grouped.get(year)!.length === 1 ? 'story' : 'stories'}</span>
       </header>
 
       <ul class="list-none p-0 space-y-6">
@@ -88,18 +84,6 @@ const jsonLd = itemList({
                   {s.data.summary && (
                     <p class="mt-3 font-body text-base text-ink/85 leading-relaxed text-pretty">
                       {s.data.summary}
-                    </p>
-                  )}
-                  {s.data.sourceUrl && (
-                    <p class="mt-4">
-                      <a
-                        href={s.data.sourceUrl}
-                        target="_blank"
-                        rel="noopener"
-                        class="caps text-xs text-accent hover:underline inline-flex items-center gap-1.5"
-                      >
-                        Read at rethinkaadhaar.in <span aria-hidden="true">↗</span>
-                      </a>
                     </p>
                   )}
                 </div>

@@ -54,14 +54,6 @@ const jsonLd = [
     <Content />
   </article>
 
-  {entry.data.sourceUrl && (
-    <aside class="container-prose mt-10">
-      <a href={entry.data.sourceUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 caps text-xs text-accent border border-accent/40 px-4 py-3 hover:bg-accent hover:text-white transition-colors">
-        Read the original at rethinkaadhaar.in <span aria-hidden="true">↗</span>
-      </a>
-    </aside>
-  )}
-
   <div class="container-prose">
     <ShareRow title={entry.data.title} />
     <p class="mt-12 mb-12"><a class="caps text-xs text-accent" href={link('/blog')}>← Back to Updates</a></p>

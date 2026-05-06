@@ -1,12 +1,11 @@
 ---
-interface Props { myth: string; fact?: string; index: number; total: number; }
-const { myth, fact, index, total } = Astro.props;
+interface Props { myth: string; fact?: string; index: number; }
+const { myth, fact, index } = Astro.props;
 const nn = String(index).padStart(2, '0');
 ---
 <article class="border-t-2 border-ink py-10 md:py-14 grid md:grid-cols-[5rem_1fr] gap-6 md:gap-10">
   <div class="md:pt-1">
     <p class="font-display font-black text-5xl md:text-6xl leading-none text-accent">{nn}</p>
-    <p class="caps text-[0.65rem] text-ink/60 mt-1">/ {String(total).padStart(2, '0')}</p>
   </div>
   <div>
     <p class="caps text-accent text-sm mb-3">Myth</p>

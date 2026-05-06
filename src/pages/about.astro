@@ -49,9 +49,8 @@ const contact = data.contact ?? {};
   {/* Friends */}
   {data.friends?.length && (
     <section class="container-prose mt-20 md:mt-28 fade-up">
-      <header class="flex items-baseline gap-3 mb-8">
+      <header class="mb-8">
         <h2 class="text-2xl md:text-3xl font-display font-extrabold tracking-tight">Friends of Rethink Aadhaar</h2>
-        <span class="caps text-xs text-ink/50">{data.friends.length}</span>
       </header>
       <ul class="grid sm:grid-cols-2 gap-x-8 list-none p-0 border-t border-ink/10">
         {data.friends.map((name) => (
@@ -67,9 +66,8 @@ const contact = data.contact ?? {};
   {/* Interns */}
   {data.interns?.length && (
     <section class="container-prose mt-16 md:mt-20 fade-up">
-      <header class="flex items-baseline gap-3 mb-8">
+      <header class="mb-8">
         <h2 class="text-2xl md:text-3xl font-display font-extrabold tracking-tight">Interns</h2>
-        <span class="caps text-xs text-ink/50">{data.interns.length}</span>
       </header>
       <ul class="grid sm:grid-cols-2 gap-x-8 list-none p-0 border-t border-ink/10">
         {data.interns.map((name) => (
