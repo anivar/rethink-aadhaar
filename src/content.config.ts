@@ -1,7 +1,10 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const md = (base: string) => glob({ pattern: '**/*.{md,mdx}', base: `./src/content/${base}` });
 
 const myth = defineCollection({
-  type: 'content',
+  loader: md('myth'),
   schema: z.object({
     myth: z.string(),
     fact: z.string().optional(),
@@ -10,7 +13,7 @@ const myth = defineCollection({
 });
 
 const update = defineCollection({
-  type: 'content',
+  loader: md('update'),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -22,7 +25,7 @@ const update = defineCollection({
 });
 
 const exclusion = defineCollection({
-  type: 'content',
+  loader: md('exclusion'),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -34,7 +37,7 @@ const exclusion = defineCollection({
 });
 
 const faq = defineCollection({
-  type: 'content',
+  loader: md('faq'),
   schema: z.object({
     question: z.string(),
     short: z.string().optional(),
@@ -52,7 +55,7 @@ const RESOURCE_SECTIONS = [
 ] as const;
 
 const resource = defineCollection({
-  type: 'content',
+  loader: md('resource'),
   schema: z.object({
     title: z.string(),
     section: z.enum(RESOURCE_SECTIONS),
@@ -63,7 +66,7 @@ const resource = defineCollection({
 });
 
 const press = defineCollection({
-  type: 'content',
+  loader: md('press'),
   schema: z.object({
     title: z.string(),
     publication: z.string(),
@@ -73,7 +76,7 @@ const press = defineCollection({
 });
 
 const page = defineCollection({
-  type: 'content',
+  loader: md('page'),
   schema: z.object({
     title: z.string(),
     intro: z.string().optional(),

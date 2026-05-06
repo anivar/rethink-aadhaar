@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import rehypeBaseHref from './src/lib/rehype-base-href.mjs';
@@ -17,7 +17,6 @@ export default defineConfig({
     rehypePlugins: [[rehypeBaseHref, { base: BASE }]],
   },
   integrations: [
-    tailwind({ applyBaseStyles: false }),
     mdx(),
     sitemap({
       changefreq: 'weekly',
@@ -33,5 +32,8 @@ export default defineConfig({
     }),
   ],
   build: { format: 'directory' },
-  vite: { ssr: { noExternal: ['@fontsource/*'] } },
+  vite: {
+    plugins: [tailwindcss()],
+    ssr: { noExternal: ['@fontsource/*'] },
+  },
 });

@@ -6,9 +6,63 @@
 @import "@fontsource/roboto/500.css";
 @import "@fontsource/roboto/700.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Class-based dark mode (matches the in-page bootstrap script). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme tokens — colours/fonts/tracking. v3 `theme.extend` → v4 @theme. */
+@theme {
+  --color-bg:      rgb(var(--bg)      / <alpha-value>);
+  --color-ink:     rgb(var(--ink)     / <alpha-value>);
+  --color-rule:    rgb(var(--rule)    / <alpha-value>);
+  --color-surface: rgb(var(--surface) / <alpha-value>);
+  --color-muted:   rgb(var(--muted)   / <alpha-value>);
+  --color-primary: #D7282F;
+  --color-accent:  #D7282F;
+  --color-button:  #111111;
+  --color-myth:    #F5B81D;
+  --color-cream:   #F7F2E8;
+
+  --font-display: "Archivo Black", Roboto, system-ui, sans-serif;
+  --font-body:    "Source Serif 4", Georgia, serif;
+  --font-sans:    Roboto, system-ui, sans-serif;
+
+  --tracking-caps:  0.08em;
+  --tracking-tight: -0.02em;
+
+  --max-width-content: 54rem;
+}
+
+/* Prose tuning — v4 typography plugin reads --tw-prose-* CSS vars; we
+   override them on .prose / .prose-invert directly instead of via the v3
+   plugin options object (which v4 dropped). */
+.prose {
+  --tw-prose-body:     rgb(var(--ink));
+  --tw-prose-headings: rgb(var(--ink));
+  --tw-prose-links:    #D7282F;
+  --tw-prose-bold:     rgb(var(--ink));
+  --tw-prose-quotes:   rgb(var(--ink));
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  max-width: none;
+}
+.prose :is(h1, h2, h3, h4) {
+  font-family: "Archivo Black", Roboto, system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+.prose a            { text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover      { color: #A41C28; }
+.prose blockquote   { font-style: italic; border-left-color: #D7282F; }
+.prose-invert {
+  --tw-prose-body:     #EAEAEA;
+  --tw-prose-headings: #EAEAEA;
+  --tw-prose-links:    #FF5A66;
+  --tw-prose-bold:     #EAEAEA;
+  --tw-prose-quotes:   #EAEAEA;
+}
 
 @layer base {
   /* Light (cream paper) is the default. */
@@ -45,12 +99,22 @@
   h1, h2, h3, h4, h5, .display {
     font-family: "Archivo Black", Roboto, system-ui, sans-serif;
   }
-  .caps {
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-family: Roboto, system-ui, sans-serif;
-    font-weight: 700;
-  }
+}
+
+/* `caps` is used both as a standalone class in markup AND inside
+   component @apply blocks below — v4 requires @utility for that. */
+@utility caps {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: Roboto, system-ui, sans-serif;
+  font-weight: 700;
+}
+
+@utility btn {
+  @apply caps text-base md:text-lg px-8 md:px-10 py-4 md:py-5 inline-flex items-center justify-center gap-2 transition-all duration-200;
+}
+
+@layer base {
 
   /* Hero — centred, massive, anchored by a 4px primary rule above. */
   .hero-title {
@@ -95,10 +159,6 @@
     background: #D7282F;
   }
 
-  /* Buttons — three variants. */
-  .btn {
-    @apply caps text-base md:text-lg px-8 md:px-10 py-4 md:py-5 inline-flex items-center justify-center gap-2 transition-all duration-200;
-  }
   .btn-dark {
     @apply btn bg-button text-white;
     border-left: 4px solid #D7282F;
