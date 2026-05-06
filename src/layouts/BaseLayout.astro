@@ -57,12 +57,12 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
     {preloadImage && (
       <link rel="preload" as="image" href={link(preloadImage)} fetchpriority="high" />
     )}
-    <link rel="canonical" href={canonical} />
     <link rel="alternate" type="application/rss+xml" title="Rethink Aadhaar — Updates" href={link('/rss.xml')} />
     <link rel="alternate" type="text/plain" title="LLM-readable index" href={link('/llms.txt')} />
     <SEO
       title={fullTitle}
       description={description}
+      canonical={canonical}
       openGraph={{
         basic: { title: fullTitle, type: article ? 'article' : 'website', image: ogImageAbs },
         optional: { siteName: 'Rethink Aadhaar', description },
