@@ -76,17 +76,22 @@ const jsonLd = breadcrumb([
   }
   .actions-list h3 {
     counter-increment: action;
-    display: flex;
+    /* Grid (not flex) — flex items keep `min-width: auto` and refuse to wrap
+       long heading text on narrow viewports, leaving the title to overflow
+       past the screen edge. The `auto 1fr` track lets the title column
+       collapse to the remaining width and wrap normally. */
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
     align-items: baseline;
-    gap: 0.85rem;
+    gap: 1rem;
     font-family: "Inter", system-ui, sans-serif;
     font-weight: 800;
-    font-size: 1.25rem;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
+    font-size: 1.55rem;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
     border-top: 1px solid rgb(var(--ink) / 0.18);
-    padding-top: 1.75rem;
-    margin: 2.25rem 0 0.75rem !important;
+    padding-top: 2rem;
+    margin: 2.75rem 0 1rem !important;
   }
   .actions-list h3:first-of-type {
     border-top-width: 2px;
@@ -97,28 +102,44 @@ const jsonLd = breadcrumb([
     content: counter(action, decimal-leading-zero);
     color: #D7282F;
     font-weight: 800;
-    font-size: 1.4rem;
-    flex-shrink: 0;
-    width: 2.25rem;
-    letter-spacing: -0.02em;
+    font-size: 2rem;
+    line-height: 1;
+    width: 2.75rem;
+    letter-spacing: -0.04em;
+    align-self: start;
   }
-  /* CTA-style "→" links inside each action paragraph. */
+  /* Bump body paragraph readability inside each action — current default is
+     fine for the hero but the dense action prose needs more line-height. */
+  .actions-list h3 ~ p {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  /* CTA-style "→" links inside each action paragraph. Pill-button look so
+     each section terminates in a clear call-to-action rather than another
+     line of body text. */
   .actions-list h3 ~ p > a:first-child:last-child,
   .actions-list h3 + p > a {
+    display: inline-block;
+    font-family: "Inter", system-ui, sans-serif;
     font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
     color: #D7282F;
     text-decoration: underline;
-    text-underline-offset: 4px;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+    padding: 0.35rem 0;
   }
   .actions-list h3 ~ p > a:hover { color: #A41C28; }
 
   @media (min-width: 768px) {
     .actions-list h3 {
-      font-size: 1.55rem;
-      padding-top: 2.25rem;
-      margin-top: 2.75rem !important;
-      gap: 1.25rem;
+      font-size: 2rem;
+      padding-top: 2.5rem;
+      margin-top: 3.25rem !important;
+      gap: 1.4rem;
     }
-    .actions-list h3::before { font-size: 1.8rem; width: 3rem; }
+    .actions-list h3::before { font-size: 2.75rem; width: 4rem; }
+    .actions-list h3 ~ p { font-size: 1.125rem; }
   }
 </style>
