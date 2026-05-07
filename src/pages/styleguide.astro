@@ -9,21 +9,21 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 
 const tokens = [
-  { name: '--color-bg',      desc: 'Page background (cream / near-black)' },
-  { name: '--color-ink',     desc: 'Primary text + buttons' },
-  { name: '--color-rule',    desc: 'Hairlines, dividers' },
+  { name: '--color-bg', desc: 'Page background (cream / near-black)' },
+  { name: '--color-ink', desc: 'Primary text + buttons' },
+  { name: '--color-rule', desc: 'Hairlines, dividers' },
   { name: '--color-surface', desc: 'Cards, panels' },
-  { name: '--color-muted',   desc: 'Secondary text (AA on bg)' },
-  { name: '--color-accent',  desc: 'Brand red — links, eyebrows, focus' },
+  { name: '--color-muted', desc: 'Secondary text (AA on bg)' },
+  { name: '--color-accent', desc: 'Brand red — links, eyebrows, focus' },
 ];
 
 const typeScale = [
   { token: '--text-display', use: '`hero-display` utility — homepage lockup only' },
-  { token: '--text-h1',      use: 'Page titles via `<h1>` or `HeroTitle variant="page"`' },
-  { token: '--text-h2',      use: 'Section headings' },
-  { token: '--text-h3',      use: 'Subsection / card titles' },
-  { token: '--text-body',    use: 'Default body copy' },
-  { token: '--text-small',   use: 'Captions, footnotes' },
+  { token: '--text-h1', use: 'Page titles via `<h1>` or `HeroTitle variant="page"`' },
+  { token: '--text-h2', use: 'Section headings' },
+  { token: '--text-h3', use: 'Subsection / card titles' },
+  { token: '--text-body', use: 'Default body copy' },
+  { token: '--text-small', use: 'Captions, footnotes' },
   { token: '--text-eyebrow', use: '`eyebrow` utility — labels above titles' },
 ];
 ---
