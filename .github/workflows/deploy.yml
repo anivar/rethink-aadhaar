@@ -45,6 +45,8 @@ jobs:
           SITE_URL:  ${{ steps.base.outputs.origin }}
           BASE_PATH: ${{ steps.base.outputs.base_path }}
         run: npm run build
+      - name: SEO check (post-build)
+        run: node scripts/check-seo.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

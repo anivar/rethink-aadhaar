@@ -1,8 +1,10 @@
 name: seo-check
 
+# Pre-merge SEO gate. Runs only on PRs — pushes to main are covered by
+# `deploy.yml`, which runs the same check post-build on the deploy artefact
+# (no point building twice).
+
 on:
-  push:
-    branches: [main]
   pull_request:
 
 jobs:
