@@ -58,25 +58,21 @@ const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'Take action', ur
 </BaseLayout>
 
 <style is:global>
-  /* Numbered action cards. The markdown body has a series of `### Heading`
-     blocks; we count them via CSS counters and render each as a card with a
-     large red badge. Authors edit the .md file directly — the layout
-     adapts to however many headings are present. */
+  /* Numbered actions, rule-separated. Each ### in the markdown becomes a
+     row with a big red counter and a hairline above. No card backgrounds
+     or :has() — keeps the layout robust across browsers and avoids the
+     sibling-selector overrides that broke the v1 design. */
   .actions-list {
-    --action-pad-x: 1.25rem;
-    --action-pad-x-md: 1.75rem;
     counter-reset: action;
     max-width: none;
   }
   .actions-list > p:first-of-type {
     font-size: 1.125rem;
     color: rgb(var(--ink) / 0.78);
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.5rem !important;
   }
-
   .actions-list h3 {
     counter-increment: action;
-    position: relative;
     display: flex;
     align-items: baseline;
     gap: 0.85rem;
@@ -85,12 +81,14 @@ const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'Take action', ur
     font-size: 1.25rem;
     line-height: 1.25;
     letter-spacing: -0.02em;
-    margin: 0 !important;
-    padding: 1.5rem var(--action-pad-x) 0.5rem;
-    background: rgb(var(--surface));
-    border-top: 1px solid rgb(var(--ink) / 0.10);
-    border-left: 1px solid rgb(var(--ink) / 0.10);
-    border-right: 1px solid rgb(var(--ink) / 0.10);
+    border-top: 1px solid rgb(var(--ink) / 0.18);
+    padding-top: 1.75rem;
+    margin: 2.25rem 0 0.75rem !important;
+  }
+  .actions-list h3:first-of-type {
+    border-top-width: 2px;
+    border-top-color: rgb(var(--ink));
+    margin-top: 0 !important;
   }
   .actions-list h3::before {
     content: counter(action, decimal-leading-zero);
@@ -101,58 +99,23 @@ const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'Take action', ur
     width: 2.25rem;
     letter-spacing: -0.02em;
   }
-
-  /* Body content of each action — paragraphs, lists, CTAs — gets the
-     left/right border + bottom rule that close the card. */
-  .actions-list h3 ~ * {
-    background: rgb(var(--surface));
-    border-left: 1px solid rgb(var(--ink) / 0.10);
-    border-right: 1px solid rgb(var(--ink) / 0.10);
-    margin: 0 !important;
-    padding: 0 var(--action-pad-x);
-  }
-  .actions-list h3 + p {
-    padding-top: 0.75rem;
-  }
-  .actions-list h3 ~ * + h3 {
-    margin-top: 1.5rem !important;
-  }
-  /* Close the card immediately before the next heading (or at end of doc). */
-  .actions-list :where(p, ol, ul):has(+ h3),
-  .actions-list > :last-child {
-    border-bottom: 1px solid rgb(var(--ink) / 0.10);
-    padding-bottom: 1.5rem;
-  }
-
-  /* CTA-style "→" links: the markdown convention is that each call-to-action
-     paragraph starts with `→ [Label](href)`. Style the arrow + link as a
-     clear, accent-coloured action row. */
-  .actions-list h3 ~ p > a {
+  /* CTA-style "→" links inside each action paragraph. */
+  .actions-list h3 ~ p > a:first-child:last-child,
+  .actions-list h3 + p > a {
     font-weight: 700;
+    color: #D7282F;
     text-decoration: underline;
     text-underline-offset: 4px;
-    color: #D7282F;
   }
   .actions-list h3 ~ p > a:hover { color: #A41C28; }
 
-  /* Inner ordered list (e.g. the four vaccination demands). */
-  .actions-list ol {
-    list-style: decimal;
-    padding-left: 1.5rem;
-    margin: 0;
-  }
-  .actions-list ol > li { margin: 0.4rem 0; }
-
   @media (min-width: 768px) {
     .actions-list h3 {
-      font-size: 1.5rem;
-      padding: 2rem var(--action-pad-x-md) 0.75rem;
+      font-size: 1.55rem;
+      padding-top: 2.25rem;
+      margin-top: 2.75rem !important;
       gap: 1.25rem;
     }
     .actions-list h3::before { font-size: 1.8rem; width: 3rem; }
-    .actions-list h3 ~ * { padding-left: var(--action-pad-x-md); padding-right: var(--action-pad-x-md); }
-    .actions-list :where(p, ol, ul):has(+ h3),
-    .actions-list > :last-child { padding-bottom: 2rem; }
-    .actions-list h3 ~ * + h3 { margin-top: 2rem !important; }
   }
 </style>
