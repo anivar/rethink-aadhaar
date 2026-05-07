@@ -1,0 +1,41 @@
+name: Refresh @no2uid feed
+
+on:
+  schedule:
+    # Once a day at 03:07 UTC (~08:37 IST). GitHub cron is best-effort; expect ±15 min drift.
+    - cron: '7 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-x
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Refresh feed cache
+        id: refresh
+        run: node scripts/refresh-x-feed.mjs
+
+      - name: Commit if changed
+        if: steps.refresh.outputs.changed == 'true'
+        run: |
+          git add src/data/x-feed.json src/data/x-archive
+          if git diff --cached --quiet; then
+            echo "No staged diff; skipping commit."
+            exit 0
+          fi
+          git config user.name "rethink-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git commit -m "Refresh @no2uid feed"
+          git push

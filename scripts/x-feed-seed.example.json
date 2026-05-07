@@ -1,0 +1,8 @@
+[
+  {
+    "id": "EXAMPLE_REPLACE_WITH_REAL_TWEET_ID",
+    "date": "2025-12-10",
+    "text": "Replace this entry with a real @no2uid post you have details for. Required: id, date (ISO or YYYY-MM-DD), text. Optional: isRetweet, url.",
+    "isRetweet": false
+  }
+]

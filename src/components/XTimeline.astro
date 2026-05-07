@@ -1,19 +1,26 @@
 ---
-// Static embed of the @no2uid X timeline. No admin work / no API key:
-// the widget script (widgets.js) renders the timeline at view time and
-// includes retweets natively. If the script is blocked, the inner <a>
-// is the graceful fallback — a plain link to the profile.
+// Server-rendered strip of the latest @no2uid posts. The cache is refreshed by
+// .github/workflows/refresh-x.yml (cron, no admin work). Rendering happens
+// at build time from src/data/x-feed.json — no Twitter SDK, no iframe, no
+// theme conflicts. Historical posts accumulate in src/data/x-archive/.
+import feed from '~/data/x-feed.json';
+
 interface Props {
   handle?: string;
-  height?: number;
-  /** Optional className passed to the wrapping section. */
+  /** How many cards to show. */
+  limit?: number;
   class?: string;
 }
-const { handle = 'no2uid', height = 700, class: cls = '' } = Astro.props;
+
+const { handle = feed.handle ?? 'no2uid', limit = 6, class: cls = '' } = Astro.props;
 const profileUrl = `https://twitter.com/${handle}`;
+const posts = (feed.posts ?? []).slice(0, limit);
+
+const fmt = (iso: string | null) =>
+  iso ? new Date(iso).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
 ---
 
-<section class={`container-prose mt-20 md:mt-28 fade-up ${cls}`} data-x-timeline>
+<section class={`container-prose mt-20 md:mt-28 fade-up ${cls}`}>
   <div class="flex items-baseline justify-between gap-4 mb-6">
     <div>
       <p class="eyebrow mb-2">Live from the campaign</p>
@@ -29,53 +36,32 @@ const profileUrl = `https://twitter.com/${handle}`;
     >Follow on X →</a>
   </div>
 
-  <div class="card-surface p-3 md:p-4 max-w-2xl mx-auto">
-    <a
-      class="twitter-timeline"
-      data-height={height}
-      data-chrome="noheader nofooter transparent"
-      data-dnt="true"
-      data-theme="light"
-      href={`${profileUrl}?ref_src=twsrc%5Etfw`}
-    >
-      Posts by @{handle}
-    </a>
-  </div>
+  {posts.length === 0 ? (
+    <p class="text-base text-ink/70 font-body">
+      Posts will appear here once the daily refresh runs.
+      <a href={profileUrl} target="_blank" rel="noopener" class="underline hover:text-accent ml-1">Visit @{handle} on X →</a>
+    </p>
+  ) : (
+    <ul class="grid sm:grid-cols-2 gap-4">
+      {posts.map((p: any) => (
+        <li class="card-surface p-5 flex flex-col gap-3">
+          <div class="flex items-center justify-between text-xs text-ink/60 font-body">
+            <span>{fmt(p.date)}</span>
+            {p.isRetweet && <span class="caps tracking-[0.08em] text-accent">Retweet</span>}
+          </div>
+          <p class="font-body text-base text-pretty leading-snug">{p.text}</p>
+          <a
+            href={p.url}
+            target="_blank"
+            rel="noopener"
+            class="caps text-[0.7rem] tracking-[0.08em] text-ink/70 hover:text-accent transition-colors mt-auto"
+          >Open on X →</a>
+        </li>
+      ))}
+    </ul>
+  )}
 
-  <p class="mt-4 text-xs text-ink/55 text-center sm:hidden">
+  <p class="mt-6 text-xs text-ink/55 text-center sm:hidden">
     <a href={profileUrl} target="_blank" rel="noopener" class="caps tracking-[0.08em] hover:text-accent">Follow on X →</a>
   </p>
 </section>
-
-<script is:inline>
-  // Match the X widget theme to the site mode, then load widgets.js once.
-  (function () {
-    var setTheme = function () {
-      var dark = document.documentElement.classList.contains('dark');
-      document.querySelectorAll('.twitter-timeline').forEach(function (el) {
-        el.setAttribute('data-theme', dark ? 'dark' : 'light');
-      });
-    };
-    setTheme();
-
-    if (!document.getElementById('twitter-wjs')) {
-      var s = document.createElement('script');
-      s.id = 'twitter-wjs';
-      s.async = true;
-      s.src = 'https://platform.twitter.com/widgets.js';
-      document.body.appendChild(s);
-    } else if (window.twttr && window.twttr.widgets) {
-      window.twttr.widgets.load();
-    }
-
-    // Re-render the timeline after a theme toggle so the iframe matches.
-    var mo = new MutationObserver(function () {
-      setTheme();
-      if (window.twttr && window.twttr.widgets) {
-        document.querySelectorAll('[data-x-timeline] .twitter-timeline-rendered').forEach(function (el) { el.remove(); });
-        window.twttr.widgets.load();
-      }
-    });
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-  })();
-</script>
