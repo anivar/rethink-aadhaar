@@ -1,16 +1,16 @@
 # Rethink Aadhaar — Astro rebuild
 
-The official redesign of [rethinkaadhaar.in](https://rethinkaadhaar.in) — a static, accessibility-first build on Astro 5 with Tailwind, MDX content collections, view transitions and dark mode. Content is published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) by Rethink Aadhaar.
+The official redesign of [rethinkaadhaar.in](https://rethinkaadhaar.in) — a static, accessibility-first build on Astro 6 with Tailwind v4, MDX content collections, view transitions and dark mode. Content is published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) by Rethink Aadhaar.
 
 > **Live preview:** https://anivar.github.io/rethink-aadhaar/ (GH Pages, auto-deployed from `main`)
 
 ## Stack
 
-- **Astro 5** static output, TypeScript strict
-- **Tailwind 3.4** + `@tailwindcss/typography`
+- **Astro 6** static output, TypeScript strict
+- **Tailwind v4** (CSS-first `@theme` config) + `@tailwindcss/typography`
 - **MDX** content via Astro Content Collections (Zod-typed)
 - **astro-seo**, **@astrojs/sitemap**, **@astrojs/rss**
-- **@fontsource/roboto** + **@fontsource/source-serif-pro** (self-hosted)
+- **@fontsource-variable/inter**, **@fontsource-variable/fraunces**, **@fontsource-variable/jetbrains-mono** (self-hosted, per-subset woff2)
 - View transitions via `<ClientRouter />`; dark mode via `class` strategy + `localStorage`
 
 ## Local development
@@ -179,7 +179,7 @@ Pushing to `main` triggers `.github/workflows/deploy.yml`. The action computes t
 ```
 Build command: bun run build
 Output dir:    dist
-Node version:  20
+Node version:  ≥24
 ```
 
 For a custom domain (e.g. `rethinkaadhaar.in`), no env vars needed — `astro.config.mjs` defaults to that origin and root path.

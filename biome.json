@@ -12,8 +12,6 @@
       "!**/.astro",
       "!**/node_modules",
       "!**/public/admin",
-      "!**/src/data/x-feed.json",
-      "!**/src/data/x-archive",
       "!**/package-lock.json",
       "!**/*.css",
       "!**/content-source"

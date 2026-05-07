@@ -36,19 +36,19 @@ This rebuild preserves the editorial voice, IA, palette, and typography of the o
 - **Active-link indicator** — current section gets a 2px accent (red) underline.
 - **Mobile drawer** — full-height, single column, accessible toggle button (`aria-expanded` / `aria-controls`).
 - **Skip-to-content link** — visible on focus, jumps to `<main id="content">`.
-- **Dismissible announcement bar** — black bar above the header, dismissed state stored in `localStorage` so it doesn't reappear per visit.
+- **Persistent announcement bar** — black bar above the header. Originally dismissible; switched to non-dismissible to match the canonical site (see brand-parity pass above).
 
 ## Theming
 
-- **Dark mode** — `prefers-color-scheme` default + manual toggle (sun/moon button), persisted in `localStorage`. Applied via Tailwind's `class` strategy with a tiny inline bootstrap script in `<head>` to prevent FOUC.
-- **Cream page background** for /myths preserved, but adapts to dark mode.
-- **Design tokens** centralised — `--accent #D62636`, `--button #141413`, `--myth #F5B81D`, `--cream #F4ECDD` exposed as CSS variables in `src/styles/global.css`.
+- **Dark mode** — opt-in via the sun/moon toggle, persisted in `localStorage`. (Earlier rebuilds defaulted to `prefers-color-scheme`; that auto-switch was removed as part of brand parity — light is the canonical default.) Applied via Tailwind's `class` strategy with a tiny inline bootstrap script in `<head>` to prevent FOUC.
+- **Cream page background** is now site-wide (canonical brand colour), and adapts to dark mode.
+- **Design tokens** centralised in `src/styles/global.css` `@theme` — `--color-accent #D7282F`, `--color-button #111111`, `--color-myth #F5B81D`, `--color-cream #F7F2E8`.
 
 ## Typography
 
-- **Self-hosted fonts** — `@fontsource/roboto` (display, weights 400/700/900) and `@fontsource/source-serif-pro` (body, 400/600). No third-party font CDN, no FOIT.
-- **`text-balance` on hero titles** and `text-pretty` on body paragraphs for nicer line-breaking on supporting browsers.
-- **Hero clamp** — `clamp(2.75rem, 9vw, 6.75rem)` Roboto 900 with `letter-spacing: -0.02em`, matching the original visual weight at every viewport without media queries.
+- **Self-hosted fonts** — `@fontsource-variable/fraunces` (display headings), `@fontsource-variable/inter` (body + UI/caps), `@fontsource-variable/jetbrains-mono` (`caps-mono` documentary labels). Per-subset woff2 with `unicode-range`; total payload <180KB. No third-party font CDN, no FOIT.
+- **`text-balance` on hero titles** and `text-pretty` on body paragraphs (now a baseline-safe global default on `p, li, blockquote`).
+- **Hero clamp** — `--text-display: clamp(2rem, 0.5rem + 6vw, 6.5rem)`, Fraunces ExtraBold with `letter-spacing: -0.035em`. Tuned so a 7-character uppercase word (RETHINK / AADHAAR) fits the 327-px content width on a 375-px iPhone viewport.
 
 ## Motion
 

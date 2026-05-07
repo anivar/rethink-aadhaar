@@ -57,7 +57,7 @@ The fluid type scale is `clamp()`-based, interpolating between 320 and
 
 | Token             | Min       | Max       | Use                                                |
 | ----------------- | --------- | --------- | -------------------------------------------------- |
-| `--text-display`  | 2.5rem    | 7.5rem    | `hero-display` utility — homepage lockup only      |
+| `--text-display`  | 2rem      | 6.5rem    | `hero-display` utility — homepage lockup only      |
 | `--text-h1`       | 2.25rem   | 4.5rem    | Page titles via `<h1>` or `HeroTitle variant=page` |
 | `--text-h2`       | 1.75rem   | 2.75rem   | Section headings                                   |
 | `--text-h3`       | 1.25rem   | 1.625rem  | Subsection / card titles                           |

@@ -119,7 +119,6 @@ async function main() {
   }
 
   let written = 0;
-  const skipped = 0;
   let missing = 0;
   let collisions = 0;
 
@@ -160,9 +159,7 @@ async function main() {
     }
   }
 
-  console.log(
-    `[legacy-redirects] wrote=${written} skipped=${skipped} no-sourceUrl=${missing} collisions=${collisions}`,
-  );
+  console.log(`[legacy-redirects] wrote=${written} no-sourceUrl=${missing} collisions=${collisions}`);
 }
 
 main().catch((err) => {
