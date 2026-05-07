@@ -1,0 +1,51 @@
+---
+// Renders a <picture> with WebP (and optional AVIF) sources alongside the
+// original JPG/PNG fallback. Assumes scripts/optimize-images.mjs has produced
+// .webp and .avif siblings under the same path.
+//
+// Usage:
+//   <Picture src="/media/foo.jpg" alt="..." width={1200} height={800} />
+//   <Picture src="/media/hero.jpg" alt="..." avif eager />
+import { link } from '~/lib/link';
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  /** Set true to also reference an .avif sibling (only generated for HERO list). */
+  avif?: boolean;
+  /** Eager + high priority — use for above-fold images. */
+  eager?: boolean;
+  class?: string;
+  sizes?: string;
+}
+
+const { src, alt, width, height, avif = false, eager = false, class: cls = '', sizes } = Astro.props;
+
+function swapExt(p: string, ext: string) {
+  return p.replace(/\.(jpe?g|png)$/i, `.${ext}`);
+}
+
+const srcLink = link(src);
+const webpLink = link(swapExt(src, 'webp'));
+const avifLink = avif ? link(swapExt(src, 'avif')) : null;
+
+const loading = eager ? 'eager' : 'lazy';
+const fetchpriority = eager ? 'high' : 'auto';
+const decoding = eager ? 'async' : 'async';
+---
+<picture>
+  {avifLink && <source srcset={avifLink} type="image/avif" sizes={sizes} />}
+  <source srcset={webpLink} type="image/webp" sizes={sizes} />
+  <img
+    src={srcLink}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding={decoding}
+    class={cls}
+  />
+</picture>

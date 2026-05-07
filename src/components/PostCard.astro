@@ -1,12 +1,13 @@
 ---
 import { formatDate } from '~/lib/format';
+import Picture from '~/components/Picture.astro';
 interface Props { href: string; title: string; date: Date; excerpt?: string; hero?: string; }
 const { href, title, date, excerpt, hero } = Astro.props;
 ---
 <article class="group flex flex-col h-full card-surface hover:border-accent hover:shadow-[0_8px_24px_-12px_rgba(215,40,47,0.25)] transition-all duration-200">
   {hero && (
     <a href={href} class="block aspect-[16/10] overflow-hidden bg-ink/5" tabindex="-1" aria-hidden="true">
-      <img src={hero} alt="" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out" />
+      <Picture src={hero} alt="" class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out" />
     </a>
   )}
   <div class="p-5 md:p-6 flex flex-col flex-1">

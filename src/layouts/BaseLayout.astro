@@ -54,9 +54,23 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
     <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/x-icon" href={link('/favicon.ico')} />
     <link rel="apple-touch-icon" sizes="180x180" href={link('/apple-touch-icon.png')} />
-    {preloadImage && (
-      <link rel="preload" as="image" href={link(preloadImage)} fetchpriority="high" />
-    )}
+    {preloadImage && (() => {
+      // Prefer AVIF for the LCP preload, then WebP, then the original. The
+      // browser uses the first <link> whose `type` it supports.
+      const avif = preloadImage.replace(/\.(jpe?g|png)$/i, '.avif');
+      const webp = preloadImage.replace(/\.(jpe?g|png)$/i, '.webp');
+      return (
+        <>
+          {avif !== preloadImage && (
+            <link rel="preload" as="image" href={link(avif)} type="image/avif" fetchpriority="high" />
+          )}
+          {webp !== preloadImage && (
+            <link rel="preload" as="image" href={link(webp)} type="image/webp" fetchpriority="high" />
+          )}
+          <link rel="preload" as="image" href={link(preloadImage)} fetchpriority="high" />
+        </>
+      );
+    })()}
     <link rel="alternate" type="application/rss+xml" title="Rethink Aadhaar — Updates" href={link('/rss.xml')} />
     <link rel="alternate" type="text/plain" title="LLM-readable index" href={link('/llms.txt')} />
     <SEO

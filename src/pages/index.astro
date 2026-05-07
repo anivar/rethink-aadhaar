@@ -7,6 +7,7 @@ import DarkCTA from '~/components/DarkCTA.astro';
 import SignupForm from '~/components/SignupForm.astro';
 import FeaturedStory from '~/components/FeaturedStory.astro';
 import XTimeline from '~/components/XTimeline.astro';
+import Picture from '~/components/Picture.astro';
 import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
 import { collectionPage } from '~/lib/seo';
 import { link } from '~/lib/link';
@@ -42,15 +43,14 @@ const jsonLd = collectionPage({ name: 'Rethink Aadhaar', url: '/', description }
   <!-- Two-column block: canonical worn fingerprint hand image + serif paragraph. -->
   <section class="container-prose mt-16 md:mt-20 grid gap-8 md:gap-12 md:grid-cols-2 items-start fade-up delay-1">
     <figure class="m-0">
-      <img
-        src={link('/media/1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg')}
+      <Picture
+        src="/media/1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg"
         alt="A worker's hand holding an Aadhaar enrolment slip — fingertips worn smooth from years of manual labour."
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        width="1200"
-        height="800"
+        width={1200}
+        height={800}
         class="w-full h-auto block"
+        avif
+        eager
       />
     </figure>
     <div class="prose font-body text-pretty">
