@@ -113,13 +113,13 @@ const contact = data.contact ?? {};
       {contact.twitter && (
         <li class="card-surface p-5 hover:border-accent transition-colors">
           <p class="caps text-xs text-ink/55 mb-2">Twitter / X</p>
-          <a href={`https://twitter.com/${contact.twitter}`} class="font-body text-base hover:text-accent">@{contact.twitter}</a>
+          <a href={`https://twitter.com/${contact.twitter}`} target="_blank" rel="noopener noreferrer" class="font-body text-base hover:text-accent">@{contact.twitter}</a>
         </li>
       )}
       {contact.facebook && (
         <li class="card-surface p-5 hover:border-accent transition-colors">
           <p class="caps text-xs text-ink/55 mb-2">Facebook</p>
-          <a href={`https://www.facebook.com/${contact.facebook}/`} class="font-body text-base hover:text-accent">/{contact.facebook}</a>
+          <a href={`https://www.facebook.com/${contact.facebook}/`} target="_blank" rel="noopener noreferrer" class="font-body text-base hover:text-accent">/{contact.facebook}</a>
         </li>
       )}
     </ul>
