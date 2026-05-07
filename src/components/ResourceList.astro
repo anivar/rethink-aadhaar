@@ -1,18 +1,33 @@
 ---
 interface Item { title: string; href: string; description?: string; order?: number; }
-interface Props { section: string; items: Item[]; }
-const { section, items } = Astro.props;
+interface Props { section: string; id?: string; items: Item[]; }
+const { section, id, items } = Astro.props;
 const sorted = [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 ---
-<section class="py-10 border-t border-ink/15 first:border-t-0">
-  <h2 class="caps text-accent text-sm mb-6">{section}</h2>
-  <ul class="space-y-5">
+<section class="py-12 md:py-16 border-t border-ink/15 first:border-t-0" id={id}>
+  <header class="mb-6 md:mb-8">
+    <h2 class="caps text-accent text-sm md:text-base tracking-[0.12em]">{section}</h2>
+  </header>
+
+  <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-6 md:gap-y-8">
     {sorted.map((item) => (
       <li>
-        <a href={item.href} target="_blank" rel="noopener" class="font-display font-bold text-xl md:text-2xl text-balance leading-snug hover:text-accent">
-          {item.title} <span class="text-accent" aria-hidden="true">↗</span>
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noopener"
+          class="group block h-full p-5 md:p-6 card-surface hover:border-accent/60 transition-colors"
+        >
+          <p class="font-display font-bold text-base md:text-lg leading-snug text-balance group-hover:text-accent transition-colors">
+            {item.title}
+            <span class="text-accent inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span>
+          </p>
+          {item.description && (
+            <p class="mt-3 font-body text-sm md:text-base text-ink/75 leading-relaxed text-pretty">
+              {item.description}
+            </p>
+          )}
         </a>
-        {item.description && <p class="font-body text-base text-ink/75 mt-2 text-pretty">{item.description}</p>}
       </li>
     ))}
   </ul>

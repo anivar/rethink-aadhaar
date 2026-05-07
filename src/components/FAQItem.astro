@@ -1,12 +1,23 @@
 ---
-interface Props { question: string; }
-const { question } = Astro.props;
+interface Props { question: string; short?: string; index: number; }
+const { question, short, index } = Astro.props;
+const nn = String(index).padStart(2, '0');
 ---
-<article class="py-8 border-t border-ink/15 first:border-t-0">
-  <h3 class="faq-question font-display font-bold text-2xl md:text-3xl text-balance leading-snug mb-5">
-    <span class="text-accent mr-3" aria-hidden="true">→</span>{question}
-  </h3>
-  <div class="faq-answer prose font-body text-pretty">
-    <slot />
+<article class="py-10 md:py-14 border-t border-ink/15 first:border-t-0" id={`faq-${index}`}>
+  <div class="grid grid-cols-[2.5rem_1fr] md:grid-cols-[4rem_1fr] gap-x-4 md:gap-x-8 gap-y-4">
+    <p class="caps text-accent text-sm md:text-base font-bold tracking-[0.08em] pt-1 md:pt-2">Q{nn}</p>
+    <h3 class="faq-question font-display font-extrabold text-xl sm:text-2xl md:text-[1.85rem] text-balance leading-snug">
+      {question}
+    </h3>
+
+    {short && (
+      <p class="col-start-2 -mt-1 text-base md:text-lg font-body text-ink/75 italic text-pretty">
+        {short}
+      </p>
+    )}
+
+    <div class="col-start-2 mt-2 md:mt-4 faq-answer prose font-body text-pretty">
+      <slot />
+    </div>
   </div>
 </article>

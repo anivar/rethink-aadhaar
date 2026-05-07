@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import SignupForm from '~/components/SignupForm.astro';
 import { breadcrumb } from '~/lib/seo';
 import { link } from '~/lib/link';
 
@@ -11,20 +10,149 @@ const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'Take action', ur
 ---
 
 <BaseLayout title="Take action" description="Sign on, opt out, launch a local campaign — concrete ways to push back against coercive Aadhaar mandates." jsonLd={jsonLd}>
-  <div class="container-prose pt-12 md:pt-20 grid md:grid-cols-[1fr_auto] items-end gap-6">
-    <div>
-      <p class="eyebrow mb-4">What can I do? What can't we do?</p>
-      <h1 class="hero-title text-balance">Take action</h1>
+  <header class="container-prose pt-12 md:pt-20">
+    <div class="grid md:grid-cols-[1fr_auto] items-end gap-6 fade-up">
+      <div>
+        <p class="eyebrow mb-4">What can I do? What can't we do?</p>
+        <h1 class="hero-title text-balance text-left">Take action</h1>
+      </div>
+      <img
+        src={link('/media/1501143464367-72QK8G9CYTG48Q7A6Y2O-noun_1067645.png')}
+        alt="Fist with network nodes"
+        class="w-24 sm:w-28 md:w-40 dark:invert justify-self-end"
+        loading="eager"
+        width="160"
+        height="160"
+      />
     </div>
-    <img src={link('/media/1501143464367-72QK8G9CYTG48Q7A6Y2O-noun_1067645.png')} alt="Fist with network nodes" class="w-32 md:w-40 dark:invert" loading="eager" />
-  </div>
+  </header>
 
-  <article class="container-prose mt-10 prose dark:prose-invert font-body text-pretty fade-up">
+  <article class="container-prose mt-10 md:mt-14 prose dark:prose-invert font-body text-pretty fade-up actions-list">
     <Content />
   </article>
 
-  <section class="container-prose mt-16 mb-24 hairline pt-10">
-    <h2 class="caps text-accent text-sm mb-4">Subscribe to the mailing list</h2>
-    <SignupForm />
+  <section class="container-prose mt-16 md:mt-20 mb-24 hairline pt-10 md:pt-14 fade-up">
+    <p class="eyebrow mb-3">Stay in the loop</p>
+    <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Subscribe to the mailing list</h2>
+    <p class="text-base md:text-lg text-ink/75 font-body text-pretty mb-6 max-w-2xl">
+      We use Riseup for the list — you'll get a confirmation email after signing up. Unsubscribe any time.
+    </p>
+    <form
+      action="https://lists.riseup.net/www/subscribe/rethink-aadhaar"
+      method="post"
+      class="grid sm:grid-cols-[1fr_auto] gap-3 max-w-xl"
+    >
+      <label class="sr-only" for="ta-email">Email address</label>
+      <input
+        id="ta-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        placeholder="your-email@example.com"
+        class="font-body text-base px-4 py-4 border border-ink/30 bg-bg text-ink focus:border-accent outline-none w-full"
+      />
+      <button type="submit" class="btn-dark whitespace-nowrap">Sign up</button>
+    </form>
   </section>
 </BaseLayout>
+
+<style is:global>
+  /* Numbered action cards. The markdown body has a series of `### Heading`
+     blocks; we count them via CSS counters and render each as a card with a
+     large red badge. Authors edit the .md file directly — the layout
+     adapts to however many headings are present. */
+  .actions-list {
+    --action-pad-x: 1.25rem;
+    --action-pad-x-md: 1.75rem;
+    counter-reset: action;
+    max-width: none;
+  }
+  .actions-list > p:first-of-type {
+    font-size: 1.125rem;
+    color: rgb(var(--ink) / 0.78);
+    margin-bottom: 2.5rem;
+  }
+
+  .actions-list h3 {
+    counter-increment: action;
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0 !important;
+    padding: 1.5rem var(--action-pad-x) 0.5rem;
+    background: rgb(var(--surface));
+    border-top: 1px solid rgb(var(--ink) / 0.10);
+    border-left: 1px solid rgb(var(--ink) / 0.10);
+    border-right: 1px solid rgb(var(--ink) / 0.10);
+  }
+  .actions-list h3::before {
+    content: counter(action, decimal-leading-zero);
+    color: #D7282F;
+    font-weight: 800;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    width: 2.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  /* Body content of each action — paragraphs, lists, CTAs — gets the
+     left/right border + bottom rule that close the card. */
+  .actions-list h3 ~ * {
+    background: rgb(var(--surface));
+    border-left: 1px solid rgb(var(--ink) / 0.10);
+    border-right: 1px solid rgb(var(--ink) / 0.10);
+    margin: 0 !important;
+    padding: 0 var(--action-pad-x);
+  }
+  .actions-list h3 + p {
+    padding-top: 0.75rem;
+  }
+  .actions-list h3 ~ * + h3 {
+    margin-top: 1.5rem !important;
+  }
+  /* Close the card immediately before the next heading (or at end of doc). */
+  .actions-list :where(p, ol, ul):has(+ h3),
+  .actions-list > :last-child {
+    border-bottom: 1px solid rgb(var(--ink) / 0.10);
+    padding-bottom: 1.5rem;
+  }
+
+  /* CTA-style "→" links: the markdown convention is that each call-to-action
+     paragraph starts with `→ [Label](href)`. Style the arrow + link as a
+     clear, accent-coloured action row. */
+  .actions-list h3 ~ p > a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: #D7282F;
+  }
+  .actions-list h3 ~ p > a:hover { color: #A41C28; }
+
+  /* Inner ordered list (e.g. the four vaccination demands). */
+  .actions-list ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+    margin: 0;
+  }
+  .actions-list ol > li { margin: 0.4rem 0; }
+
+  @media (min-width: 768px) {
+    .actions-list h3 {
+      font-size: 1.5rem;
+      padding: 2rem var(--action-pad-x-md) 0.75rem;
+      gap: 1.25rem;
+    }
+    .actions-list h3::before { font-size: 1.8rem; width: 3rem; }
+    .actions-list h3 ~ * { padding-left: var(--action-pad-x-md); padding-right: var(--action-pad-x-md); }
+    .actions-list :where(p, ol, ul):has(+ h3),
+    .actions-list > :last-child { padding-bottom: 2rem; }
+    .actions-list h3 ~ * + h3 { margin-top: 2rem !important; }
+  }
+</style>

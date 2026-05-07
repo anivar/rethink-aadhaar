@@ -7,10 +7,13 @@ import { itemList } from '~/lib/seo';
 
 const all = await getCollection('resource');
 const sections = ['Primers', 'Government documents', 'Hunger deaths 2015–18', 'Case documents', 'Templates', 'Articles archive'] as const;
-const grouped = sections.map((s) => ({
-  section: s,
-  items: all.filter((r) => r.data.section === s).map((r) => r.data),
-}));
+const grouped = sections
+  .map((s) => ({
+    section: s,
+    id: s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+    items: all.filter((r) => r.data.section === s).map((r) => r.data),
+  }))
+  .filter((g) => g.items.length > 0);
 
 const jsonLd = itemList({
   name: 'Resources',
@@ -26,9 +29,25 @@ const jsonLd = itemList({
     Primers on the law, court documents, government notifications, reports on Aadhaar-linked hunger deaths, and ready-to-use letter templates. Most files are hosted on the original campaign Drive.
   </p>
 
-  <section class="container-prose mt-10 mb-24">
-    {grouped.map((g) => g.items.length > 0 && (
-      <ResourceList section={g.section} items={g.items} />
+  {/* Section jump strip — sticky on scroll for quick navigation. */}
+  <nav class="container-prose mt-8 fade-up delay-1" aria-label="Jump to a section">
+    <ul class="flex flex-wrap gap-2">
+      {grouped.map((g) => (
+        <li>
+          <a
+            href={`#${g.id}`}
+            class="caps text-[0.7rem] tracking-[0.08em] inline-block px-3 py-2 border border-ink/20 hover:border-accent hover:text-accent transition-colors"
+          >
+            {g.section}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <section class="container-prose mt-6 mb-24">
+    {grouped.map((g) => (
+      <ResourceList section={g.section} id={g.id} items={g.items} />
     ))}
   </section>
 </BaseLayout>

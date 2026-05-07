@@ -3,19 +3,31 @@ interface Props { myth: string; fact?: string; index: number; }
 const { myth, fact, index } = Astro.props;
 const nn = String(index).padStart(2, '0');
 ---
-<article class="border-t-2 border-ink py-10 md:py-14 grid md:grid-cols-[5rem_1fr] gap-6 md:gap-10">
-  <div class="md:pt-1">
-    <p class="font-display font-black text-5xl md:text-6xl leading-none text-accent">{nn}</p>
+<article
+  class="group relative border-t-2 border-ink py-10 md:py-14 grid grid-cols-[3.25rem_1fr] md:grid-cols-[6rem_1fr] gap-x-5 md:gap-x-10 gap-y-2 first:border-t-[3px]"
+  id={`myth-${index}`}
+>
+  <div class="row-span-2 md:row-span-3 md:pt-2">
+    <p class="font-display font-black text-4xl md:text-6xl leading-none text-accent select-none">{nn}</p>
   </div>
+
   <div>
-    <p class="caps text-accent text-sm mb-3">Myth</p>
-    <p class="font-display font-bold text-2xl md:text-3xl text-balance leading-snug mb-8">{myth}</p>
-    {fact && (
-      <>
-        <p class="caps text-ink/60 text-sm mb-3">Fact</p>
-        <p class="font-display font-bold text-xl md:text-2xl text-balance leading-snug mb-8">{fact}</p>
-      </>
-    )}
+    <p class="caps text-accent text-xs md:text-sm mb-2 md:mb-3">Myth</p>
+    <p class="font-display font-bold text-xl sm:text-2xl md:text-3xl text-balance leading-snug">
+      {myth}
+    </p>
+  </div>
+
+  {fact && (
+    <div class="col-start-2 mt-6 md:mt-8 border-l-2 border-accent/70 pl-4 md:pl-5">
+      <p class="caps text-ink/55 text-xs md:text-sm mb-2 md:mb-3">Fact</p>
+      <p class="font-display font-bold text-lg sm:text-xl md:text-2xl text-balance leading-snug">
+        {fact}
+      </p>
+    </div>
+  )}
+
+  <div class="col-start-2 mt-6 md:mt-8">
     <div class="prose font-body text-pretty">
       <slot />
     </div>

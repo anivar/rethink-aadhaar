@@ -33,7 +33,26 @@ const jsonLd = [
     Claims about Aadhaar that are often repeated in policy circles and in the press — and what the evidence actually shows.
   </p>
 
-  <section class="container-prose mt-12 mb-24">
+  {/* Quick jump on desktop — scannable index of every myth. */}
+  {rendered.length > 1 && (
+    <nav class="container-prose mt-8 hidden md:block fade-up delay-1" aria-label="Jump to a myth">
+      <ul class="grid grid-cols-2 gap-x-6 gap-y-1.5">
+        {rendered.map((m, i) => (
+          <li>
+            <a
+              href={`#myth-${i + 1}`}
+              class="group flex items-baseline gap-3 py-1.5 text-sm text-ink/70 hover:text-accent transition-colors"
+            >
+              <span class="caps text-[0.7rem] text-accent w-6 shrink-0 tracking-[0.08em]">{String(i + 1).padStart(2, '0')}</span>
+              <span class="text-pretty leading-snug">{m.data.myth}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
+
+  <section class="container-prose mt-10 md:mt-14 mb-24">
     {rendered.map((m, i) => (
       <MythCard myth={m.data.myth} fact={m.data.fact} index={i + 1}>
         <m.Content />

@@ -19,9 +19,30 @@ const jsonLd = faqPage(faqs.map((f) => ({
 <BaseLayout title="FAQs" description="Common questions about Aadhaar, privacy, welfare, and the Indian context." jsonLd={jsonLd}>
   <HeroTitle eyebrow="Common questions">FAQs</HeroTitle>
 
-  <section class="container-prose mt-12 mb-24">
-    {rendered.map((f) => (
-      <FAQItem question={f.data.question}>
+  <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
+    Short answers to the questions we hear most often — from privacy and surveillance to welfare exclusion and how Aadhaar compares to other identity systems.
+  </p>
+
+  {rendered.length > 1 && (
+    <nav class="container-prose mt-8 fade-up delay-1" aria-label="Jump to a question">
+      <ul class="flex flex-wrap gap-2">
+        {rendered.map((f, i) => (
+          <li>
+            <a
+              href={`#faq-${i + 1}`}
+              class="caps text-[0.7rem] tracking-[0.08em] inline-block px-3 py-2 border border-ink/20 hover:border-accent hover:text-accent transition-colors"
+            >
+              Q{String(i + 1).padStart(2, '0')}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
+
+  <section class="container-prose mt-10 md:mt-14 mb-24">
+    {rendered.map((f, i) => (
+      <FAQItem question={f.data.question} short={f.data.short} index={i + 1}>
         <f.Content />
       </FAQItem>
     ))}

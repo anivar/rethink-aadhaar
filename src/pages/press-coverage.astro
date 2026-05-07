@@ -9,6 +9,7 @@ import { itemList } from '~/lib/seo';
 const all = (await getCollection('press')).sort(byDateDesc);
 const byYear = groupByYear(all);
 const years = [...byYear.keys()].sort((a, b) => b - a);
+const firstYear = years[years.length - 1];
 
 const description = "External press coverage of Aadhaar — exclusion stories, surveillance concerns, judgments and analysis.";
 const jsonLd = itemList({
@@ -25,15 +26,35 @@ const jsonLd = itemList({
     A chronological index of significant external reporting and analysis on Aadhaar — from front-line exclusion stories to surveillance investigations and Supreme Court judgements. Each entry links out to the original publication.
   </p>
 
+  <p class="container-prose mt-8 caps text-xs text-ink/55 tracking-[0.18em] fade-up delay-1">
+    Indexed from {firstYear} · ongoing
+  </p>
+
   {years.map((y) => (
-    <section class="container-prose mt-14">
-      <h2 class="caps text-accent text-sm mb-4">{y}</h2>
-      <ul class="divide-y divide-ink/10">
+    <section class="container-prose mt-14 md:mt-20 fade-up">
+      <header class="mb-4 sticky top-0 bg-bg/95 backdrop-blur py-3 -mx-6 px-6 z-10">
+        <h2 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">{y}</h2>
+      </header>
+      <ul class="divide-y divide-ink/15">
         {byYear.get(y)!.map((p) => (
-          <li class="py-5 grid md:grid-cols-[7rem_1fr] gap-4">
-            <p class="caps text-xs text-ink/55">{formatDate(p.data.date, 'monthYear')} · {p.data.publication}</p>
-            <a href={p.data.href} target="_blank" rel="noopener" class="font-display font-bold text-lg leading-snug text-balance hover:text-accent">
-              {p.data.title} <span class="text-accent" aria-hidden="true">↗</span>
+          <li class="py-5 md:py-6">
+            <a
+              href={p.data.href}
+              target="_blank"
+              rel="noopener"
+              class="group block hover:text-accent transition-colors"
+            >
+              <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
+                <span class="caps text-[0.7rem] text-ink/55 tracking-[0.12em]">
+                  {formatDate(p.data.date, 'monthYear')}
+                </span>
+                <span class="caps text-[0.68rem] bg-ink/[0.06] text-ink/75 px-2 py-0.5 tracking-[0.08em] group-hover:bg-accent/10 group-hover:text-accent transition-colors">
+                  {p.data.publication}
+                </span>
+              </div>
+              <p class="font-display font-bold text-lg sm:text-xl md:text-[1.4rem] leading-snug text-balance">
+                {p.data.title} <span class="text-accent inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span>
+              </p>
             </a>
           </li>
         ))}
@@ -42,6 +63,6 @@ const jsonLd = itemList({
   ))}
 
   <p class="container-prose mt-16 mb-24 text-sm text-ink/60">
-    Looking for older coverage? Ram Krishnaswamy's <a class="underline" href="http://aadhaar-articles.blogspot.in/">archive of UID-critical articles since 2010</a> is the most comprehensive index.
+    Looking for older coverage? Ram Krishnaswamy's <a class="underline hover:text-accent" href="http://aadhaar-articles.blogspot.in/" rel="noopener">archive of UID-critical articles since 2010</a> is the most comprehensive index.
   </p>
 </BaseLayout>
