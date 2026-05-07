@@ -7,12 +7,12 @@
  * Two modes:
  *
  *   1. Bulk from a YAML/JSON-ish file:
- *        bun scripts/x-feed-add.mjs scripts/x-feed-seed.json
+ *        bun scripts/x-feed-add.ts scripts/x-feed-seed.json
  *      The file may be either a JSON array of entries, OR a JSONL stream
  *      (one entry per line).
  *
  *   2. Single entry via CLI flags:
- *        bun scripts/x-feed-add.mjs \
+ *        bun scripts/x-feed-add.ts \
  *          --id 1234567890 \
  *          --date 2025-12-10 \
  *          --text "Beware of Aadhaar — released today on Human Rights Day."
@@ -35,35 +35,49 @@ const DATA_DIR = resolve(import.meta.dir, '..', 'src', 'data');
 const LIVE_PATH = join(DATA_DIR, 'x-feed.json');
 const ARCHIVE_DIR = join(DATA_DIR, 'x-archive');
 
-async function readJson(path, fallback) {
+interface XPost {
+  id: string;
+  url: string;
+  date: string;
+  text: string;
+  isRetweet: boolean;
+}
+
+interface MonthArchive {
+  handle: string;
+  month: string;
+  posts: XPost[];
+}
+
+async function readJson<T>(path: string, fallback: T): Promise<T> {
   try {
-    return await Bun.file(path).json();
+    return (await Bun.file(path).json()) as T;
   } catch {
     return fallback;
   }
 }
 
-async function writeJson(path, data) {
+async function writeJson(path: string, data: unknown) {
   // Bun.write creates parent dirs implicitly.
   await Bun.write(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
-function normalise(raw) {
+function normalise(raw: Record<string, unknown>): XPost {
   if (!raw.id) throw new Error(`entry missing id: ${JSON.stringify(raw)}`);
   if (!raw.text) throw new Error(`entry ${raw.id} missing text`);
   if (!raw.date) throw new Error(`entry ${raw.id} missing date`);
 
   const id = String(raw.id).trim();
-  const date = new Date(raw.date).toISOString();
-  const url = raw.url ?? `https://twitter.com/${HANDLE}/status/${id}`;
+  const date = new Date(String(raw.date)).toISOString();
+  const url = (raw.url as string) ?? `https://twitter.com/${HANDLE}/status/${id}`;
   const text = String(raw.text).replace(/\s+/g, ' ').trim();
   const isRetweet = Boolean(raw.isRetweet);
 
   return { id, url, date, text, isRetweet };
 }
 
-function parseArgs(argv) {
-  const args = { _: [], flags: {} };
+function parseArgs(argv: string[]) {
+  const args: { _: string[]; flags: Record<string, string | true> } = { _: [], flags: {} };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a.startsWith('--')) {
@@ -80,7 +94,7 @@ function parseArgs(argv) {
   return args;
 }
 
-async function loadEntries(path) {
+async function loadEntries(path: string): Promise<Record<string, unknown>[]> {
   const raw = (await Bun.file(path).text()).trim();
   // Try JSON array first; else treat as JSONL.
   try {
@@ -96,10 +110,10 @@ async function loadEntries(path) {
   }
 }
 
-async function mergeOne(entry) {
+async function mergeOne(entry: XPost) {
   const month = entry.date.slice(0, 7);
   const path = join(ARCHIVE_DIR, `${month}.json`);
-  const existing = await readJson(path, { handle: HANDLE, month, posts: [] });
+  const existing = await readJson<MonthArchive>(path, { handle: HANDLE, month, posts: [] });
   const seen = new Map(existing.posts.map((p) => [p.id, p]));
   if (seen.has(entry.id)) return false;
   seen.set(entry.id, entry);
@@ -109,9 +123,9 @@ async function mergeOne(entry) {
 }
 
 async function regenerateLiveFromArchive() {
-  const all = [];
+  const all: XPost[] = [];
   for await (const f of new Glob('*.json').scan({ cwd: ARCHIVE_DIR })) {
-    const data = await readJson(join(ARCHIVE_DIR, f), null);
+    const data = await readJson<MonthArchive | null>(join(ARCHIVE_DIR, f), null);
     if (data?.posts) all.push(...data.posts);
   }
   if (all.length === 0) return;
@@ -128,7 +142,7 @@ async function regenerateLiveFromArchive() {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  let entries = [];
+  let entries: Record<string, unknown>[] = [];
 
   if (args._.length > 0) {
     entries = await loadEntries(args._[0]);
@@ -144,8 +158,8 @@ async function main() {
     ];
   } else {
     console.error('Usage:');
-    console.error('  bun scripts/x-feed-add.mjs <file.json>');
-    console.error('  bun scripts/x-feed-add.mjs --id <id> --date <iso> --text "..." [--retweet]');
+    console.error('  bun scripts/x-feed-add.ts <file.json>');
+    console.error('  bun scripts/x-feed-add.ts --id <id> --date <iso> --text "..." [--retweet]');
     process.exit(2);
   }
 

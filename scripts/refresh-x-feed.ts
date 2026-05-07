@@ -36,7 +36,28 @@ const DATA_DIR = resolve(import.meta.dir, '..', 'src', 'data');
 const LIVE_PATH = join(DATA_DIR, 'x-feed.json');
 const ARCHIVE_DIR = join(DATA_DIR, 'x-archive');
 
-async function fetchWithTimeout(url) {
+interface XPost {
+  id: string;
+  url: string;
+  date: string | null;
+  text: string;
+  isRetweet: boolean;
+}
+
+interface MonthArchive {
+  handle: string;
+  month: string;
+  posts: XPost[];
+}
+
+interface LiveFeed {
+  handle: string;
+  fetchedAt: string;
+  source: string;
+  posts: XPost[];
+}
+
+async function fetchWithTimeout(url: string) {
   const ctl = new AbortController();
   const t = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   try {
@@ -51,7 +72,7 @@ async function fetchWithTimeout(url) {
   }
 }
 
-const decode = (s) =>
+const decode = (s: string) =>
   s
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
@@ -59,12 +80,12 @@ const decode = (s) =>
     .replace(/&#39;/g, "'")
     .replace(/&amp;/g, '&');
 
-const unwrap = (s) =>
+const unwrap = (s: string) =>
   s
     .replace(/^<!\[CDATA\[/, '')
     .replace(/\]\]>$/, '')
     .trim();
-const stripHtml = (s) =>
+const stripHtml = (s: string) =>
   decode(
     s
       .replace(/<[^>]+>/g, ' ')
@@ -72,14 +93,14 @@ const stripHtml = (s) =>
       .trim(),
   );
 
-function pickTag(block, tag) {
+function pickTag(block: string, tag: string) {
   const re = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i');
   const m = block.match(re);
   return m ? unwrap(m[1]).trim() : '';
 }
 
-function parseFeed(xml) {
-  const items = [];
+function parseFeed(xml: string): XPost[] {
+  const items: XPost[] = [];
   const re = /<item[\s>][\s\S]*?<\/item>/g;
   for (const m of xml.matchAll(re)) {
     const block = m[0];
@@ -111,7 +132,7 @@ function parseFeed(xml) {
   return items.slice(0, FETCH_LIMIT);
 }
 
-async function tryFetch(url) {
+async function tryFetch(url: string) {
   const xml = await fetchWithTimeout(url);
   if (!xml?.includes('<item')) throw new Error('feed contains no items');
   const posts = parseFeed(xml);
@@ -119,27 +140,27 @@ async function tryFetch(url) {
   return posts;
 }
 
-async function readJson(path, fallback) {
+async function readJson<T>(path: string, fallback: T): Promise<T> {
   try {
-    return await Bun.file(path).json();
+    return (await Bun.file(path).json()) as T;
   } catch {
     return fallback;
   }
 }
 
-async function writeJson(path, data) {
+async function writeJson(path: string, data: unknown) {
   // Bun.write creates parent dirs implicitly.
   await Bun.write(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
-function archiveKeyFor(iso) {
+function archiveKeyFor(iso: string | null) {
   if (!iso) return 'undated';
   return iso.slice(0, 7); // YYYY-MM
 }
 
-async function mergeArchive(posts) {
+async function mergeArchive(posts: XPost[]) {
   // Group incoming by month, then merge into each month's file.
-  const byMonth = new Map();
+  const byMonth = new Map<string, XPost[]>();
   for (const p of posts) {
     const key = archiveKeyFor(p.date);
     if (!byMonth.has(key)) byMonth.set(key, []);
@@ -149,7 +170,7 @@ async function mergeArchive(posts) {
   let touched = 0;
   for (const [key, incoming] of byMonth) {
     const path = join(ARCHIVE_DIR, `${key}.json`);
-    const existing = await readJson(path, { handle: HANDLE, month: key, posts: [] });
+    const existing = await readJson<MonthArchive>(path, { handle: HANDLE, month: key, posts: [] });
     const seen = new Map(existing.posts.map((p) => [p.id, p]));
     let added = 0;
     for (const p of incoming) {
@@ -168,19 +189,19 @@ async function mergeArchive(posts) {
 }
 
 async function main() {
-  const errors = [];
+  const errors: string[] = [];
   for (const src of SOURCES) {
     try {
       const posts = await tryFetch(src);
 
-      const liveNext = {
+      const liveNext: LiveFeed = {
         handle: HANDLE,
         fetchedAt: new Date().toISOString(),
         source: new URL(src).host,
         posts: posts.slice(0, LIVE_LIMIT),
       };
 
-      const livePrev = await readJson(LIVE_PATH, null);
+      const livePrev = await readJson<LiveFeed | null>(LIVE_PATH, null);
       const liveSame = livePrev && JSON.stringify(livePrev.posts ?? []) === JSON.stringify(liveNext.posts);
 
       let changed = false;
@@ -201,7 +222,7 @@ async function main() {
       if (!changed) console.log('[x-feed] nothing to commit');
       return;
     } catch (err) {
-      errors.push(`${src}: ${err.message}`);
+      errors.push(`${src}: ${(err as Error).message}`);
     }
   }
 

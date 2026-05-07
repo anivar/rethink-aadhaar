@@ -49,11 +49,10 @@ public/
   media/               Migrated images
   robots.txt  .nojekyll
 scripts/
-  new.mjs              Scaffold a new content entry (bun run new -- update "Title")
-  sync.mjs             Crawl rethinkaadhaar.in/sitemap.xml, write new entries as drafts
-  _categories.mjs      Mirror of src/lib/categories.ts for node scripts
-  migrate-posts.mjs    Original one-time HTML→MD migration (kept for re-runs)
-  seed-press.mjs       Seeded the press collection from a curated list
+  new.ts               Scaffold a new content entry (bun run new -- update "Title")
+  sync.ts              Crawl rethinkaadhaar.in/sitemap.xml, write new entries as drafts
+  migrate-posts.ts     Original one-time HTML→MD migration (kept for re-runs)
+  seed-press.ts        Seeded the press collection from a curated list
 .github/workflows/
   deploy.yml           Build & publish to GH Pages on every push to main
   sync.yml             Weekly cron (Mon 06:00 UTC) — opens a PR with new upstream content

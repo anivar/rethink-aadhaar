@@ -24,19 +24,21 @@ const HERO_LIST = (process.env.HERO ?? '1489594687018-VG8KQQP625TQFSNEP1FV-image
 const WEBP_OPTS = { quality: 80, effort: 4 };
 const AVIF_OPTS = { quality: 55, effort: 4 };
 
-async function isFresher(target, source) {
+async function isFresher(target: string, source: string) {
   const t = Bun.file(target);
   if (!(await t.exists())) return false;
   return t.lastModified >= Bun.file(source).lastModified;
 }
 
-async function convert(src, target, format, opts) {
+type Format = 'webp' | 'avif';
+
+async function convert(src: string, target: string, format: Format, opts: Record<string, number>) {
   if (await isFresher(target, src)) return 'skip';
   try {
     await sharp(src).rotate().toFormat(format, opts).toFile(target);
     return 'wrote';
   } catch (err) {
-    console.warn(`[optimize-images] skip ${src}: ${err.message}`);
+    console.warn(`[optimize-images] skip ${src}: ${(err as Error).message}`);
     return 'fail';
   }
 }
@@ -51,7 +53,7 @@ async function main() {
   let total = 0;
   let webpAdded = 0;
   let avifAdded = 0;
-  const tasks = [];
+  const tasks: Promise<void>[] = [];
 
   for await (const rel of new Glob('**/*').scan({ cwd: ROOT })) {
     const src = join(ROOT, rel);

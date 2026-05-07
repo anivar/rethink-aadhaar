@@ -7,8 +7,8 @@
 // `sourceUrl` front-matter field. The in-body line duplicates it and
 // breaks the prose. Front-matter `sourceUrl` is preserved.
 //
-// Usage:  bun scripts/scrub-boilerplate.mjs            (writes)
-//         bun scripts/scrub-boilerplate.mjs --dry      (reports only)
+// Usage:  bun scripts/scrub-boilerplate.ts            (writes)
+//         bun scripts/scrub-boilerplate.ts --dry      (reports only)
 
 import { Glob } from 'bun';
 import { join, resolve } from 'node:path';

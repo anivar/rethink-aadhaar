@@ -1,6 +1,6 @@
 // Single source of truth for "which content categories get regular updates".
-// Both the editor scaffolder (scripts/new.mjs) and the upstream sync
-// (scripts/sync.mjs) read this — adding a new updatable collection means
+// Both the editor scaffolder (scripts/new.ts) and the upstream sync
+// (scripts/sync.ts) read this — adding a new updatable collection means
 // editing this one file.
 
 export type CategoryKey = 'update' | 'exclusion' | 'press';
@@ -62,4 +62,8 @@ export function kebab(s: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 80);
+}
+
+export function todayISO(): string {
+  return new Date().toISOString().slice(0, 10);
 }

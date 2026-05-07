@@ -9,10 +9,12 @@
 // and is excluded from RSS/index until you flip `draft: false`).
 
 import { resolve, join } from 'node:path';
-import { CATEGORIES, ROOT, kebab, todayISO } from './_categories.mjs';
+import { CATEGORIES, type CategoryKey, kebab, todayISO } from '~/lib/categories';
 
-function parseArgs(argv) {
-  const args = { _: [], flags: {} };
+const ROOT = resolve(import.meta.dir, '..');
+
+function parseArgs(argv: string[]) {
+  const args: { _: string[]; flags: Record<string, string> } = { _: [], flags: {} };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a.startsWith('--')) {
@@ -25,7 +27,7 @@ function parseArgs(argv) {
 const args = parseArgs(process.argv.slice(2));
 const [categoryKey, ...titleWords] = args._;
 const title = titleWords.join(' ').trim();
-const cfg = CATEGORIES[categoryKey];
+const cfg = CATEGORIES[categoryKey as CategoryKey];
 
 if (!cfg || !title) {
   console.error('Usage: bun run new -- <update|exclusion|press> "Title here" [--flag value...]');
@@ -42,7 +44,7 @@ if (await Bun.file(file).exists()) {
   process.exit(1);
 }
 
-const fm = [];
+const fm: string[] = [];
 fm.push('---');
 fm.push(`title: ${JSON.stringify(title)}`);
 fm.push(`date: ${date}`);

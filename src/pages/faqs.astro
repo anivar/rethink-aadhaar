@@ -28,7 +28,7 @@ const jsonLd = faqPage(
   {rendered.length > 1 && (
     <nav class="container-prose mt-8 fade-up delay-1" aria-label="Jump to a question">
       <ul class="flex flex-wrap gap-2">
-        {rendered.map((f, i) => (
+        {rendered.map((_f, i) => (
           <li>
             <a
               href={`#faq-${i + 1}`}

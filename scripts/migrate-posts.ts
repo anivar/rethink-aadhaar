@@ -19,12 +19,12 @@ const decode = (s) =>
     .replace(/&nbsp;/g, ' ')
     .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(Number.parseInt(h, 16)));
 
-function pick(html, re) {
+function pick(html: string, re: RegExp) {
   const m = html.match(re);
   return m ? decode(m[1]).trim() : null;
 }
 
-function localImage(url) {
+function localImage(url: string | null) {
   // images.squarespace-cdn.com/content/v1/HASH1/HASH2/filename.ext
   if (!url) return null;
   const m = url.match(/squarespace-cdn\.com\/content\/v1\/[^/]+\/([^/]+)\/([^?"'\s]+)/);
@@ -34,7 +34,7 @@ function localImage(url) {
   return `/media/${dirHash}-${safe}`;
 }
 
-function slugFromFile(name, prefix) {
+function slugFromFile(name: string, prefix: string) {
   // blog__2026__4__30__news-update-april-2026.html → 2026-04-30-news-update-april-2026
   const stem = name.replace(/\.html$/, '');
   const parts = stem.split('__');
@@ -47,11 +47,11 @@ function slugFromFile(name, prefix) {
     .replace(/[^a-z0-9-]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
-  const pad = (s) => String(Number.parseInt(s, 10)).padStart(2, '0');
+  const pad = (s: string) => String(Number.parseInt(s, 10)).padStart(2, '0');
   return { date: `${y}-${pad(m)}-${pad(d)}`, slug };
 }
 
-async function processOne(file, prefix, outDir) {
+async function processOne(file: string, prefix: string, outDir: string) {
   const html = await Bun.file(resolve(RAW, file)).text();
   const meta = slugFromFile(file, prefix);
   if (!meta) return false;

@@ -9,11 +9,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "bun scripts/optimize-images.mjs && astro check && astro build && bun scripts/emit-legacy-redirects.mjs",
+    "build": "bun scripts/optimize-images.ts && astro check && astro build && bun scripts/emit-legacy-redirects.ts",
     "preview": "astro preview",
     "astro": "astro",
-    "new": "bun scripts/new.mjs",
-    "sync": "bun scripts/sync.mjs",
+    "new": "bun scripts/new.ts",
+    "sync": "bun scripts/sync.ts",
     "check": "biome check",
     "format": "biome format --write",
     "lint": "biome lint",
@@ -41,6 +41,7 @@
     "yaml": "^2.8.3"
   },
   "engines": {
-    "bun": ">=1.3"
+    "bun": ">=1.3",
+    "node": ">=24"
   }
 }

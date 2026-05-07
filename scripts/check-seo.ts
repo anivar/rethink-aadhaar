@@ -22,12 +22,12 @@ import { join, resolve } from 'node:path';
 const ROOT = resolve(import.meta.dir, '..');
 const DIST = join(ROOT, 'dist');
 
-const failures = [];
-function fail(msg) {
+const failures: string[] = [];
+function fail(msg: string) {
   failures.push(msg);
   console.error('  ✗', msg);
 }
-function pass(msg) {
+function pass(msg: string) {
   console.log('  ✓', msg);
 }
 
@@ -60,12 +60,12 @@ async function checkFeeds() {
   }
 }
 
-function extractJsonLd(html) {
+function extractJsonLd(html: string): string[] {
   const re = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/g;
   return Array.from(html.matchAll(re), (m) => m[1].trim());
 }
 
-function singleMatch(html, re, label) {
+function singleMatch(html: string, re: RegExp, label: string) {
   const matches = html.match(re);
   if (!matches) {
     fail(`${label}: missing`);
@@ -78,7 +78,15 @@ function singleMatch(html, re, label) {
   return matches[0];
 }
 
-async function checkPage(relPath, requirements) {
+interface PageRequirements {
+  title?: boolean;
+  canonical?: boolean;
+  og?: boolean;
+  minLdBlocks?: number;
+  expectTypes?: string[];
+}
+
+async function checkPage(relPath: string, requirements: PageRequirements) {
   console.log(`# ${relPath}`);
   const file = Bun.file(join(DIST, relPath));
   if (!(await file.exists())) {
@@ -113,13 +121,13 @@ async function checkPage(relPath, requirements) {
       pass(`${blocks.length} JSON-LD blocks`);
     }
     let parseFail = 0;
-    const types = [];
+    const types: string[] = [];
     for (const raw of blocks) {
       try {
         types.push(JSON.parse(raw)['@type'] ?? '?');
       } catch (e) {
         parseFail++;
-        fail(`JSON-LD parse error: ${e.message}`);
+        fail(`JSON-LD parse error: ${(e as Error).message}`);
       }
     }
     if (parseFail === 0 && blocks.length) pass(`JSON-LD types: ${types.join(', ')}`);

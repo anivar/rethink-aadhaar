@@ -22,10 +22,10 @@ const COLLECTIONS = [
   { dir: 'src/content/exclusion', newPrefix: 'testimonials' },
 ];
 
-function parseFrontMatter(src) {
+function parseFrontMatter(src: string): Record<string, string> {
   const m = src.match(/^---\n([\s\S]*?)\n---/);
   if (!m) return {};
-  const fm = {};
+  const fm: Record<string, string> = {};
   for (const line of m[1].split('\n')) {
     const kv = line.match(/^([a-zA-Z_][\w-]*):\s*(.*)$/);
     if (!kv) continue;
@@ -40,14 +40,14 @@ function parseFrontMatter(src) {
 
 // Expand a legacy path into every URL shape Squarespace might have served:
 // zero-padded vs unpadded month/day, with and without a trailing dash.
-function expandLegacyVariants(oldPath) {
+function expandLegacyVariants(oldPath: string): string[] {
   // Match `/blog/YYYY/M/D/slug` or `/testimonials/YYYY/M/D/slug`
   const m = oldPath.match(/^(\/(?:blog|testimonials))\/(\d{4})\/(\d{1,2})\/(\d{1,2})(\/.*)?$/);
   if (!m) return [oldPath];
   const [, prefix, y, mo, d, rest = ''] = m;
   const months = new Set([mo, mo.padStart(2, '0')]);
   const days = new Set([d, d.padStart(2, '0')]);
-  const out = new Set();
+  const out = new Set<string>();
   for (const mm of months)
     for (const dd of days) {
       const base = `${prefix}/${y}/${mm}/${dd}${rest}`;
@@ -57,7 +57,7 @@ function expandLegacyVariants(oldPath) {
   return [...out];
 }
 
-function legacyPathFromSourceUrl(sourceUrl) {
+function legacyPathFromSourceUrl(sourceUrl: string) {
   try {
     const u = new URL(sourceUrl);
     return u.pathname.replace(/\/$/, '');
@@ -66,12 +66,12 @@ function legacyPathFromSourceUrl(sourceUrl) {
   }
 }
 
-function newPathForEntry(filename, newPrefix) {
+function newPathForEntry(filename: string, newPrefix: string) {
   const slug = filename.replace(/\.mdx?$/, '');
   return `${BASE}${newPrefix}/${slug}/`;
 }
 
-function stubHtml(targetPath, title) {
+function stubHtml(targetPath: string, title: string) {
   const targetAbs = `${SITE}${targetPath}`;
   return `<!doctype html>
 <html lang="en-IN">
@@ -90,23 +90,20 @@ function stubHtml(targetPath, title) {
 `;
 }
 
-function escapeHtml(s) {
-  return String(s).replace(
-    /[&<>"']/g,
-    (c) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;',
-      })[c],
-  );
+function escapeHtml(s: string) {
+  const ENTITIES: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return String(s).replace(/[&<>"']/g, (c) => ENTITIES[c]);
 }
 
-async function listMd(dir) {
+async function listMd(dir: string) {
   const abs = join(ROOT, dir);
-  const out = [];
+  const out: { name: string; path: string }[] = [];
   for (const name of await readdir(abs)) {
     if (!/\.mdx?$/.test(name)) continue;
     out.push({ name, path: join(abs, name) });

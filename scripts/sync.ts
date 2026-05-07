@@ -20,12 +20,13 @@
 
 import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { CATEGORIES, ROOT } from './_categories.mjs';
+import { CATEGORIES, type CategoryKey } from '~/lib/categories';
 
+const ROOT = resolve(import.meta.dir, '..');
 const SITE = 'https://rethinkaadhaar.in';
 
-function parseArgs(argv) {
-  const flags = { write: false };
+function parseArgs(argv: string[]) {
+  const flags: { write: boolean; since?: string } = { write: false };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--write') flags.write = true;
     else if (argv[i] === '--since') flags.since = argv[++i];
@@ -34,13 +35,13 @@ function parseArgs(argv) {
 }
 const flags = parseArgs(process.argv.slice(2));
 
-async function fetchText(url) {
+async function fetchText(url: string) {
   const r = await fetch(url, { headers: { 'user-agent': 'rethink-sync/1.0' } });
   if (!r.ok) throw new Error(`${url} → HTTP ${r.status}`);
   return r.text();
 }
 
-function existingSlugs(dir) {
+function existingSlugs(dir: string) {
   try {
     return new Set(
       readdirSync(resolve(ROOT, dir))
@@ -48,13 +49,13 @@ function existingSlugs(dir) {
         .map((f) => f.replace(/\.md$/, '')),
     );
   } catch {
-    return new Set();
+    return new Set<string>();
   }
 }
 
 // Squarespace URLs look like /blog/2024/3/12/headline-slug.
 // Squarespace also pads month/day with no leading zero.
-function urlToParts(href) {
+function urlToParts(href: string) {
   const m = href.match(/^\/(blog|testimonials)\/(\d{4})\/(\d{1,2})\/(\d{1,2})\/(.+?)\/?$/);
   if (!m) return null;
   const [, kind, y, mo, d, slug] = m;
@@ -62,20 +63,20 @@ function urlToParts(href) {
   return { kind, date, slug, fullSlug: `${date}-${slug}` };
 }
 
-function ogMeta(html, prop) {
+function ogMeta(html: string, prop: string) {
   const m = html.match(new RegExp(`<meta[^>]+property=["']og:${prop}["'][^>]+content=["']([^"']+)["']`, 'i'));
   return m ? m[1] : null;
 }
-function nameMeta(html, name) {
+function nameMeta(html: string, name: string) {
   const m = html.match(new RegExp(`<meta[^>]+name=["']${name}["'][^>]+content=["']([^"']+)["']`, 'i'));
   return m ? m[1] : null;
 }
-function jsonLdDate(html) {
+function jsonLdDate(html: string) {
   const m = html.match(/"datePublished"\s*:\s*"([^"]+)"/);
   return m ? m[1].slice(0, 10) : null;
 }
 
-async function syncCategory(catKey) {
+async function syncCategory(catKey: CategoryKey) {
   const cfg = CATEGORIES[catKey];
   console.log(`\n=== ${cfg.label} (${cfg.upstreamPath}) ===`);
 
@@ -133,14 +134,14 @@ async function syncCategory(catKey) {
       console.log(`  ✓ ${parts.fullSlug}.md`);
       added++;
     } catch (err) {
-      console.warn(`  ✗ ${path} — ${err.message}`);
+      console.warn(`  ✗ ${path} — ${(err as Error).message}`);
     }
   }
   return { added, found: filtered.length };
 }
 
 const totals = { added: 0, found: 0 };
-for (const k of ['update', 'exclusion']) {
+for (const k of ['update', 'exclusion'] as const) {
   const r = await syncCategory(k);
   totals.added += r.added;
   totals.found += r.found;

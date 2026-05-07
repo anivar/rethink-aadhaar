@@ -67,7 +67,7 @@ const RAW = `
 
 const OUT = resolve('src/content/press');
 
-const slugify = (s) =>
+const slugify = (s: string) =>
   s
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
@@ -81,7 +81,7 @@ for (const line of RAW.split('\n')
   const parts = line.split(' | ').map((s) => s.trim());
   if (parts.length < 4) continue;
   const [dateRaw, publication, title, href] = parts;
-  let date;
+  let date: string;
   if (/^\d{2}\/\d{4}$/.test(dateRaw)) {
     const [m, y] = dateRaw.split('/');
     date = `${y}-${m}-01`;

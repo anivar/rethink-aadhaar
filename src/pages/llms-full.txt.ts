@@ -1,6 +1,6 @@
 // llms-full.txt — full text of all on-site content for LLM crawlers.
 // Now that migrated stubs no longer carry the "Migrated from the live
-// site…" boilerplate (see scripts/scrub-boilerplate.mjs), update and
+// site…" boilerplate (see scripts/scrub-boilerplate.ts), update and
 // exclusion bodies are meaningful editorial summaries and worth indexing.
 // Re-generated at build time from the content collections.
 
