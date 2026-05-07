@@ -134,6 +134,13 @@ function isActive(href: string) {
     const btn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
     const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
     if (!btn || !panel) return;
+    // Astro's ClientRouter fires `astro:page-load` on the initial paint as
+    // well as subsequent navigations, so the bare `init()` call below would
+    // attach a second click handler — first tap then opens AND immediately
+    // closes the menu, looking like the button is dead. Mark the button so
+    // re-entry is a no-op.
+    if (btn.dataset.menuBound === 'true') return;
+    btn.dataset.menuBound = 'true';
 
     function setOpen(open: boolean) {
       panel!.classList.toggle('hidden', !open);
