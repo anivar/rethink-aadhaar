@@ -69,12 +69,18 @@ const RAW = `
 const OUT = path.resolve('src/content/press');
 fs.mkdirSync(OUT, { recursive: true });
 
-const slugify = (s) => s.toLowerCase()
-  .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 70);
+const slugify = (s) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 70);
 
 let n = 0;
-for (const line of RAW.split('\n').map(l => l.trim()).filter(Boolean)) {
-  const parts = line.split(' | ').map(s => s.trim());
+for (const line of RAW.split('\n')
+  .map((l) => l.trim())
+  .filter(Boolean)) {
+  const parts = line.split(' | ').map((s) => s.trim());
   if (parts.length < 4) continue;
   const [dateRaw, publication, title, href] = parts;
   let date;
@@ -94,7 +100,7 @@ for (const line of RAW.split('\n').map(l => l.trim()).filter(Boolean)) {
     `date: ${date}`,
     `href: ${JSON.stringify(href)}`,
     '---',
-    ''
+    '',
   ].join('\n');
   fs.writeFileSync(path.join(OUT, fname), fm);
   n++;

@@ -1,5 +1,9 @@
 ---
-interface Props { myth: string; fact?: string; index: number; }
+interface Props {
+  myth: string;
+  fact?: string;
+  index: number;
+}
 const { myth, fact, index } = Astro.props;
 const nn = String(index).padStart(2, '0');
 ---

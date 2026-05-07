@@ -1,5 +1,10 @@
 ---
-interface Props { eyebrow?: string; class?: string; rule?: boolean; align?: 'center' | 'left'; }
+interface Props {
+  eyebrow?: string;
+  class?: string;
+  rule?: boolean;
+  align?: 'center' | 'left';
+}
 const { eyebrow, class: cls = '', rule = true, align = 'center' } = Astro.props;
 const alignCls = align === 'center' ? 'text-center' : 'text-left';
 ---

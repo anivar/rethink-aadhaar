@@ -6,11 +6,21 @@ import ResourceList from '~/components/ResourceList.astro';
 import { itemList } from '~/lib/seo';
 
 const all = await getCollection('resource');
-const sections = ['Primers', 'Government documents', 'Hunger deaths 2015–18', 'Case documents', 'Templates', 'Articles archive'] as const;
+const sections = [
+  'Primers',
+  'Government documents',
+  'Hunger deaths 2015–18',
+  'Case documents',
+  'Templates',
+  'Articles archive',
+] as const;
 const grouped = sections
   .map((s) => ({
     section: s,
-    id: s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+    id: s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, ''),
     items: all.filter((r) => r.data.section === s).map((r) => r.data),
   }))
   .filter((g) => g.items.length > 0);
@@ -18,7 +28,9 @@ const grouped = sections
 const jsonLd = itemList({
   name: 'Resources',
   url: '/resources',
-  items: all.slice(0, 50).map((r) => ({ name: r.data.title, url: r.data.href, description: r.data.description })),
+  items: all
+    .slice(0, 50)
+    .map((r) => ({ name: r.data.title, url: r.data.href, description: r.data.description })),
 });
 ---
 

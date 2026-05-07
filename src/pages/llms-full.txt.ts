@@ -10,10 +10,10 @@ import { byDateDesc, byOrder, notDraft } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
 
 export async function GET(_: APIContext) {
-  const pages      = await getCollection('page');
-  const myths      = (await getCollection('myth')).sort(byOrder);
-  const faqs       = (await getCollection('faq')).sort(byOrder);
-  const updates    = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
+  const pages = await getCollection('page');
+  const myths = (await getCollection('myth')).sort(byOrder);
+  const faqs = (await getCollection('faq')).sort(byOrder);
+  const updates = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
   const exclusions = (await getCollection('exclusion')).sort(byDateDesc);
 
   const out: string[] = [];
@@ -69,7 +69,9 @@ export async function GET(_: APIContext) {
   out.push('## Exclusion stories');
   out.push('');
   for (const e of exclusions) {
-    out.push(`### ${formatDate(e.data.date, 'medium')} — ${e.data.title}${e.data.location ? ` (${e.data.location})` : ''}`);
+    out.push(
+      `### ${formatDate(e.data.date, 'medium')} — ${e.data.title}${e.data.location ? ` (${e.data.location})` : ''}`,
+    );
     if (e.data.summary) {
       out.push('');
       out.push(`> ${e.data.summary}`);

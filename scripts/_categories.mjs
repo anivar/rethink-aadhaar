@@ -39,7 +39,8 @@ export const CATEGORIES = {
 export function kebab(s) {
   return s
     .toLowerCase()
-    .normalize('NFKD').replace(/[̀-ͯ]/g, '')
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 80);

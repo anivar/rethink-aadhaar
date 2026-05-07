@@ -17,7 +17,7 @@ export default function rehypeBaseHref({ base = '/' } = {}) {
         if (typeof v !== 'string') continue;
         // Only root paths, not protocol-relative or absolute URLs or anchors.
         if (!v.startsWith('/') || v.startsWith('//')) continue;
-        if (trimmed && !v.startsWith(trimmed + '/') && v !== trimmed) {
+        if (trimmed && !v.startsWith(`${trimmed}/`) && v !== trimmed) {
           node.properties[a] = `${trimmed}${v}`;
         }
       }

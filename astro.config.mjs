@@ -26,7 +26,19 @@ export default defineConfig({
         const u = new URL(item.url);
         const p = u.pathname.replace(/\/$/, '');
         if (p === '') item.priority = 1.0;
-        else if (['/blog', '/testimonials', '/press-coverage', '/myths', '/faqs', '/resources', '/take-action', '/campaign2025'].includes(p)) item.priority = 0.9;
+        else if (
+          [
+            '/blog',
+            '/testimonials',
+            '/press-coverage',
+            '/myths',
+            '/faqs',
+            '/resources',
+            '/take-action',
+            '/campaign2025',
+          ].includes(p)
+        )
+          item.priority = 0.9;
         return item;
       },
     }),

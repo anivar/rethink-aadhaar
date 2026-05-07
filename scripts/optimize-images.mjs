@@ -16,7 +16,9 @@ import sharp from 'sharp';
 
 const ROOT = 'public/media';
 const HERO_LIST = (process.env.HERO ?? '1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg')
-  .split(',').map((s) => s.trim()).filter(Boolean);
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 const WEBP_OPTS = { quality: 80, effort: 4 };
 const AVIF_OPTS = { quality: 55, effort: 4 };
@@ -63,15 +65,19 @@ async function main() {
     total++;
 
     const stem = src.slice(0, -ext.length);
-    const webp = stem + '.webp';
+    const webp = `${stem}.webp`;
     tasks.push(
-      convert(src, webp, 'webp', WEBP_OPTS).then((r) => { if (r === 'wrote') webpAdded++; })
+      convert(src, webp, 'webp', WEBP_OPTS).then((r) => {
+        if (r === 'wrote') webpAdded++;
+      }),
     );
 
     if (HERO_LIST.includes(basename(src))) {
-      const avif = stem + '.avif';
+      const avif = `${stem}.avif`;
       tasks.push(
-        convert(src, avif, 'avif', AVIF_OPTS).then((r) => { if (r === 'wrote') avifAdded++; })
+        convert(src, avif, 'avif', AVIF_OPTS).then((r) => {
+          if (r === 'wrote') avifAdded++;
+        }),
       );
     }
   }

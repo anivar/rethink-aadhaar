@@ -4,7 +4,7 @@
 // content collections change — no hand-maintained structured data.
 
 const SITE_NAME = 'Rethink Aadhaar';
-const SITE_URL  = 'https://rethinkaadhaar.in';
+const SITE_URL = 'https://rethinkaadhaar.in';
 
 export type JsonLd = Record<string, unknown>;
 
@@ -17,20 +17,24 @@ export function org(): JsonLd {
     alternateName: ['Rethink Aadhaar Campaign', 'No2UID'],
     url: SITE_URL,
     description:
-      "A non-partisan Indian campaign documenting the welfare exclusion, surveillance risk, and biometric failures of the Aadhaar (UID) project, and pushing back against its coercive expansion.",
+      'A non-partisan Indian campaign documenting the welfare exclusion, surveillance risk, and biometric failures of the Aadhaar (UID) project, and pushing back against its coercive expansion.',
     foundingDate: '2017',
     foundingLocation: { '@type': 'Country', name: 'India' },
     areaServed: { '@type': 'Country', name: 'India' },
     address: { '@type': 'PostalAddress', addressCountry: 'IN' },
     knowsAbout: [
-      'Aadhaar', 'Unique Identification Authority of India', 'biometric identification',
-      'welfare exclusion', 'public distribution system', 'NREGA', 'right to privacy',
-      'mass surveillance', 'data protection', 'digital identity',
+      'Aadhaar',
+      'Unique Identification Authority of India',
+      'biometric identification',
+      'welfare exclusion',
+      'public distribution system',
+      'NREGA',
+      'right to privacy',
+      'mass surveillance',
+      'data protection',
+      'digital identity',
     ],
-    sameAs: [
-      'https://twitter.com/no2uid',
-      'https://www.facebook.com/no2uid/',
-    ],
+    sameAs: ['https://twitter.com/no2uid', 'https://www.facebook.com/no2uid/'],
     logo: `${SITE_URL}/brand/logo-mark.png`,
   };
 }
@@ -46,10 +50,19 @@ export function website(): JsonLd {
     publisher: { '@id': `${SITE_URL}/#organization` },
     about: { '@id': `${SITE_URL}/#topic-aadhaar` },
     keywords: [
-      'Aadhaar', 'UIDAI', 'biometric ID India', 'welfare exclusion',
-      'PDS ration Aadhaar', 'NREGA Aadhaar', 'pension Aadhaar',
-      'right to privacy India', 'Puttaswamy judgment', 'mass surveillance India',
-      'India Stack', 'digital identity', 'hunger deaths Aadhaar',
+      'Aadhaar',
+      'UIDAI',
+      'biometric ID India',
+      'welfare exclusion',
+      'PDS ration Aadhaar',
+      'NREGA Aadhaar',
+      'pension Aadhaar',
+      'right to privacy India',
+      'Puttaswamy judgment',
+      'mass surveillance India',
+      'India Stack',
+      'digital identity',
+      'hunger deaths Aadhaar',
     ].join(', '),
     potentialAction: {
       '@type': 'SearchAction',
@@ -90,11 +103,11 @@ export function aboutPage(input: { url: string; description?: string }): JsonLd 
 export function event(input: {
   name: string;
   url: string;
-  startDate: string;       // ISO date
-  endDate?: string;        // ISO date — for ongoing campaigns
+  startDate: string; // ISO date
+  endDate?: string; // ISO date — for ongoing campaigns
   description?: string;
   organizerName?: string;
-  locationName?: string;   // free-form, defaults to "India"
+  locationName?: string; // free-form, defaults to "India"
 }): JsonLd {
   const out: JsonLd = {
     '@context': 'https://schema.org',
@@ -175,10 +188,7 @@ export const MENTIONS: JsonLd[] = [
     '@type': 'Thing',
     '@id': `${SITE_URL}/#topic-aadhaar`,
     name: 'Aadhaar',
-    sameAs: [
-      'https://en.wikipedia.org/wiki/Aadhaar',
-      'https://www.wikidata.org/wiki/Q1815901',
-    ],
+    sameAs: ['https://en.wikipedia.org/wiki/Aadhaar', 'https://www.wikidata.org/wiki/Q1815901'],
   },
   {
     '@type': 'GovernmentOrganization',
@@ -193,10 +203,7 @@ export const MENTIONS: JsonLd[] = [
   {
     '@type': 'GovernmentOrganization',
     name: 'Supreme Court of India',
-    sameAs: [
-      'https://en.wikipedia.org/wiki/Supreme_Court_of_India',
-      'https://www.wikidata.org/wiki/Q11602',
-    ],
+    sameAs: ['https://en.wikipedia.org/wiki/Supreme_Court_of_India', 'https://www.wikidata.org/wiki/Q11602'],
   },
   {
     '@type': 'Legislation',
@@ -218,8 +225,8 @@ export function claimReview(input: {
   url: string;
   claim: string;
   verdict: string;
-  ratingName?: string;       // "False" | "Misleading" | "Mostly False"
-  ratingValue?: number;      // 1 = false, 5 = true; we use 2 = mostly false
+  ratingName?: string; // "False" | "Misleading" | "Mostly False"
+  ratingValue?: number; // 1 = false, 5 = true; we use 2 = mostly false
   datePublished?: Date;
 }): JsonLd {
   return {
@@ -291,11 +298,7 @@ export function itemList(input: {
   };
 }
 
-export function collectionPage(input: {
-  name: string;
-  url: string;
-  description?: string;
-}): JsonLd {
+export function collectionPage(input: { name: string; url: string; description?: string }): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',

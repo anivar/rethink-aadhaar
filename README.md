@@ -16,13 +16,16 @@ The official redesign of [rethinkaadhaar.in](https://rethinkaadhaar.in) — a st
 ## Local development
 
 ```sh
-npm install
-npm run dev          # http://localhost:4321
-npm run build        # astro check && astro build
-npm run preview      # serve dist/
+bun install
+bun run dev          # http://localhost:4321
+bun run build        # optimize-images + astro check + astro build + emit-legacy-redirects
+bun run preview      # serve dist/
+
+bun run check        # biome lint + format check
+bun run fix          # biome auto-fix (safe)
 ```
 
-Node 20+ required.
+Bun 1.3+ required. Install via `curl -fsSL https://bun.sh/install | bash`.
 
 ## Project layout
 
@@ -46,7 +49,7 @@ public/
   media/               Migrated images
   robots.txt  .nojekyll
 scripts/
-  new.mjs              Scaffold a new content entry (npm run new -- update "Title")
+  new.mjs              Scaffold a new content entry (bun run new -- update "Title")
   sync.mjs             Crawl rethinkaadhaar.in/sitemap.xml, write new entries as drafts
   _categories.mjs      Mirror of src/lib/categories.ts for node scripts
   migrate-posts.mjs    Original one-time HTML→MD migration (kept for re-runs)
@@ -81,33 +84,33 @@ scripts/
 
 ## Adding content
 
-### The fast path — `npm run new`
+### The fast path — `bun run new`
 
 Three updatable categories. Always works:
 
 ```sh
-npm run new -- update    "Statement on the latest exclusion incident"
-npm run new -- exclusion "Aadhaar-linked pension denial in Khunti" --location "Khunti, Jharkhand"
-npm run new -- press     "Headline of the article" --publication "The Wire" --href https://example.com/article
+bun run new -- update    "Statement on the latest exclusion incident"
+bun run new -- exclusion "Aadhaar-linked pension denial in Khunti" --location "Khunti, Jharkhand"
+bun run new -- press     "Headline of the article" --publication "The Wire" --href https://example.com/article
 ```
 
 This drops a Markdown file with valid front-matter. `update` entries are written as `draft: true` so they don't ship until you flip the flag.
 
-### Auto-sync from the live site — `npm run sync`
+### Auto-sync from the live site — `bun run sync`
 
 Pulls `rethinkaadhaar.in/sitemap.xml`, finds URLs not yet represented locally, fetches each page, extracts metadata (og:title / og:description / og:image / datePublished), and writes draft Markdown.
 
 ```sh
-npm run sync                 # dry-run: list new URLs
-npm run sync -- --write      # write the files
-npm run sync -- --since 2026-01-01 --write   # only entries on/after this date
+bun run sync                 # dry-run: list new URLs
+bun run sync -- --write      # write the files
+bun run sync -- --since 2026-01-01 --write   # only entries on/after this date
 ```
 
-Press coverage is **not** auto-synced — it's curated third-party publications. Use `npm run new -- press …`.
+Press coverage is **not** auto-synced — it's curated third-party publications. Use `bun run new -- press …`.
 
 ### CI sync (every Monday)
 
-The `sync.yml` workflow runs `npm run sync -- --write` weekly and opens a PR titled "Upstream sync — new updates / exclusion stories". Reviewing and merging the PR publishes the new content.
+The `sync.yml` workflow runs `bun run sync -- --write` weekly and opens a PR titled "Upstream sync — new updates / exclusion stories". Reviewing and merging the PR publishes the new content.
 
 ### By hand
 
@@ -175,7 +178,7 @@ Pushing to `main` triggers `.github/workflows/deploy.yml`. The action computes t
 ### Cloudflare Pages / Netlify / Vercel / S3
 
 ```
-Build command: npm run build
+Build command: bun run build
 Output dir:    dist
 Node version:  20
 ```

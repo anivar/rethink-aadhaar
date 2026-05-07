@@ -6,7 +6,10 @@ import { link } from '~/lib/link';
 
 const page = await getEntry('page', 'take-action');
 const { Content } = await render(page!);
-const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'Take action', url: '/take-action' }]);
+const jsonLd = breadcrumb([
+  { name: 'Home', url: '/' },
+  { name: 'Take action', url: '/take-action' },
+]);
 ---
 
 <BaseLayout title="Take action" description="Sign on, opt out, launch a local campaign — concrete ways to push back against coercive Aadhaar mandates." jsonLd={jsonLd}>

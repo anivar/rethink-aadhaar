@@ -18,11 +18,13 @@ const jsonLd = [
   }),
   // One ClaimReview per myth — eligible for Google fact-check rich
   // results and read by answer engines as an authoritative verdict.
-  ...myths.map((m) => claimReview({
-    url: mythsUrl,
-    claim: m.data.myth,
-    verdict: m.data.fact ?? 'See full evidence on this page.',
-  })),
+  ...myths.map((m) =>
+    claimReview({
+      url: mythsUrl,
+      claim: m.data.myth,
+      verdict: m.data.fact ?? 'See full evidence on this page.',
+    }),
+  ),
 ];
 ---
 

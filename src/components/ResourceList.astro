@@ -1,6 +1,15 @@
 ---
-interface Item { title: string; href: string; description?: string; order?: number; }
-interface Props { section: string; id?: string; items: Item[]; }
+interface Item {
+  title: string;
+  href: string;
+  description?: string;
+  order?: number;
+}
+interface Props {
+  section: string;
+  id?: string;
+  items: Item[];
+}
 const { section, id, items } = Astro.props;
 const sorted = [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 ---

@@ -7,10 +7,10 @@ export type CategoryKey = 'update' | 'exclusion' | 'press';
 
 export interface CategoryConfig {
   key: CategoryKey;
-  label: string;                    // human label
-  collectionDir: string;            // src/content/<dir>
-  routePrefix: string;              // public URL prefix
-  upstreamPath: string;             // path on rethinkaadhaar.in to crawl for new entries
+  label: string; // human label
+  collectionDir: string; // src/content/<dir>
+  routePrefix: string; // public URL prefix
+  upstreamPath: string; // path on rethinkaadhaar.in to crawl for new entries
   /** Required front-matter fields the scaffolder will prompt for. */
   required: readonly string[];
   /** Optional fields the scaffolder offers. */
@@ -44,7 +44,7 @@ export const CATEGORIES: Record<CategoryKey, CategoryConfig> = {
     key: 'press',
     label: 'Press coverage entry',
     collectionDir: 'src/content/press',
-    routePrefix: '/press-coverage',  // single index page
+    routePrefix: '/press-coverage', // single index page
     upstreamPath: '/press-coverage',
     required: ['title', 'publication', 'date', 'href'],
     optional: [],
@@ -57,7 +57,8 @@ export const CATEGORY_LIST: CategoryConfig[] = Object.values(CATEGORIES);
 export function kebab(s: string): string {
   return s
     .toLowerCase()
-    .normalize('NFKD').replace(/[̀-ͯ]/g, '')
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 80);

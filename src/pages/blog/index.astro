@@ -7,11 +7,10 @@ import { itemList } from '~/lib/seo';
 import { link } from '~/lib/link';
 import { formatDate } from '~/lib/format';
 
-const posts = (await getCollection('update'))
-  .filter(notDraft)
-  .sort(byDateDesc);
+const posts = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
 
-const description = "Press releases, statements, news commentary and analysis from the Rethink Aadhaar campaign.";
+const description =
+  'Press releases, statements, news commentary and analysis from the Rethink Aadhaar campaign.';
 
 // Pull the first inline image out of the body when there's no hero set.
 function firstImage(body: string | undefined): string | undefined {

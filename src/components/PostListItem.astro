@@ -1,6 +1,12 @@
 ---
 import { formatDate } from '~/lib/format';
-interface Props { href: string; title: string; date: Date; location?: string; excerpt?: string; }
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  location?: string;
+  excerpt?: string;
+}
 const { href, title, date, location, excerpt } = Astro.props;
 const dateStr = formatDate(date, 'medium');
 ---

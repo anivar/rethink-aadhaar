@@ -19,8 +19,8 @@
 //   npm run sync -- --since 2026-01-01    # only entries on/after this date
 
 import { writeFileSync, readdirSync, mkdirSync } from 'node:fs';
-import { resolve, join } from 'node:path';
-import { CATEGORIES, ROOT, kebab } from './_categories.mjs';
+import { resolve } from 'node:path';
+import { CATEGORIES, ROOT } from './_categories.mjs';
 
 const SITE = 'https://rethinkaadhaar.in';
 
@@ -42,8 +42,14 @@ async function fetchText(url) {
 
 function existingSlugs(dir) {
   try {
-    return new Set(readdirSync(resolve(ROOT, dir)).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, '')));
-  } catch { return new Set(); }
+    return new Set(
+      readdirSync(resolve(ROOT, dir))
+        .filter((f) => f.endsWith('.md'))
+        .map((f) => f.replace(/\.md$/, '')),
+    );
+  } catch {
+    return new Set();
+  }
 }
 
 // Squarespace URLs look like /blog/2024/3/12/headline-slug.
@@ -52,7 +58,7 @@ function urlToParts(href) {
   const m = href.match(/^\/(blog|testimonials)\/(\d{4})\/(\d{1,2})\/(\d{1,2})\/(.+?)\/?$/);
   if (!m) return null;
   const [, kind, y, mo, d, slug] = m;
-  const date = `${y}-${mo.padStart(2,'0')}-${d.padStart(2,'0')}`;
+  const date = `${y}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`;
   return { kind, date, slug, fullSlug: `${date}-${slug}` };
 }
 
@@ -84,7 +90,9 @@ async function syncCategory(catKey) {
   const fresh = candidates.filter(({ parts }) => !existing.has(parts.fullSlug));
 
   const filtered = flags.since ? fresh.filter(({ parts }) => parts.date >= flags.since) : fresh;
-  console.log(`Upstream: ${candidates.length}  local: ${existing.size}  new: ${filtered.length}${flags.since ? ` (since ${flags.since})` : ''}`);
+  console.log(
+    `Upstream: ${candidates.length}  local: ${existing.size}  new: ${filtered.length}${flags.since ? ` (since ${flags.since})` : ''}`,
+  );
   if (!flags.write) {
     for (const { path, parts } of filtered.slice(0, 50)) console.log(`  + ${parts.date}  ${path}`);
     if (filtered.length > 50) console.log(`  … ${filtered.length - 50} more`);
@@ -96,14 +104,14 @@ async function syncCategory(catKey) {
     try {
       const html = await fetchText(`${SITE}${path}`);
       const title = ogMeta(html, 'title') ?? parts.slug.replace(/-/g, ' ');
-      const desc  = ogMeta(html, 'description') ?? nameMeta(html, 'description') ?? '';
+      const desc = ogMeta(html, 'description') ?? nameMeta(html, 'description') ?? '';
       const image = ogMeta(html, 'image');
-      const date  = jsonLdDate(html) ?? parts.date;
+      const date = jsonLdDate(html) ?? parts.date;
       const sourceUrl = `${SITE}${path}`;
       const file = resolve(ROOT, cfg.collectionDir, `${parts.fullSlug}.md`);
 
       const fm = ['---'];
-      fm.push(`title: ${JSON.stringify(title.replace(/&amp;/g,'&'))}`);
+      fm.push(`title: ${JSON.stringify(title.replace(/&amp;/g, '&'))}`);
       fm.push(`date: ${date}`);
       if (catKey === 'update') {
         if (desc) fm.push(`excerpt: ${JSON.stringify(desc.slice(0, 320))}`);
@@ -137,4 +145,6 @@ for (const k of ['update', 'exclusion']) {
   totals.added += r.added;
   totals.found += r.found;
 }
-console.log(`\nDone. ${flags.write ? `${totals.added} files written.` : `${totals.found} would be written. Re-run with --write to commit.`}`);
+console.log(
+  `\nDone. ${flags.write ? `${totals.added} files written.` : `${totals.found} would be written. Re-run with --write to commit.`}`,
+);

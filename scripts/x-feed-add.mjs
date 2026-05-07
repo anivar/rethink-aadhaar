@@ -38,11 +38,15 @@ const LIVE_PATH = join(DATA_DIR, 'x-feed.json');
 const ARCHIVE_DIR = join(DATA_DIR, 'x-archive');
 
 function readJson(path, fallback) {
-  try { return JSON.parse(readFileSync(path, 'utf8')); } catch { return fallback; }
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return fallback;
+  }
 }
 
 function writeJson(path, data) {
-  writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
+  writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
 function normalise(raw) {
@@ -66,8 +70,10 @@ function parseArgs(argv) {
     if (a.startsWith('--')) {
       const key = a.slice(2);
       const next = argv[i + 1];
-      if (next && !next.startsWith('--')) { args.flags[key] = next; i++; }
-      else args.flags[key] = true;
+      if (next && !next.startsWith('--')) {
+        args.flags[key] = next;
+        i++;
+      } else args.flags[key] = true;
     } else {
       args._.push(a);
     }
@@ -84,7 +90,10 @@ function loadEntries(path) {
     if (Array.isArray(parsed.posts)) return parsed.posts;
     throw new Error('JSON file must be an array or { posts: [...] }');
   } catch {
-    return raw.split('\n').filter(Boolean).map((l) => JSON.parse(l));
+    return raw
+      .split('\n')
+      .filter(Boolean)
+      .map((l) => JSON.parse(l));
   }
 }
 
@@ -127,13 +136,15 @@ function main() {
   if (args._.length > 0) {
     entries = loadEntries(args._[0]);
   } else if (args.flags.id) {
-    entries = [{
-      id: args.flags.id,
-      date: args.flags.date,
-      text: args.flags.text,
-      url: args.flags.url,
-      isRetweet: args.flags.retweet === true || args.flags.retweet === 'true',
-    }];
+    entries = [
+      {
+        id: args.flags.id,
+        date: args.flags.date,
+        text: args.flags.text,
+        url: args.flags.url,
+        isRetweet: args.flags.retweet === true || args.flags.retweet === 'true',
+      },
+    ];
   } else {
     console.error('Usage:');
     console.error('  node scripts/x-feed-add.mjs <file.json>');

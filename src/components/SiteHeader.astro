@@ -8,25 +8,25 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 // Canonical layout: Myths · Exclusion · Updates · Take Action  | LOGO |
 //                   FAQs · Resources · Press · About · Campaign 2025
 const navLeft = [
-  { label: 'Myths',       href: '/myths' },
-  { label: 'Exclusion',   href: '/testimonials' },
-  { label: 'Updates',     href: '/blog' },
+  { label: 'Myths', href: '/myths' },
+  { label: 'Exclusion', href: '/testimonials' },
+  { label: 'Updates', href: '/blog' },
   { label: 'Take action', href: '/take-action' },
 ];
 const navRight = [
-  { label: 'FAQs',         href: '/faqs' },
-  { label: 'Resources',    href: '/resources' },
-  { label: 'Press',        href: '/press-coverage' },
-  { label: 'About',        href: '/about' },
-  { label: 'Campaign 2025',href: '/campaign2025' },
+  { label: 'FAQs', href: '/faqs' },
+  { label: 'Resources', href: '/resources' },
+  { label: 'Press', href: '/press-coverage' },
+  { label: 'About', href: '/about' },
+  { label: 'Campaign 2025', href: '/campaign2025' },
 ];
 const all = [...navLeft, ...navRight].map((n) => ({ ...n, hrefAbs: link(n.href) }));
-const left  = navLeft.map((n)  => ({ ...n, hrefAbs: link(n.href) }));
+const left = navLeft.map((n) => ({ ...n, hrefAbs: link(n.href) }));
 const right = navRight.map((n) => ({ ...n, hrefAbs: link(n.href) }));
 
 function isActive(href: string) {
   if (href === '/') return path === '/';
-  return path === href || path.startsWith(href + '/');
+  return path === href || path.startsWith(`${href}/`);
 }
 ---
 

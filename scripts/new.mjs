@@ -16,8 +16,9 @@ function parseArgs(argv) {
   const args = { _: [], flags: {} };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a.startsWith('--')) { args.flags[a.slice(2)] = argv[++i]; }
-    else args._.push(a);
+    if (a.startsWith('--')) {
+      args.flags[a.slice(2)] = argv[++i];
+    } else args._.push(a);
   }
   return args;
 }
@@ -49,15 +50,15 @@ fm.push(`title: ${JSON.stringify(title)}`);
 fm.push(`date: ${date}`);
 
 if (categoryKey === 'update') {
-  if (args.flags.excerpt)   fm.push(`excerpt: ${JSON.stringify(args.flags.excerpt)}`);
-  if (args.flags.hero)      fm.push(`hero: ${JSON.stringify(args.flags.hero)}`);
+  if (args.flags.excerpt) fm.push(`excerpt: ${JSON.stringify(args.flags.excerpt)}`);
+  if (args.flags.hero) fm.push(`hero: ${JSON.stringify(args.flags.hero)}`);
   if (args.flags.sourceUrl) fm.push(`sourceUrl: ${JSON.stringify(args.flags.sourceUrl)}`);
   fm.push('draft: true');
 }
 if (categoryKey === 'exclusion') {
-  if (args.flags.location)   fm.push(`location: ${JSON.stringify(args.flags.location)}`);
-  if (args.flags.summary)    fm.push(`summary: ${JSON.stringify(args.flags.summary)}`);
-  if (args.flags.sourceUrl)  fm.push(`sourceUrl: ${JSON.stringify(args.flags.sourceUrl)}`);
+  if (args.flags.location) fm.push(`location: ${JSON.stringify(args.flags.location)}`);
+  if (args.flags.summary) fm.push(`summary: ${JSON.stringify(args.flags.summary)}`);
+  if (args.flags.sourceUrl) fm.push(`sourceUrl: ${JSON.stringify(args.flags.sourceUrl)}`);
 }
 if (categoryKey === 'press') {
   if (!args.flags.publication || !args.flags.href) {
@@ -73,5 +74,5 @@ fm.push('<!-- Write the body here in Markdown. -->');
 fm.push('');
 
 writeFileSync(file, fm.join('\n'));
-console.log(`✓ Created ${file.replace(ROOT + '/', '')}`);
+console.log(`✓ Created ${file.replace(`${ROOT}/`, '')}`);
 console.log('  Edit the body, then flip `draft: true` → `draft: false` (updates only).');

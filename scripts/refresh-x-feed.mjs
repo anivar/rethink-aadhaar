@@ -28,7 +28,10 @@ const DEFAULT_SOURCES = [
   `https://nitter.tiekoetter.com/${HANDLE}/with_replies/rss`,
   `https://nitter.net/${HANDLE}/with_replies/rss`,
 ];
-const SOURCES = (process.env.X_FEED_SOURCES?.split(',').map((s) => s.trim()).filter(Boolean)) ?? DEFAULT_SOURCES;
+const SOURCES =
+  process.env.X_FEED_SOURCES?.split(',')
+    .map((s) => s.trim())
+    .filter(Boolean) ?? DEFAULT_SOURCES;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', 'src', 'data');
@@ -50,13 +53,26 @@ async function fetchWithTimeout(url) {
   }
 }
 
-const decode = (s) => s
-  .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-  .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-  .replace(/&amp;/g, '&');
+const decode = (s) =>
+  s
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&');
 
-const unwrap = (s) => s.replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, '').trim();
-const stripHtml = (s) => decode(s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+const unwrap = (s) =>
+  s
+    .replace(/^<!\[CDATA\[/, '')
+    .replace(/\]\]>$/, '')
+    .trim();
+const stripHtml = (s) =>
+  decode(
+    s
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim(),
+  );
 
 function pickTag(block, tag) {
   const re = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i');
@@ -67,8 +83,7 @@ function pickTag(block, tag) {
 function parseFeed(xml) {
   const items = [];
   const re = /<item[\s>][\s\S]*?<\/item>/g;
-  let m;
-  while ((m = re.exec(xml)) !== null) {
+  for (const m of xml.matchAll(re)) {
     const block = m[0];
     const link = pickTag(block, 'link');
     const titleRaw = pickTag(block, 'title');
@@ -84,8 +99,7 @@ function parseFeed(xml) {
     if (!text) continue;
 
     const isRetweet =
-      /^RT\s/i.test(titleRaw) ||
-      (creator && !creator.toLowerCase().includes(HANDLE.toLowerCase()));
+      /^RT\s/i.test(titleRaw) || (creator && !creator.toLowerCase().includes(HANDLE.toLowerCase()));
 
     items.push({
       id,
@@ -101,18 +115,22 @@ function parseFeed(xml) {
 
 async function tryFetch(url) {
   const xml = await fetchWithTimeout(url);
-  if (!xml || !xml.includes('<item')) throw new Error('feed contains no items');
+  if (!xml?.includes('<item')) throw new Error('feed contains no items');
   const posts = parseFeed(xml);
   if (posts.length === 0) throw new Error('parsed zero posts');
   return posts;
 }
 
 function readJson(path, fallback) {
-  try { return JSON.parse(readFileSync(path, 'utf8')); } catch { return fallback; }
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return fallback;
+  }
 }
 
 function writeJson(path, data) {
-  writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
+  writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
 function archiveKeyFor(iso) {
@@ -138,7 +156,10 @@ function mergeArchive(posts) {
     const seen = new Map(existing.posts.map((p) => [p.id, p]));
     let added = 0;
     for (const p of incoming) {
-      if (!seen.has(p.id)) { seen.set(p.id, p); added++; }
+      if (!seen.has(p.id)) {
+        seen.set(p.id, p);
+        added++;
+      }
     }
     if (added === 0) continue;
     const merged = [...seen.values()].sort((a, b) => (a.date ?? '').localeCompare(b.date ?? ''));
@@ -163,8 +184,7 @@ async function main() {
       };
 
       const livePrev = readJson(LIVE_PATH, null);
-      const liveSame =
-        livePrev && JSON.stringify(livePrev.posts ?? []) === JSON.stringify(liveNext.posts);
+      const liveSame = livePrev && JSON.stringify(livePrev.posts ?? []) === JSON.stringify(liveNext.posts);
 
       let changed = false;
       if (!liveSame) {

@@ -15,15 +15,13 @@ import { link } from '~/lib/link';
 const statement = await getEntry('page', 'home-statement');
 const { Content: StatementBody } = await render(statement!);
 
-const updates = (await getCollection('update'))
-  .filter(notDraft)
-  .sort(byDateDesc)
-  .slice(0, 5);
+const updates = (await getCollection('update')).filter(notDraft).sort(byDateDesc).slice(0, 5);
 
 const featured = updates[0];
 const grid = updates.slice(1, 5);
 
-const description = "The Aadhaar project, with its fundamental weaknesses and dangerous effects, continues to grow. Let's Rethink Aadhaar.";
+const description =
+  "The Aadhaar project, with its fundamental weaknesses and dangerous effects, continues to grow. Let's Rethink Aadhaar.";
 const jsonLd = [
   collectionPage({ name: 'Rethink Aadhaar', url: '/', description }),
   itemList({

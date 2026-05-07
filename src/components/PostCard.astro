@@ -1,7 +1,13 @@
 ---
 import { formatDate } from '~/lib/format';
 import Picture from '~/components/Picture.astro';
-interface Props { href: string; title: string; date: Date; excerpt?: string; hero?: string; }
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  excerpt?: string;
+  hero?: string;
+}
 const { href, title, date, excerpt, hero } = Astro.props;
 ---
 <article class="group flex flex-col h-full card-surface hover:border-accent hover:shadow-[0_8px_24px_-12px_rgba(215,40,47,0.25)] transition-all duration-200">

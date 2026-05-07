@@ -26,7 +26,7 @@ interface Props {
 
 const {
   title,
-  description = "Rethink Aadhaar — Opt-out from Aadhaar. Take action now.",
+  description = 'Rethink Aadhaar — Opt-out from Aadhaar. Take action now.',
   bg = 'white',
   bodyClass = '',
   jsonLd,
@@ -35,9 +35,10 @@ const {
   preloadImage,
 } = Astro.props;
 
-const fullTitle = title === 'Rethink Aadhaar'
-  ? 'Rethink Aadhaar — Opt-out from Aadhaar. Take action now.'
-  : `${title} — Rethink Aadhaar`;
+const fullTitle =
+  title === 'Rethink Aadhaar'
+    ? 'Rethink Aadhaar — Opt-out from Aadhaar. Take action now.'
+    : `${title} — Rethink Aadhaar`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageAbs = ogImage.startsWith('http') ? ogImage : absoluteUrl(ogImage, Astro.site!);
 

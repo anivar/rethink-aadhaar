@@ -10,12 +10,21 @@ const OUT_EXC = path.resolve('src/content/exclusion');
 fs.mkdirSync(OUT_BLOG, { recursive: true });
 fs.mkdirSync(OUT_EXC, { recursive: true });
 
-const decode = (s) => s
-  .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-  .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&mdash;/g, '—')
-  .replace(/&nbsp;/g, ' ').replace(/&#x([0-9a-f]+);/gi, (_,h)=>String.fromCharCode(parseInt(h,16)));
+const decode = (s) =>
+  s
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&mdash;/g, '—')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)));
 
-function pick(html, re) { const m = html.match(re); return m ? decode(m[1]).trim() : null; }
+function pick(html, re) {
+  const m = html.match(re);
+  return m ? decode(m[1]).trim() : null;
+}
 
 function localImage(url) {
   // images.squarespace-cdn.com/content/v1/HASH1/HASH2/filename.ext
@@ -34,8 +43,12 @@ function slugFromFile(name, prefix) {
   if (parts[0] !== prefix) return null;
   const [, y, m, d, ...rest] = parts;
   if (!y || !m || !d) return null;
-  const slug = rest.join('-').toLowerCase()
-    .replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  const slug = rest
+    .join('-')
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
   const pad = (s) => String(parseInt(s, 10)).padStart(2, '0');
   return { date: `${y}-${pad(m)}-${pad(d)}`, slug };
 }
@@ -44,15 +57,15 @@ function processOne(file, prefix, outDir) {
   const html = fs.readFileSync(path.join(RAW, file), 'utf8');
   const meta = slugFromFile(file, prefix);
   if (!meta) return false;
-  const titleRaw = pick(html, /<meta\s+property="og:title"\s+content="([^"]+)"/i)
-                ?? pick(html, /<title>([^<]+)<\/title>/i);
+  const titleRaw =
+    pick(html, /<meta\s+property="og:title"\s+content="([^"]+)"/i) ?? pick(html, /<title>([^<]+)<\/title>/i);
   if (!titleRaw) return false;
   const title = titleRaw.replace(/\s*[—–]\s*Rethink Aadhaar\s*$/i, '').trim();
   const desc = pick(html, /<meta\s+property="og:description"\s+content="([^"]+)"/i) || '';
   const ogImg = pick(html, /<meta\s+property="og:image"\s+content="([^"]+)"/i);
   const hero = localImage(ogImg);
-  const liveUrl = `https://rethinkaadhaar.in/${prefix}/${meta.date.split('-')[0]}/${parseInt(meta.date.split('-')[1])}/${parseInt(meta.date.split('-')[2])}/${meta.slug.replace(/^[0-9-]+-/, '')}`;
-  const truncDesc = desc.length > 320 ? desc.slice(0, 320).replace(/\s+\S*$/, '') + '…' : desc;
+  const liveUrl = `https://rethinkaadhaar.in/${prefix}/${meta.date.split('-')[0]}/${parseInt(meta.date.split('-')[1], 10)}/${parseInt(meta.date.split('-')[2], 10)}/${meta.slug.replace(/^[0-9-]+-/, '')}`;
+  const truncDesc = desc.length > 320 ? `${desc.slice(0, 320).replace(/\s+\S*$/, '')}…` : desc;
   const fname = `${meta.date}-${meta.slug.replace(/^[0-9-]+-/, '')}.md`.replace(/--+/g, '-');
   const outPath = path.join(outDir, fname);
   if (fs.existsSync(outPath)) return false; // don't clobber hand-written posts
@@ -65,17 +78,21 @@ function processOne(file, prefix, outDir) {
     `sourceUrl: ${JSON.stringify(liveUrl)}`,
     '---',
     '',
-    truncDesc ? truncDesc + '\n' : '',
+    truncDesc ? `${truncDesc}\n` : '',
     `> Migrated from the live site. The full original post is at [${liveUrl}](${liveUrl}).`,
-    ''
-  ].filter(Boolean).join('\n');
+    '',
+  ]
+    .filter(Boolean)
+    .join('\n');
   fs.writeFileSync(outPath, fm);
   return true;
 }
 
-let blog = 0, exc = 0;
+let blog = 0,
+  exc = 0;
 for (const f of fs.readdirSync(RAW).sort()) {
   if (f.startsWith('blog__') && f.endsWith('.html')) blog += processOne(f, 'blog', OUT_BLOG) ? 1 : 0;
-  if (f.startsWith('testimonials__') && f.endsWith('.html')) exc += processOne(f, 'testimonials', OUT_EXC) ? 1 : 0;
+  if (f.startsWith('testimonials__') && f.endsWith('.html'))
+    exc += processOne(f, 'testimonials', OUT_EXC) ? 1 : 0;
 }
 console.log(`Migrated: ${blog} blog posts, ${exc} exclusion stories`);

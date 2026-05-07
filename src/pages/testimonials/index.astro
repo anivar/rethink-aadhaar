@@ -8,7 +8,7 @@ import { link } from '~/lib/link';
 import { formatDate } from '~/lib/format';
 
 const stories = (await getCollection('exclusion')).sort(byDateDesc);
-const description = "Stories from the ground: what Aadhaar exclusion looks like in practice.";
+const description = 'Stories from the ground: what Aadhaar exclusion looks like in practice.';
 
 // Pull the first inline image out of the body (we converted all media to raw
 // <img> tags during migration). Falls back to undefined for text-only entries.

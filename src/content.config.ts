@@ -86,12 +86,14 @@ const page = defineCollection({
     friends: z.array(z.string()).optional(),
     interns: z.array(z.string()).optional(),
     internsNote: z.string().optional(),
-    contact: z.object({
-      email: z.string().optional(),
-      twitter: z.string().optional(),
-      facebook: z.string().optional(),
-      mailingList: z.string().optional(),
-    }).optional(),
+    contact: z
+      .object({
+        email: z.string().optional(),
+        twitter: z.string().optional(),
+        facebook: z.string().optional(),
+        mailingList: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 

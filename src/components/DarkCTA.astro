@@ -1,5 +1,10 @@
 ---
-interface Props { href: string; external?: boolean; class?: string; variant?: 'dark' | 'outline'; }
+interface Props {
+  href: string;
+  external?: boolean;
+  class?: string;
+  variant?: 'dark' | 'outline';
+}
 const { href, external = false, class: cls = '', variant = 'dark' } = Astro.props;
 const rel = external ? 'noopener' : undefined;
 const target = external ? '_blank' : undefined;

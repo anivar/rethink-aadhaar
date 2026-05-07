@@ -8,9 +8,9 @@
 // then writes a tiny HTML file at `dist<old_path>/index.html`. Honours
 // BASE_PATH so previews under `/rethink/` keep working.
 
-import { readdir, readFile, writeFile, mkdir, stat } from 'node:fs/promises';
+import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(fileURLToPath(import.meta.url), '..', '..');
@@ -19,7 +19,7 @@ const SITE = (process.env.SITE_URL ?? 'https://rethinkaadhaar.in').replace(/\/$/
 const BASE = (process.env.BASE_PATH ?? '/').replace(/\/?$/, '/');
 
 const COLLECTIONS = [
-  { dir: 'src/content/update',    newPrefix: 'blog' },
+  { dir: 'src/content/update', newPrefix: 'blog' },
   { dir: 'src/content/exclusion', newPrefix: 'testimonials' },
 ];
 
@@ -47,13 +47,14 @@ function expandLegacyVariants(oldPath) {
   if (!m) return [oldPath];
   const [, prefix, y, mo, d, rest = ''] = m;
   const months = new Set([mo, mo.padStart(2, '0')]);
-  const days   = new Set([d,  d.padStart(2, '0')]);
+  const days = new Set([d, d.padStart(2, '0')]);
   const out = new Set();
-  for (const mm of months) for (const dd of days) {
-    const base = `${prefix}/${y}/${mm}/${dd}${rest}`;
-    out.add(base);
-    if (!base.endsWith('-')) out.add(base + '-');
-  }
+  for (const mm of months)
+    for (const dd of days) {
+      const base = `${prefix}/${y}/${mm}/${dd}${rest}`;
+      out.add(base);
+      if (!base.endsWith('-')) out.add(`${base}-`);
+    }
   return [...out];
 }
 
@@ -91,9 +92,17 @@ function stubHtml(targetPath, title) {
 }
 
 function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, (c) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-  }[c]));
+  return String(s).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      })[c],
+  );
 }
 
 async function listMd(dir) {
@@ -113,7 +122,7 @@ async function main() {
   }
 
   let written = 0;
-  let skipped = 0;
+  const skipped = 0;
   let missing = 0;
   let collisions = 0;
 
@@ -122,10 +131,16 @@ async function main() {
     for (const { name, path } of files) {
       const src = await readFile(path, 'utf8');
       const fm = parseFrontMatter(src);
-      if (!fm.sourceUrl) { missing++; continue; }
+      if (!fm.sourceUrl) {
+        missing++;
+        continue;
+      }
 
       const oldPath = legacyPathFromSourceUrl(fm.sourceUrl);
-      if (!oldPath) { missing++; continue; }
+      if (!oldPath) {
+        missing++;
+        continue;
+      }
 
       const newPath = newPathForEntry(name, newPrefix);
 
@@ -138,7 +153,10 @@ async function main() {
       for (const variant of variants) {
         const stubDir = join(DIST, variant.replace(/^\//, ''));
         const stubFile = join(stubDir, 'index.html');
-        if (existsSync(stubFile)) { collisions++; continue; }
+        if (existsSync(stubFile)) {
+          collisions++;
+          continue;
+        }
         await mkdir(stubDir, { recursive: true });
         await writeFile(stubFile, stubHtml(newPath, fm.title ?? 'Rethink Aadhaar'));
         written++;
@@ -146,7 +164,9 @@ async function main() {
     }
   }
 
-  console.log(`[legacy-redirects] wrote=${written} skipped=${skipped} no-sourceUrl=${missing} collisions=${collisions}`);
+  console.log(
+    `[legacy-redirects] wrote=${written} skipped=${skipped} no-sourceUrl=${missing} collisions=${collisions}`,
+  );
 }
 
 main().catch((err) => {

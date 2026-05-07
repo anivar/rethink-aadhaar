@@ -4,7 +4,9 @@
 // Rendered via CSS mask so we can recolour: brand red on cream in light
 // mode, cream on dark in dark mode.
 import { link } from '~/lib/link';
-interface Props { class?: string }
+interface Props {
+  class?: string;
+}
 const { class: cls = '' } = Astro.props;
 const url = link('/brand/logo-mark.png');
 ---
