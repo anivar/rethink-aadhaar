@@ -13,21 +13,17 @@ const jsonLd = breadcrumb([
 ---
 
 <BaseLayout title="Take action" description="Sign on, opt out, launch a local campaign — concrete ways to push back against coercive Aadhaar mandates." jsonLd={jsonLd}>
-  <header class="container-prose pt-12 md:pt-20">
-    <div class="grid md:grid-cols-[1fr_auto] items-end gap-6 fade-up">
-      <div>
-        <p class="eyebrow mb-4">What can I do? What can't we do?</p>
-        <h1 class="text-balance text-left">Take action</h1>
-      </div>
-      <img
-        src={link('/media/1501143464367-72QK8G9CYTG48Q7A6Y2O-noun_1067645.png')}
-        alt="Fist with network nodes"
-        class="w-24 sm:w-28 md:w-40 dark:invert justify-self-end"
-        loading="eager"
-        width="160"
-        height="160"
-      />
-    </div>
+  <header class="container-prose pt-12 md:pt-20 text-center fade-up">
+    <img
+      src={link('/media/1501143464367-72QK8G9CYTG48Q7A6Y2O-noun_1067645.png')}
+      alt="Fist with network nodes"
+      class="w-20 sm:w-24 md:w-28 mx-auto mb-6 dark:invert"
+      loading="eager"
+      width="160"
+      height="160"
+    />
+    <p class="eyebrow mb-4">What can I do? What can't we do?</p>
+    <h1 class="text-balance">Take action</h1>
   </header>
 
   <article class="container-prose mt-10 md:mt-14 prose dark:prose-invert font-body text-pretty fade-up actions-list">
