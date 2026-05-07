@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 // Emits HTML stubs at legacy Squarespace URLs that meta-refresh + canonical to
 // the current Astro routes. GitHub Pages can't issue real HTTP 30x redirects,
 // so this is the standard fallback. Run AFTER `astro build` against `dist/`.
@@ -8,12 +8,11 @@
 // then writes a tiny HTML file at `dist<old_path>/index.html`. Honours
 // BASE_PATH so previews under `/rethink/` keep working.
 
-import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { readdir } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(fileURLToPath(import.meta.url), '..', '..');
+const ROOT = resolve(import.meta.dir, '..');
 const DIST = join(ROOT, 'dist');
 const SITE = (process.env.SITE_URL ?? 'https://rethinkaadhaar.in').replace(/\/$/, '');
 const BASE = (process.env.BASE_PATH ?? '/').replace(/\/?$/, '/');
@@ -116,6 +115,7 @@ async function listMd(dir) {
 }
 
 async function main() {
+  // Bun.file().exists() is for files only; directories need existsSync.
   if (!existsSync(DIST)) {
     console.error(`[legacy-redirects] dist/ not found at ${DIST}. Run \`astro build\` first.`);
     process.exit(1);
@@ -129,7 +129,7 @@ async function main() {
   for (const { dir, newPrefix } of COLLECTIONS) {
     const files = await listMd(dir);
     for (const { name, path } of files) {
-      const src = await readFile(path, 'utf8');
+      const src = await Bun.file(path).text();
       const fm = parseFrontMatter(src);
       if (!fm.sourceUrl) {
         missing++;
@@ -151,14 +151,13 @@ async function main() {
       const variants = expandLegacyVariants(oldPath);
 
       for (const variant of variants) {
-        const stubDir = join(DIST, variant.replace(/^\//, ''));
-        const stubFile = join(stubDir, 'index.html');
-        if (existsSync(stubFile)) {
+        const stubFile = join(DIST, variant.replace(/^\//, ''), 'index.html');
+        if (await Bun.file(stubFile).exists()) {
           collisions++;
           continue;
         }
-        await mkdir(stubDir, { recursive: true });
-        await writeFile(stubFile, stubHtml(newPath, fm.title ?? 'Rethink Aadhaar'));
+        // Bun.write creates parent dirs implicitly.
+        await Bun.write(stubFile, stubHtml(newPath, fm.title ?? 'Rethink Aadhaar'));
         written++;
       }
     }

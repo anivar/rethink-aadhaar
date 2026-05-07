@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 // Sync new content from the live rethinkaadhaar.in site.
 //
 // What it does:
@@ -11,14 +11,14 @@
 //
 // Press coverage cannot be auto-synced — it's a curated, hand-built list of
 // third-party publications, not pages on rethinkaadhaar.in. Add new entries
-// with `npm run new -- press ...`.
+// with `bun run new -- press ...`.
 //
 // Usage:
-//   npm run sync                 # dry-run: list new URLs, write nothing
-//   npm run sync -- --write      # write new draft files
-//   npm run sync -- --since 2026-01-01    # only entries on/after this date
+//   bun run sync                 # dry-run: list new URLs, write nothing
+//   bun run sync -- --write      # write new draft files
+//   bun run sync -- --since 2026-01-01    # only entries on/after this date
 
-import { writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { CATEGORIES, ROOT } from './_categories.mjs';
 
@@ -128,8 +128,8 @@ async function syncCategory(catKey) {
       fm.push('');
       fm.push(`> Read the original at [${sourceUrl}](${sourceUrl}).`);
       fm.push('');
-      mkdirSync(resolve(ROOT, cfg.collectionDir), { recursive: true });
-      writeFileSync(file, fm.join('\n'));
+      // Bun.write creates parent dirs implicitly.
+      await Bun.write(file, fm.join('\n'));
       console.log(`  ✓ ${parts.fullSlug}.md`);
       added++;
     } catch (err) {

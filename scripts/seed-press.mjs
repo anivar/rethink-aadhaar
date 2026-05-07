@@ -1,6 +1,5 @@
-#!/usr/bin/env node
-import fs from 'node:fs';
-import path from 'node:path';
+#!/usr/bin/env bun
+import { resolve } from 'node:path';
 
 // Each line: "MM/YYYY | Outlet | Title | URL"  (date may be empty)
 const RAW = `
@@ -66,8 +65,7 @@ const RAW = `
 2016 | TheWire.in | Aadhaar Act is Not a Money Bill | https://thewire.in/31297/the-aadhaar-act-is-not-a-money-bill/
 `.trim();
 
-const OUT = path.resolve('src/content/press');
-fs.mkdirSync(OUT, { recursive: true });
+const OUT = resolve('src/content/press');
 
 const slugify = (s) =>
   s
@@ -102,7 +100,8 @@ for (const line of RAW.split('\n')
     '---',
     '',
   ].join('\n');
-  fs.writeFileSync(path.join(OUT, fname), fm);
+  // Bun.write creates parent dirs implicitly.
+  await Bun.write(resolve(OUT, fname), fm);
   n++;
 }
 console.log(`Wrote ${n} press entries`);

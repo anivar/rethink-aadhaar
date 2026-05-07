@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 /**
  * Pulls the latest posts from @no2uid via public Nitter / RSSHub mirrors and:
  *   1. writes the latest N to src/data/x-feed.json (used by the homepage strip)
@@ -12,9 +12,8 @@
  * actually changed on disk, so the workflow can skip a no-op commit.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve, join } from 'node:path';
+import { appendFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 
 const HANDLE = process.env.X_HANDLE ?? 'no2uid';
 const LIVE_LIMIT = Number(process.env.X_LIVE_LIMIT ?? 8);
@@ -33,8 +32,7 @@ const SOURCES =
     .map((s) => s.trim())
     .filter(Boolean) ?? DEFAULT_SOURCES;
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = resolve(__dirname, '..', 'src', 'data');
+const DATA_DIR = resolve(import.meta.dir, '..', 'src', 'data');
 const LIVE_PATH = join(DATA_DIR, 'x-feed.json');
 const ARCHIVE_DIR = join(DATA_DIR, 'x-archive');
 
@@ -121,16 +119,17 @@ async function tryFetch(url) {
   return posts;
 }
 
-function readJson(path, fallback) {
+async function readJson(path, fallback) {
   try {
-    return JSON.parse(readFileSync(path, 'utf8'));
+    return await Bun.file(path).json();
   } catch {
     return fallback;
   }
 }
 
-function writeJson(path, data) {
-  writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
+async function writeJson(path, data) {
+  // Bun.write creates parent dirs implicitly.
+  await Bun.write(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
 function archiveKeyFor(iso) {
@@ -138,9 +137,7 @@ function archiveKeyFor(iso) {
   return iso.slice(0, 7); // YYYY-MM
 }
 
-function mergeArchive(posts) {
-  if (!existsSync(ARCHIVE_DIR)) mkdirSync(ARCHIVE_DIR, { recursive: true });
-
+async function mergeArchive(posts) {
   // Group incoming by month, then merge into each month's file.
   const byMonth = new Map();
   for (const p of posts) {
@@ -152,7 +149,7 @@ function mergeArchive(posts) {
   let touched = 0;
   for (const [key, incoming] of byMonth) {
     const path = join(ARCHIVE_DIR, `${key}.json`);
-    const existing = readJson(path, { handle: HANDLE, month: key, posts: [] });
+    const existing = await readJson(path, { handle: HANDLE, month: key, posts: [] });
     const seen = new Map(existing.posts.map((p) => [p.id, p]));
     let added = 0;
     for (const p of incoming) {
@@ -163,7 +160,7 @@ function mergeArchive(posts) {
     }
     if (added === 0) continue;
     const merged = [...seen.values()].sort((a, b) => (a.date ?? '').localeCompare(b.date ?? ''));
-    writeJson(path, { handle: HANDLE, month: key, posts: merged });
+    await writeJson(path, { handle: HANDLE, month: key, posts: merged });
     console.log(`[x-feed] archive ${key}: +${added} (total ${merged.length})`);
     touched++;
   }
@@ -183,19 +180,19 @@ async function main() {
         posts: posts.slice(0, LIVE_LIMIT),
       };
 
-      const livePrev = readJson(LIVE_PATH, null);
+      const livePrev = await readJson(LIVE_PATH, null);
       const liveSame = livePrev && JSON.stringify(livePrev.posts ?? []) === JSON.stringify(liveNext.posts);
 
       let changed = false;
       if (!liveSame) {
-        writeJson(LIVE_PATH, liveNext);
+        await writeJson(LIVE_PATH, liveNext);
         console.log(`[x-feed] live: ${liveNext.posts.length} posts via ${liveNext.source}`);
         changed = true;
       } else {
         console.log(`[x-feed] live: no change (${liveNext.posts.length} posts via ${liveNext.source})`);
       }
 
-      const archiveTouched = mergeArchive(posts);
+      const archiveTouched = await mergeArchive(posts);
       if (archiveTouched > 0) changed = true;
 
       if (changed && process.env.GITHUB_OUTPUT) {

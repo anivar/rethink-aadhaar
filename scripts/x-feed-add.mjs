@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 /**
  * Manual entry helper for the @no2uid archive. Use this when the cron mirrors
  * are unreachable but you have post details to hand (a screenshot, a reply
@@ -7,12 +7,12 @@
  * Two modes:
  *
  *   1. Bulk from a YAML/JSON-ish file:
- *        node scripts/x-feed-add.mjs scripts/x-feed-seed.json
+ *        bun scripts/x-feed-add.mjs scripts/x-feed-seed.json
  *      The file may be either a JSON array of entries, OR a JSONL stream
  *      (one entry per line).
  *
  *   2. Single entry via CLI flags:
- *        node scripts/x-feed-add.mjs \
+ *        bun scripts/x-feed-add.mjs \
  *          --id 1234567890 \
  *          --date 2025-12-10 \
  *          --text "Beware of Aadhaar — released today on Human Rights Day."
@@ -25,28 +25,27 @@
  * regenerated from the merged archive (newest first).
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve, join } from 'node:path';
+import { Glob } from 'bun';
+import { join, resolve } from 'node:path';
 
 const HANDLE = process.env.X_HANDLE ?? 'no2uid';
 const LIVE_LIMIT = Number(process.env.X_LIVE_LIMIT ?? 8);
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = resolve(__dirname, '..', 'src', 'data');
+const DATA_DIR = resolve(import.meta.dir, '..', 'src', 'data');
 const LIVE_PATH = join(DATA_DIR, 'x-feed.json');
 const ARCHIVE_DIR = join(DATA_DIR, 'x-archive');
 
-function readJson(path, fallback) {
+async function readJson(path, fallback) {
   try {
-    return JSON.parse(readFileSync(path, 'utf8'));
+    return await Bun.file(path).json();
   } catch {
     return fallback;
   }
 }
 
-function writeJson(path, data) {
-  writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
+async function writeJson(path, data) {
+  // Bun.write creates parent dirs implicitly.
+  await Bun.write(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
 function normalise(raw) {
@@ -81,8 +80,8 @@ function parseArgs(argv) {
   return args;
 }
 
-function loadEntries(path) {
-  const raw = readFileSync(path, 'utf8').trim();
+async function loadEntries(path) {
+  const raw = (await Bun.file(path).text()).trim();
   // Try JSON array first; else treat as JSONL.
   try {
     const parsed = JSON.parse(raw);
@@ -97,27 +96,25 @@ function loadEntries(path) {
   }
 }
 
-function mergeOne(entry) {
-  if (!existsSync(ARCHIVE_DIR)) mkdirSync(ARCHIVE_DIR, { recursive: true });
+async function mergeOne(entry) {
   const month = entry.date.slice(0, 7);
   const path = join(ARCHIVE_DIR, `${month}.json`);
-  const existing = readJson(path, { handle: HANDLE, month, posts: [] });
+  const existing = await readJson(path, { handle: HANDLE, month, posts: [] });
   const seen = new Map(existing.posts.map((p) => [p.id, p]));
   if (seen.has(entry.id)) return false;
   seen.set(entry.id, entry);
   const merged = [...seen.values()].sort((a, b) => a.date.localeCompare(b.date));
-  writeJson(path, { handle: HANDLE, month, posts: merged });
+  await writeJson(path, { handle: HANDLE, month, posts: merged });
   return true;
 }
 
-function regenerateLiveFromArchive() {
-  if (!existsSync(ARCHIVE_DIR)) return;
+async function regenerateLiveFromArchive() {
   const all = [];
-  for (const f of readdirSync(ARCHIVE_DIR)) {
-    if (!f.endsWith('.json')) continue;
-    const data = readJson(join(ARCHIVE_DIR, f), null);
+  for await (const f of new Glob('*.json').scan({ cwd: ARCHIVE_DIR })) {
+    const data = await readJson(join(ARCHIVE_DIR, f), null);
     if (data?.posts) all.push(...data.posts);
   }
+  if (all.length === 0) return;
   all.sort((a, b) => b.date.localeCompare(a.date));
   const live = {
     handle: HANDLE,
@@ -125,16 +122,16 @@ function regenerateLiveFromArchive() {
     source: 'manual',
     posts: all.slice(0, LIVE_LIMIT),
   };
-  writeJson(LIVE_PATH, live);
+  await writeJson(LIVE_PATH, live);
   console.log(`[x-feed-add] live: ${live.posts.length} posts (newest first) regenerated from archive`);
 }
 
-function main() {
+async function main() {
   const args = parseArgs(process.argv.slice(2));
   let entries = [];
 
   if (args._.length > 0) {
-    entries = loadEntries(args._[0]);
+    entries = await loadEntries(args._[0]);
   } else if (args.flags.id) {
     entries = [
       {
@@ -147,15 +144,15 @@ function main() {
     ];
   } else {
     console.error('Usage:');
-    console.error('  node scripts/x-feed-add.mjs <file.json>');
-    console.error('  node scripts/x-feed-add.mjs --id <id> --date <iso> --text "..." [--retweet]');
+    console.error('  bun scripts/x-feed-add.mjs <file.json>');
+    console.error('  bun scripts/x-feed-add.mjs --id <id> --date <iso> --text "..." [--retweet]');
     process.exit(2);
   }
 
   let added = 0;
   for (const raw of entries) {
     const entry = normalise(raw);
-    if (mergeOne(entry)) {
+    if (await mergeOne(entry)) {
       console.log(`[x-feed-add] +${entry.id} (${entry.date.slice(0, 10)}) ${entry.text.slice(0, 60)}…`);
       added++;
     } else {
@@ -164,7 +161,7 @@ function main() {
   }
 
   console.log(`[x-feed-add] ${added} added of ${entries.length} requested`);
-  regenerateLiveFromArchive();
+  await regenerateLiveFromArchive();
 }
 
-main();
+await main();

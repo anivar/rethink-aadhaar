@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 /**
  * Generate WebP siblings for every JPG/PNG under public/media/. Idempotent —
  * skips files where the .webp is already up to date (newer mtime than source).
@@ -10,8 +10,9 @@
  * run, < 1s on incremental runs.
  */
 
-import { readdirSync, statSync, existsSync } from 'node:fs';
-import { join, extname, basename } from 'node:path';
+import { Glob } from 'bun';
+import { existsSync } from 'node:fs';
+import { basename, extname, join } from 'node:path';
 import sharp from 'sharp';
 
 const ROOT = 'public/media';
@@ -23,22 +24,14 @@ const HERO_LIST = (process.env.HERO ?? '1489594687018-VG8KQQP625TQFSNEP1FV-image
 const WEBP_OPTS = { quality: 80, effort: 4 };
 const AVIF_OPTS = { quality: 55, effort: 4 };
 
-function* walk(dir) {
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    const st = statSync(full);
-    if (st.isDirectory()) yield* walk(full);
-    else yield full;
-  }
-}
-
-function isFresher(target, source) {
-  if (!existsSync(target)) return false;
-  return statSync(target).mtimeMs >= statSync(source).mtimeMs;
+async function isFresher(target, source) {
+  const t = Bun.file(target);
+  if (!(await t.exists())) return false;
+  return t.lastModified >= Bun.file(source).lastModified;
 }
 
 async function convert(src, target, format, opts) {
-  if (isFresher(target, src)) return 'skip';
+  if (await isFresher(target, src)) return 'skip';
   try {
     await sharp(src).rotate().toFormat(format, opts).toFile(target);
     return 'wrote';
@@ -49,6 +42,7 @@ async function convert(src, target, format, opts) {
 }
 
 async function main() {
+  // Bun.file().exists() is for files only; directories need existsSync.
   if (!existsSync(ROOT)) {
     console.log(`[optimize-images] no ${ROOT}; skipping`);
     return;
@@ -59,7 +53,8 @@ async function main() {
   let avifAdded = 0;
   const tasks = [];
 
-  for (const src of walk(ROOT)) {
+  for await (const rel of new Glob('**/*').scan({ cwd: ROOT })) {
+    const src = join(ROOT, rel);
     const ext = extname(src).toLowerCase();
     if (!['.jpg', '.jpeg', '.png'].includes(ext)) continue;
     total++;

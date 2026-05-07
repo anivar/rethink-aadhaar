@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 // Minimal post-build SEO sanity check. Runs against `dist/` after
 // `astro build`. Fails the build if any of these break — these are
 // the things we'd be embarrassed to ship a regression on.
@@ -15,12 +15,11 @@
 // Deliberately NOT pulling in puppeteer / external crawlers / link
 // checkers — overkill for a static archive of this size.
 
-import { readFile, readdir, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { readdir } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(fileURLToPath(import.meta.url), '..', '..');
+const ROOT = resolve(import.meta.dir, '..');
 const DIST = join(ROOT, 'dist');
 
 const failures = [];
@@ -32,13 +31,6 @@ function pass(msg) {
   console.log('  ✓', msg);
 }
 
-async function exists(p) {
-  return existsSync(p);
-}
-async function size(p) {
-  return (await stat(p)).size;
-}
-
 async function checkFeeds() {
   console.log('# Feeds');
   for (const [path, label] of [
@@ -48,18 +40,18 @@ async function checkFeeds() {
     ['robots.txt', 'robots.txt'],
     ['rss.xml', 'rss.xml'],
   ]) {
-    const p = join(DIST, path);
-    if (!(await exists(p))) {
-      fail(`${label} missing at ${p}`);
+    const file = Bun.file(join(DIST, path));
+    if (!(await file.exists())) {
+      fail(`${label} missing at ${file.name}`);
       continue;
     }
-    const bytes = await size(p);
+    const bytes = file.size;
     if (bytes < 100) {
       fail(`${label} suspiciously small (${bytes} bytes)`);
       continue;
     }
     if (path === 'sitemap-index.xml') {
-      const txt = await readFile(p, 'utf8');
+      const txt = await file.text();
       if (!/^<\?xml/.test(txt)) fail('sitemap-index.xml does not start with <?xml');
       else pass(`${label} (${bytes}B, valid XML head)`);
     } else {
@@ -88,12 +80,12 @@ function singleMatch(html, re, label) {
 
 async function checkPage(relPath, requirements) {
   console.log(`# ${relPath}`);
-  const p = join(DIST, relPath);
-  if (!(await exists(p))) {
-    fail(`page missing: ${p}`);
+  const file = Bun.file(join(DIST, relPath));
+  if (!(await file.exists())) {
+    fail(`page missing: ${file.name}`);
     return;
   }
-  const html = await readFile(p, 'utf8');
+  const html = await file.text();
 
   if (requirements.title) {
     const titles = html.match(/<title>[^<]*<\/title>/g) ?? [];
@@ -143,19 +135,20 @@ async function checkPage(relPath, requirements) {
 
 async function findFirstUpdatePage() {
   const blog = join(DIST, 'blog');
-  if (!(await exists(blog))) return null;
+  // Bun.file().exists() is for files only; directories need existsSync.
+  if (!existsSync(blog)) return null;
   for (const name of await readdir(blog)) {
     if (/^\d{4}-/.test(name)) {
       const p = join('blog', name, 'index.html');
-      if (await exists(join(DIST, p))) return p;
+      if (await Bun.file(join(DIST, p)).exists()) return p;
     }
   }
   return null;
 }
 
 async function main() {
-  if (!(await exists(DIST))) {
-    console.error('dist/ missing — run `npm run build` first.');
+  if (!existsSync(DIST)) {
+    console.error('dist/ missing — run `bun run build` first.');
     process.exit(1);
   }
 

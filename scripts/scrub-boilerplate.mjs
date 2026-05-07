@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 // Strip the "Migrated from the live site…" boilerplate paragraph from
 // content bodies. Idempotent — re-runs are no-ops.
 //
@@ -7,29 +7,15 @@
 // `sourceUrl` front-matter field. The in-body line duplicates it and
 // breaks the prose. Front-matter `sourceUrl` is preserved.
 //
-// Usage:  node scripts/scrub-boilerplate.mjs            (writes)
-//         node scripts/scrub-boilerplate.mjs --dry      (reports only)
+// Usage:  bun scripts/scrub-boilerplate.mjs            (writes)
+//         bun scripts/scrub-boilerplate.mjs --dry      (reports only)
 
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve, dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { readdirSync, statSync } from 'node:fs';
+import { Glob } from 'bun';
+import { join, resolve } from 'node:path';
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = resolve(import.meta.dir, '..');
 const CONTENT = join(ROOT, 'src', 'content');
 const dry = process.argv.includes('--dry');
-
-// Walk all .md files under src/content (any depth).
-function walk(dir) {
-  const out = [];
-  for (const name of readdirSync(dir)) {
-    const p = join(dir, name);
-    const s = statSync(p);
-    if (s.isDirectory()) out.push(...walk(p));
-    else if (s.isFile() && p.endsWith('.md')) out.push(p);
-  }
-  return out;
-}
 
 // Match the trailing "> Migrated from the live site. The full original post
 // is at [URL](URL)." block, with any leading blank lines, anywhere in the body.
@@ -42,22 +28,24 @@ const PATTERNS = [
 
 let changed = 0;
 let unchanged = 0;
-const files = walk(CONTENT);
+let total = 0;
 
-for (const file of files) {
-  const before = readFileSync(file, 'utf8');
+for await (const rel of new Glob('**/*.md').scan({ cwd: CONTENT })) {
+  total++;
+  const path = join(CONTENT, rel);
+  const before = await Bun.file(path).text();
   let after = before;
   for (const re of PATTERNS) after = after.replace(re, '');
   // Collapse 3+ trailing newlines to a single trailing newline.
   after = after.replace(/\n{3,}$/, '\n').replace(/\s+$/, '\n');
   if (after !== before) {
     changed++;
-    if (!dry) writeFileSync(file, after);
+    if (!dry) await Bun.write(path, after);
   } else {
     unchanged++;
   }
 }
 
 console.log(
-  `${dry ? '[dry-run] would update' : 'Updated'} ${changed} files; ${unchanged} already clean (of ${files.length} total).`,
+  `${dry ? '[dry-run] would update' : 'Updated'} ${changed} files; ${unchanged} already clean (of ${total} total).`,
 );

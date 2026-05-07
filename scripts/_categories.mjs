@@ -1,10 +1,9 @@
 // JS mirror of src/lib/categories.ts so node scripts can use it without
 // transpilation. Keep in sync — both files reference the same dirs/prefixes.
 
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
 
-export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+export const ROOT = resolve(import.meta.dir, '..');
 
 export const CATEGORIES = {
   update: {

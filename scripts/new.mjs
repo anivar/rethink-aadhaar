@@ -1,14 +1,13 @@
-#!/usr/bin/env node
-// Scaffold a new content entry: `npm run new -- <category> "Title here"`
+#!/usr/bin/env bun
+// Scaffold a new content entry: `bun run new -- <category> "Title here"`
 //
-//   npm run new -- update    "Statement on the latest exclusion incident"
-//   npm run new -- exclusion "Aadhaar-linked pension denial in Khunti"
-//   npm run new -- press     "Outlet — headline" --publication "The Wire" --href https://...
+//   bun run new -- update    "Statement on the latest exclusion incident"
+//   bun run new -- exclusion "Aadhaar-linked pension denial in Khunti"
+//   bun run new -- press     "Outlet — headline" --publication "The Wire" --href https://...
 //
-// Always writes the entry as a draft (so it shows up in `npm run sync` reports
+// Always writes the entry as a draft (so it shows up in `bun run sync` reports
 // and is excluded from RSS/index until you flip `draft: false`).
 
-import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { CATEGORIES, ROOT, kebab, todayISO } from './_categories.mjs';
 
@@ -29,7 +28,7 @@ const title = titleWords.join(' ').trim();
 const cfg = CATEGORIES[categoryKey];
 
 if (!cfg || !title) {
-  console.error('Usage: npm run new -- <update|exclusion|press> "Title here" [--flag value...]');
+  console.error('Usage: bun run new -- <update|exclusion|press> "Title here" [--flag value...]');
   console.error('Categories:', Object.keys(CATEGORIES).join(', '));
   process.exit(1);
 }
@@ -37,9 +36,8 @@ if (!cfg || !title) {
 const date = args.flags.date ?? todayISO();
 const slug = `${date}-${kebab(title)}`;
 const dir = resolve(ROOT, cfg.collectionDir);
-mkdirSync(dir, { recursive: true });
 const file = join(dir, `${slug}.md`);
-if (existsSync(file)) {
+if (await Bun.file(file).exists()) {
   console.error(`✗ Already exists: ${file}`);
   process.exit(1);
 }
@@ -73,6 +71,7 @@ fm.push('');
 fm.push('<!-- Write the body here in Markdown. -->');
 fm.push('');
 
-writeFileSync(file, fm.join('\n'));
+// Bun.write creates parent directories implicitly.
+await Bun.write(file, fm.join('\n'));
 console.log(`✓ Created ${file.replace(`${ROOT}/`, '')}`);
 console.log('  Edit the body, then flip `draft: true` → `draft: false` (updates only).');
