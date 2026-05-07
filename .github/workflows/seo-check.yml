@@ -7,12 +7,21 @@ name: seo-check
 on:
   pull_request:
 
+# `pull_request` (not `pull_request_target`) gives GITHUB_TOKEN read-only
+# perms on PRs from forks; we mirror that explicitly here so an internal PR
+# from a feature branch cannot escalate either.
+permissions:
+  contents: read
+
 jobs:
   seo:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Pinned to commit SHA — tag in comment is the human-readable version.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
         with:
           node-version: '24'
           cache: npm

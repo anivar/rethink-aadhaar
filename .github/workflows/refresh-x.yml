@@ -6,8 +6,10 @@ on:
     - cron: '7 3 * * *'
   workflow_dispatch:
 
+# Workflow-level baseline is read-only; the refresh job below escalates to
+# `contents: write` only because the bot commits the refreshed JSON cache.
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: refresh-x
@@ -16,10 +18,13 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      # Pinned to commit SHA — tag in comment is the human-readable version.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
         with:
           node-version: '24'
 
@@ -30,10 +35,21 @@ jobs:
       - name: Commit if changed
         if: steps.refresh.outputs.changed == 'true'
         run: |
+          set -euo pipefail
           git add src/data/x-feed.json src/data/x-archive
           if git diff --cached --quiet; then
             echo "No staged diff; skipping commit."
             exit 0
+          fi
+          # Defence-in-depth: refuse to push if anything outside the bot's
+          # designated paths sneaks into the staged diff. The script should
+          # only ever touch these two paths; this catches the case where a
+          # future change accidentally widens its blast radius.
+          OUT_OF_SCOPE=$(git diff --cached --name-only | grep -Ev '^src/data/x-feed\.json$|^src/data/x-archive(/|$)' || true)
+          if [ -n "$OUT_OF_SCOPE" ]; then
+            echo "Refusing to commit: paths outside bot scope:"
+            echo "$OUT_OF_SCOPE"
+            exit 1
           fi
           git config user.name "rethink-bot"
           git config user.email "bot@users.noreply.github.com"

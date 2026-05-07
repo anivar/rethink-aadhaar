@@ -9,6 +9,11 @@ on:
     - cron: '0 6 * * 1'
   workflow_dispatch:
 
+# Read-only by default; the sync job below escalates to write because it
+# opens a PR via peter-evans/create-pull-request.
+permissions:
+  contents: read
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -16,13 +21,14 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Pinned to commit SHA — tag in comment is the human-readable version.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
         with:
           node-version: '24'
       - run: node scripts/sync.mjs --write
       - name: Open PR if anything new
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c  # v6.1.0
         with:
           branch: chore/upstream-sync
           commit-message: "chore: sync new upstream content"
