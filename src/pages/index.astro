@@ -9,7 +9,7 @@ import FeaturedStory from '~/components/FeaturedStory.astro';
 import XTimeline from '~/components/XTimeline.astro';
 import Picture from '~/components/Picture.astro';
 import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
-import { collectionPage } from '~/lib/seo';
+import { collectionPage, itemList } from '~/lib/seo';
 import { link } from '~/lib/link';
 
 const statement = await getEntry('page', 'home-statement');
@@ -24,7 +24,18 @@ const featured = updates[0];
 const grid = updates.slice(1, 5);
 
 const description = "The Aadhaar project, with its fundamental weaknesses and dangerous effects, continues to grow. Let's Rethink Aadhaar.";
-const jsonLd = collectionPage({ name: 'Rethink Aadhaar', url: '/', description });
+const jsonLd = [
+  collectionPage({ name: 'Rethink Aadhaar', url: '/', description }),
+  itemList({
+    name: 'Latest updates',
+    url: '/blog',
+    items: updates.map((u) => ({
+      name: u.data.title,
+      url: entryHref('update', u),
+      description: u.data.excerpt,
+    })),
+  }),
+];
 ---
 
 <BaseLayout

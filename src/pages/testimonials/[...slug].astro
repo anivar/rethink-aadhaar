@@ -6,7 +6,7 @@ import ShareRow from '~/components/ShareRow.astro';
 import StickyAction from '~/components/StickyAction.astro';
 import { entryHref } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
-import { article, breadcrumb, MENTIONS } from '~/lib/seo';
+import { article, breadcrumb, MENTIONS, place } from '~/lib/seo';
 import { link } from '~/lib/link';
 
 export async function getStaticPaths() {
@@ -32,6 +32,7 @@ const jsonLd = [
     image: entry.data.shareImage,
     section: 'Exclusion',
     mentions: MENTIONS,
+    contentLocation: entry.data.location ? place(entry.data.location) : undefined,
   }),
   breadcrumb([
     { name: 'Home', url: '/' },

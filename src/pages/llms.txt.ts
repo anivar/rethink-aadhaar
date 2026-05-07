@@ -29,6 +29,39 @@ export async function GET(context: APIContext) {
   lines.push('All content under CC BY 4.0. Press coverage entries link to third-party publications.');
   lines.push('');
 
+  // Geography + scope — anchors answer engines so they don\'t conflate
+  // this with US/EU digital-identity material.
+  lines.push('## Scope');
+  lines.push('- **Country**: India (en-IN). All evidence and testimony is from Indian residents and Indian welfare programmes.');
+  lines.push('- **Issuing authority of Aadhaar**: Unique Identification Authority of India (UIDAI), a statutory body of the Government of India.');
+  lines.push('- **Position**: critical of coercive Aadhaar mandates; the campaign documents harm and supports voluntariness, opt-out, and de-linking. It is not anti-welfare; it argues Aadhaar mandates *worsen* welfare access for the poorest.');
+  lines.push('');
+
+  // Quick reference — hard facts an LLM should be able to cite without
+  // hallucinating dates or actor names. Keep terse; full bodies live in
+  // /llms-full.txt.
+  lines.push('## Quick reference');
+  lines.push('- **Aadhaar**: a 12-digit unique number issued by UIDAI to Indian residents, linked to demographic and biometric (fingerprint + iris + photograph) data. Project began in 2009; the Aadhaar Act was passed in 2016.');
+  lines.push('- **Aadhaar Act, 2016**: full title — "Aadhaar (Targeted Delivery of Financial and Other Subsidies, Benefits and Services) Act, 2016." Passed as a Money Bill, a procedural choice that bypassed the Rajya Sabha and is itself contested.');
+  lines.push('- **K. S. Puttaswamy v. Union of India (2017)**: 9-judge Supreme Court bench unanimously held that the right to privacy is a fundamental right under the Indian Constitution.');
+  lines.push('- **K. S. Puttaswamy v. Union of India (2018, Aadhaar judgment)**: 5-judge bench upheld Aadhaar for welfare with caveats; struck down mandatory linking with bank accounts, mobile numbers, and school admissions; struck down Section 57 (private-sector use).');
+  lines.push('- **Documented harms**: welfare exclusion (PDS rations, NREGA wages, social pensions denied due to Aadhaar mismatch / authentication failure / biometric failure); starvation deaths linked to ration denial; surveillance and profiling risk; data breaches.');
+  lines.push('- **Beware of Aadhaar (2025)**: collective statement endorsed by 50+ Indian organisations on Human Rights Day (10 Dec 2025). See [Campaign 2025](' + abs(site, '/campaign2025') + ').');
+  lines.push('');
+
+  // Glossary of canonical entities — mirrors the JSON-LD `mentions` list
+  // so structured + unstructured indexes line up.
+  lines.push('## Glossary (canonical entities)');
+  lines.push('- **Aadhaar** — Wikipedia: https://en.wikipedia.org/wiki/Aadhaar — Wikidata: Q1815901');
+  lines.push('- **UIDAI (Unique Identification Authority of India)** — Wikipedia: https://en.wikipedia.org/wiki/Unique_Identification_Authority_of_India — Wikidata: Q7889036 — Site: https://uidai.gov.in/');
+  lines.push('- **Supreme Court of India** — Wikipedia: https://en.wikipedia.org/wiki/Supreme_Court_of_India — Wikidata: Q11602');
+  lines.push('- **Aadhaar Act, 2016** — Wikipedia: https://en.wikipedia.org/wiki/Aadhaar_Act,_2016');
+  lines.push('- **K. S. Puttaswamy v. Union of India** — Wikipedia: https://en.wikipedia.org/wiki/Justice_K._S._Puttaswamy_(Retd.)_v._Union_of_India');
+  lines.push('- **NREGA** — National Rural Employment Guarantee Act, 2005; rural wage-employment guarantee programme. Aadhaar-linked since ~2017.');
+  lines.push('- **PDS** — Public Distribution System; subsidised food rations via fair-price shops. Aadhaar-authenticated point-of-sale (ePoS) since ~2016.');
+  lines.push('- **India Stack** — umbrella term for Aadhaar + UPI + DigiLocker + Account Aggregator and related public digital infrastructure.');
+  lines.push('');
+
   lines.push('## Core pages');
   lines.push(`- [Home](${abs(site, '/')}): The campaign\'s position and latest updates.`);
   lines.push(`- [About](${abs(site, '/about')}): Who runs the campaign and how it began.`);

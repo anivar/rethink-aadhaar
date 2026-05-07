@@ -12,8 +12,21 @@ export function org(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
     name: SITE_NAME,
+    alternateName: ['Rethink Aadhaar Campaign', 'No2UID'],
     url: SITE_URL,
+    description:
+      "A non-partisan Indian campaign documenting the welfare exclusion, surveillance risk, and biometric failures of the Aadhaar (UID) project, and pushing back against its coercive expansion.",
+    foundingDate: '2017',
+    foundingLocation: { '@type': 'Country', name: 'India' },
+    areaServed: { '@type': 'Country', name: 'India' },
+    address: { '@type': 'PostalAddress', addressCountry: 'IN' },
+    knowsAbout: [
+      'Aadhaar', 'Unique Identification Authority of India', 'biometric identification',
+      'welfare exclusion', 'public distribution system', 'NREGA', 'right to privacy',
+      'mass surveillance', 'data protection', 'digital identity',
+    ],
     sameAs: [
       'https://twitter.com/no2uid',
       'https://www.facebook.com/no2uid/',
@@ -26,15 +39,78 @@ export function website(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
     name: SITE_NAME,
     url: SITE_URL,
     inLanguage: 'en-IN',
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    about: { '@id': `${SITE_URL}/#topic-aadhaar` },
+    keywords: [
+      'Aadhaar', 'UIDAI', 'biometric ID India', 'welfare exclusion',
+      'PDS ration Aadhaar', 'NREGA Aadhaar', 'pension Aadhaar',
+      'right to privacy India', 'Puttaswamy judgment', 'mass surveillance India',
+      'India Stack', 'digital identity', 'hunger deaths Aadhaar',
+    ].join(', '),
     potentialAction: {
       '@type': 'SearchAction',
       target: `${SITE_URL}/?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   };
+}
+
+/** Place entity for `contentLocation` on exclusion stories. Free-form
+ *  location string is preserved verbatim (e.g. "Khunti, Jharkhand"); we
+ *  only add the country code to anchor it to India. */
+export function place(name: string, country = 'IN'): JsonLd {
+  return {
+    '@type': 'Place',
+    name,
+    address: { '@type': 'PostalAddress', addressLocality: name, addressCountry: country },
+  };
+}
+
+/** AboutPage for /about — pairs with the Organization graph for richer
+ *  answer-engine context ("who runs this site?"). */
+export function aboutPage(input: { url: string; description?: string }): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    url: input.url.startsWith('http') ? input.url : `${SITE_URL}${input.url}`,
+    inLanguage: 'en-IN',
+    description: input.description,
+    mainEntity: { '@id': `${SITE_URL}/#organization` },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+  };
+}
+
+/** Event/PublicationEvent — used for the Campaign 2025 launch on
+ *  Human Rights Day. Tells answer engines this is a dated, named release
+ *  with named endorsing organisations, not just a static page. */
+export function event(input: {
+  name: string;
+  url: string;
+  startDate: string;       // ISO date
+  endDate?: string;        // ISO date — for ongoing campaigns
+  description?: string;
+  organizerName?: string;
+  locationName?: string;   // free-form, defaults to "India"
+}): JsonLd {
+  const out: JsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'PublicationEvent',
+    name: input.name,
+    url: input.url.startsWith('http') ? input.url : `${SITE_URL}${input.url}`,
+    startDate: input.startDate,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
+    location: { '@type': 'Country', name: input.locationName ?? 'India' },
+    organizer: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: 'en-IN',
+  };
+  if (input.endDate) out.endDate = input.endDate;
+  if (input.description) out.description = input.description;
+  return out;
 }
 
 export function breadcrumb(trail: { name: string; url: string }[]): JsonLd {
@@ -64,6 +140,8 @@ export function article(input: {
   mentions?: JsonLd[];
   /** Voice-assistant readable selectors. */
   speakable?: string[];
+  /** Geographic context — exclusion stories pass district/state. */
+  contentLocation?: JsonLd;
 }): JsonLd {
   const out: JsonLd = {
     '@context': 'https://schema.org',
@@ -73,13 +151,15 @@ export function article(input: {
     datePublished: input.datePublished.toISOString(),
     dateModified: (input.dateModified ?? input.datePublished).toISOString(),
     author: { '@type': 'Organization', name: input.authorName ?? SITE_NAME },
-    publisher: org(),
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
     inLanguage: 'en-IN',
   };
   if (input.description) out.description = input.description;
   if (input.image) out.image = input.image.startsWith('http') ? input.image : `${SITE_URL}${input.image}`;
   if (input.section) out.articleSection = input.section;
   if (input.mentions?.length) out.mentions = input.mentions;
+  if (input.contentLocation) out.contentLocation = input.contentLocation;
   if (input.speakable?.length) {
     out.speakable = { '@type': 'SpeakableSpecification', cssSelector: input.speakable };
   }
@@ -93,6 +173,7 @@ export function article(input: {
 export const MENTIONS: JsonLd[] = [
   {
     '@type': 'Thing',
+    '@id': `${SITE_URL}/#topic-aadhaar`,
     name: 'Aadhaar',
     sameAs: [
       'https://en.wikipedia.org/wiki/Aadhaar',

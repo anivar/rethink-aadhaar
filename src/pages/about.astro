@@ -2,12 +2,16 @@
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
-import { breadcrumb } from '~/lib/seo';
+import { aboutPage, breadcrumb } from '~/lib/seo';
 
 const page = await getEntry('page', 'about');
 const data = page!.data;
 const { Content } = await render(page!);
-const jsonLd = breadcrumb([{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]);
+const description = "A non-partisan campaign concerned about India's Unique Identification (UID) or Aadhaar project.";
+const jsonLd = [
+  aboutPage({ url: '/about', description }),
+  breadcrumb([{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]),
+];
 
 const contact = data.contact ?? {};
 ---
