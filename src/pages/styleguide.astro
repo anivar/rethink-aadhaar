@@ -109,8 +109,8 @@ const typeScale = [
       <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-6">Reference</h2>
       <ul class="border-t border-rule">
         {typeScale.map((row) => (
-          <li class="grid grid-cols-[12rem_1fr] gap-4 py-3 border-b border-rule">
-            <code class="font-mono text-sm">{row.token}</code>
+          <li class="grid grid-cols-1 sm:grid-cols-[12rem_minmax(0,1fr)] gap-1 sm:gap-4 py-3 border-b border-rule">
+            <code class="font-mono text-sm break-all">{row.token}</code>
             <p class="text-sm text-ink/80" set:html={row.use.replace(/`([^`]+)`/g, '<code class="font-mono text-[0.85em]">$1</code>')}></p>
           </li>
         ))}

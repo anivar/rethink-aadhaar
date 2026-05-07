@@ -1,7 +1,26 @@
 ---
 import { link } from '~/lib/link';
-// Floating "Take action" pill on long pages.
+// Floating "Take action" pill on long pages. Honours iOS / Android safe-area
+// insets so the button doesn't sit underneath the home-bar on edge-to-edge
+// phones; mobile padding is dialled in so the pill doesn't overlap body copy
+// at narrow widths.
 ---
-<a href={link('/take-action')} class="fixed bottom-6 right-6 z-30 caps text-xs px-4 py-3 bg-accent text-white shadow-lg shadow-accent/30 hover:bg-button transition-colors">
+<a
+  href={link('/take-action')}
+  class="sticky-action fixed z-30 caps text-xs px-4 py-3 bg-accent text-white shadow-lg shadow-accent/30 hover:bg-button transition-colors"
+>
   Take action <span aria-hidden="true">→</span>
 </a>
+
+<style>
+  .sticky-action {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  @media (min-width: 640px) {
+    .sticky-action {
+      right: max(1.5rem, env(safe-area-inset-right));
+      bottom: max(1.5rem, env(safe-area-inset-bottom));
+    }
+  }
+</style>

@@ -21,7 +21,7 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
 ---
 
 <footer class="mt-24 border-t border-ink/10 bg-bg">
-  <div class="container-wide py-12 md:py-16 grid gap-10 md:grid-cols-[2fr_1fr_1fr_1.2fr] items-start">
+  <div class="container-wide py-10 md:py-16 grid gap-8 sm:gap-10 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1.2fr] items-start">
     <div>
       <div class="flex items-center gap-3">
         <LogoMark class="h-10 w-10" />
@@ -100,14 +100,14 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
 
   <!-- Canonical-style starburst band — black with white rays sweeping -180° to 0°. -->
   <div class="relative w-full overflow-hidden bg-[#0E0E0E]">
-    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice" class="block w-full h-[220px] md:h-[300px]" aria-hidden="true">
+    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice" class="block w-full h-[140px] sm:h-[180px] md:h-[300px]" aria-hidden="true">
       <rect width="1200" height="400" fill="#0E0E0E"/>
       <g stroke="#FFFFFF" stroke-linecap="square" opacity="0.95">
         {rays.map((r) => <line x1={cx} y1={cy} x2={r.x2} y2={r.y2} stroke-width={r.w} />)}
       </g>
       <circle cx={cx} cy={cy} r="14" fill="#0E0E0E"/>
     </svg>
-    <p class="absolute inset-x-0 bottom-3 text-center text-xs text-white/80 caps">
+    <p class="absolute inset-x-0 bottom-3 px-4 text-center text-[0.65rem] sm:text-xs text-white/80 caps leading-relaxed text-balance">
       © {year} Rethink Aadhaar · CC BY 4.0 · Built with Astro by <a href="https://anivar.net" rel="author noopener noreferrer" class="underline hover:text-white">anivar</a> · Hosted on GitHub Pages
     </p>
   </div>

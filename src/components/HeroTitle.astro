@@ -30,7 +30,7 @@ const alignCls = align === 'center' ? 'text-center' : 'text-left';
 const showRule = rule ?? variant === 'display';
 const h1Cls = variant === 'display' ? 'hero-title' : '';
 ---
-<header class={`container-prose pt-12 md:pt-20 fade-up ${alignCls} ${cls}`}>
+<header class={`container-prose pt-10 sm:pt-14 md:pt-20 fade-up ${alignCls} ${cls}`}>
   {showRule && <div class={`hero-rule ${align === 'left' ? '!ml-0' : ''}`} aria-hidden="true"></div>}
   {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
   <h1 class={`${h1Cls} text-balance`.trim()}><slot /></h1>

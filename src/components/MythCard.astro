@@ -8,7 +8,7 @@ const { myth, fact, index } = Astro.props;
 const nn = String(index).padStart(2, '0');
 ---
 <article
-  class="group relative border-t-2 border-ink py-10 md:py-14 grid grid-cols-[3.25rem_1fr] md:grid-cols-[6rem_1fr] gap-x-5 md:gap-x-10 gap-y-2 first:border-t-[3px]"
+  class="group relative border-t-2 border-ink py-10 md:py-14 grid grid-cols-[2.75rem_minmax(0,1fr)] sm:grid-cols-[3.25rem_minmax(0,1fr)] md:grid-cols-[6rem_minmax(0,1fr)] gap-x-4 sm:gap-x-5 md:gap-x-10 gap-y-2 first:border-t-[3px]"
   id={`myth-${index}`}
 >
   <div class="row-span-2 md:row-span-3 md:pt-2">

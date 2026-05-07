@@ -31,10 +31,14 @@ function isActive(href: string) {
 ---
 
 <header class="site-header">
-  <div class="container-wide grid grid-cols-[auto_1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-4 py-3 md:py-4">
+  <!-- Mobile (< lg): simple flex row — logo on the left, controls on the right.
+       Grid kept for lg+ where the centred-logo / split-nav lockup is canonical.
+       The grid-on-mobile version centres the logo within whatever space the
+       right-hand controls leave, which visually drifts left of true centre. -->
+  <div class="container-wide flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between gap-3 lg:gap-4 py-3 md:py-4">
 
     <!-- LEFT NAV (desktop only) -->
-    <nav class="hidden lg:flex justify-end" aria-label="Primary (left)">
+    <nav class="hidden lg:flex lg:justify-end" aria-label="Primary (left)">
       <ul class="flex items-center gap-5 xl:gap-7">
         {left.map((item) => (
           <li>
@@ -48,20 +52,21 @@ function isActive(href: string) {
       </ul>
     </nav>
 
-    <!-- CENTERED LOGO (mark only — wordmark lives in the H1 of the home page) -->
+    <!-- LOGO (mark only — wordmark lives in the H1 of the home page).
+         Left-aligned on mobile, centred at lg+. -->
     <a
       href={link('/')}
-      class="justify-self-center flex items-center group"
+      class="lg:justify-self-center flex items-center group shrink-0"
       aria-label="Rethink Aadhaar — home"
     >
-      <LogoMark class="h-12 w-12 md:h-14 md:w-14 transition-transform group-hover:rotate-[-3deg]" />
+      <LogoMark class="h-11 w-11 md:h-14 md:w-14 transition-transform group-hover:rotate-[-3deg]" />
       <span class="sr-only">Rethink Aadhaar</span>
     </a>
 
     <!-- RIGHT GROUP: nav (desktop) sits flush against the logo; theme toggle
          + hamburger drift to the far right so the nav is symmetrical with the
          left side. -->
-    <div class="justify-self-end lg:justify-self-stretch flex items-center w-full gap-3 lg:gap-5 xl:gap-7">
+    <div class="flex items-center gap-2 lg:gap-5 xl:gap-7 lg:w-full">
       <nav class="hidden lg:flex lg:flex-1 lg:justify-start" aria-label="Primary (right)">
         <ul class="flex items-center gap-5 xl:gap-7">
           {right.map((item) => (
@@ -76,12 +81,12 @@ function isActive(href: string) {
         </ul>
       </nav>
 
-      <div class="lg:ml-auto flex items-center gap-3 lg:gap-5 xl:gap-7">
+      <div class="lg:ml-auto flex items-center gap-2 lg:gap-5 xl:gap-7">
       <ThemeToggle />
 
       <button
         type="button"
-        class="lg:hidden inline-flex items-center justify-center w-10 h-10 border border-ink/20 hover:border-accent transition-colors"
+        class="lg:hidden inline-flex items-center justify-center w-11 h-11 border border-ink/20 hover:border-accent transition-colors"
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="mobile-nav"
