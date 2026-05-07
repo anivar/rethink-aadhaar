@@ -7,7 +7,13 @@
     <title>Content Manager — Rethink Aadhaar</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <!--
-      Sveltia CMS is loaded from jsDelivr (immutable, integrity-pinned URL).
+      Sveltia CMS, pinned to an exact version with SRI so a compromised CDN
+      cannot serve us a tampered bundle. To upgrade: bump the version in
+      the URL, recompute the integrity hash with
+        curl -sSL https://cdn.jsdelivr.net/npm/@sveltia/cms@<ver>/dist/sveltia-cms.js \
+          | openssl dgst -sha384 -binary | openssl base64 -A
+      and update both fields in lockstep.
+
       The admin shell is harmless without OAuth — the GitHub login button
       will not produce a usable session unless `backend.base_url` in
       ./config.yml points at an OAuth proxy you control.
@@ -17,7 +23,9 @@
   <body>
     <script
       type="module"
-      src="https://cdn.jsdelivr.net/npm/@sveltia/cms/dist/sveltia-cms.js"
+      src="https://cdn.jsdelivr.net/npm/@sveltia/cms@0.159.2/dist/sveltia-cms.js"
+      integrity="sha384-Ay8BeWnb6AXG0ehz54pF3zOTJJlKcb78VbY1Iq4ppwXtKWYoNZFm2K50ZVMLW95F"
+      crossorigin="anonymous"
     ></script>
   </body>
 </html>
