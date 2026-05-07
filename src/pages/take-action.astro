@@ -80,7 +80,7 @@ const jsonLd = breadcrumb([
     grid-template-columns: auto minmax(0, 1fr);
     align-items: baseline;
     gap: 1rem;
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: var(--font-sans);
     font-weight: 800;
     font-size: 1.55rem;
     line-height: 1.15;
@@ -96,7 +96,7 @@ const jsonLd = breadcrumb([
   }
   .actions-list h3::before {
     content: counter(action, decimal-leading-zero);
-    color: #D7282F;
+    color: var(--color-accent);
     font-weight: 800;
     font-size: 2rem;
     line-height: 1;
@@ -116,11 +116,11 @@ const jsonLd = breadcrumb([
   .actions-list h3 ~ p > a:first-child:last-child,
   .actions-list h3 + p > a {
     display: inline-block;
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 0.95rem;
     letter-spacing: 0.01em;
-    color: #D7282F;
+    color: var(--color-accent);
     text-decoration: underline;
     text-underline-offset: 6px;
     text-decoration-thickness: 2px;
