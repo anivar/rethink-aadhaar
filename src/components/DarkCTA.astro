@@ -6,7 +6,7 @@ interface Props {
   variant?: 'dark' | 'outline';
 }
 const { href, external = false, class: cls = '', variant = 'dark' } = Astro.props;
-const rel = external ? 'noopener' : undefined;
+const rel = external ? 'noopener noreferrer' : undefined;
 const target = external ? '_blank' : undefined;
 const klass = variant === 'outline' ? 'btn-secondary' : 'btn-primary';
 ---

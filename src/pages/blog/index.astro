@@ -22,7 +22,7 @@ function firstImage(body: string | undefined): string | undefined {
 // Group descending by year so the page reads as a timeline.
 const grouped = new Map<number, typeof posts>();
 for (const p of posts) {
-  const y = p.data.date.getFullYear();
+  const y = p.data.date.getUTCFullYear();
   if (!grouped.has(y)) grouped.set(y, []);
   grouped.get(y)!.push(p);
 }

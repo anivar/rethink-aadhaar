@@ -11,7 +11,6 @@ const { class: cls = '' } = Astro.props;
 const url = link('/brand/logo-mark.png');
 ---
 <span
-  role="img"
   aria-hidden="true"
   class={`logo-mark block bg-accent dark:bg-cream ${cls}`}
   style={`--logo-mask:url('${url}')`}

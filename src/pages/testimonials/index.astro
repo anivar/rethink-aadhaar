@@ -21,7 +21,7 @@ function firstImage(body: string | undefined): string | undefined {
 // Group descending by year so the page reads as a timeline.
 const grouped = new Map<number, typeof stories>();
 for (const s of stories) {
-  const y = s.data.date.getFullYear();
+  const y = s.data.date.getUTCFullYear();
   if (!grouped.has(y)) grouped.set(y, []);
   grouped.get(y)!.push(s);
 }
