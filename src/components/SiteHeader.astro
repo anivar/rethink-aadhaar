@@ -100,8 +100,18 @@ function isActive(href: string) {
     </div>
   </div>
 
-  <!-- MOBILE PANEL -->
-  <div id="mobile-nav" class="lg:hidden hidden border-t border-ink/10 bg-bg" data-mobile-nav>
+  <!-- MOBILE PANEL.
+       `max-h` + `overflow-y-auto` is critical for landscape phones:
+       9 nav items at 40px tall = 360px, but a landscape iPhone is
+       ~375px tall total. Without scroll, the menu would push past
+       the viewport and leave the bottom items unreachable.
+       `100svh` (small viewport height) respects mobile browser
+       chrome (URL bar, tab strip), unlike `100vh`. -->
+  <div
+    id="mobile-nav"
+    class="lg:hidden hidden border-t border-ink/10 bg-bg max-h-[calc(100svh-3.5rem)] overflow-y-auto overscroll-contain"
+    data-mobile-nav
+  >
     <nav class="container-wide py-4" aria-label="Mobile">
       <ul class="flex flex-col gap-3">
         {all.map((item) => (
@@ -110,6 +120,7 @@ function isActive(href: string) {
               href={item.hrefAbs}
               class={`nav-link block py-2 ${isActive(item.href) ? 'active' : ''}`}
               aria-current={isActive(item.href) ? 'page' : undefined}
+              data-mobile-nav-link
             >{item.label}</a>
           </li>
         ))}
@@ -123,10 +134,30 @@ function isActive(href: string) {
     const btn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
     const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
     if (!btn || !panel) return;
+
+    function setOpen(open: boolean) {
+      panel!.classList.toggle('hidden', !open);
+      btn!.setAttribute('aria-expanded', String(open));
+      btn!.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
     btn.addEventListener('click', () => {
-      panel.classList.toggle('hidden');
-      const open = !panel.classList.contains('hidden');
-      btn.setAttribute('aria-expanded', String(open));
+      setOpen(panel.classList.contains('hidden'));
+    });
+
+    // Close on Escape so keyboard users can dismiss without re-finding the
+    // toggle button.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.classList.contains('hidden')) {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+
+    // Close after tapping any nav link — otherwise the panel stays open
+    // behind the next page until the user re-toggles.
+    panel.querySelectorAll<HTMLAnchorElement>('[data-mobile-nav-link]').forEach((a) => {
+      a.addEventListener('click', () => setOpen(false));
     });
   }
   init();
