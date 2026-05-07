@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "bun scripts/optimize-images.ts && astro check && astro build && bun scripts/emit-legacy-redirects.ts",
+    "build": "bun scripts/optimize-images.ts && astro check && astro build && bun scripts/emit-legacy-redirects.ts && bun scripts/check-seo.ts",
     "preview": "astro preview",
     "astro": "astro",
     "new": "bun scripts/new.ts",
