@@ -91,12 +91,23 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
       // Light is the default. Dark mode is opt-in via the toggle and persisted
       // in localStorage. We deliberately do NOT auto-pick dark from OS pref —
       // brand parity with rethinkaadhaar.in (cream paper) wins over OS theme.
-      try {
-        if (localStorage.getItem('theme') === 'dark') {
-          document.documentElement.classList.add('dark');
+      //
+      // Runs synchronously before first paint to avoid a light-mode flash on
+      // dark-preferred reloads. The `astro:after-swap` listener below re-syncs
+      // the class on every view transition so the toggle state always matches
+      // localStorage even after navigation.
+      (function () {
+        function sync() {
+          try {
+            var dark = localStorage.getItem('theme') === 'dark';
+            document.documentElement.classList.toggle('dark', dark);
+          } catch (e) {}
         }
-      } catch {}
+        sync();
+        document.addEventListener('astro:after-swap', sync);
+      })();
     </script>
+    <slot name="head" />
     <ClientRouter />
   </head>
   <body class={`min-h-screen ${bg === 'myth' ? 'bg-myth' : 'bg-bg'} ${bodyClass}`}>

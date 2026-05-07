@@ -42,16 +42,20 @@ const jsonLd = [
   jsonLd={jsonLd}
   preloadImage="/media/1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg"
 >
-  <HeroTitle align="center">Rethink<br/>Aadhaar</HeroTitle>
+  <HeroTitle align="center" variant="display">Rethink<br/>Aadhaar</HeroTitle>
 
   <!-- Centred intro paragraph at a comfortable measure (~65ch). -->
-  <div class="container-prose mt-10 md:mt-14 prose font-body text-pretty text-center mx-auto fade-up" style="max-width: 65ch;">
-    <p>The Aadhaar project, to provide a unique number to all residents in India, was packaged as a welfare-enabling programme. It was sold as an initiative for greater inclusiveness in welfare, a tool against corruption, greater efficiency and so on.</p>
+  <div class="container-prose mt-10 md:mt-14 fade-up">
+    <div class="prose font-body text-pretty text-center mx-auto">
+      <p>The Aadhaar project, to provide a unique number to all residents in India, was packaged as a welfare-enabling programme. It was sold as an initiative for greater inclusiveness in welfare, a tool against corruption, greater efficiency and so on.</p>
+    </div>
   </div>
 
-  <!-- Two-column block: canonical worn fingerprint hand image + serif paragraph. -->
-  <section class="container-prose mt-16 md:mt-20 grid gap-8 md:gap-12 md:grid-cols-2 items-start fade-up delay-1">
-    <figure class="m-0">
+  <!-- Two-column block at md+ — canonical worn fingerprint hand image + serif paragraph.
+       Mobile keeps a simple stacked flow so the image and prose can each
+       size to the container without the grid item min-width: auto trap. -->
+  <section class="container-prose mt-16 md:mt-20 md:grid md:grid-cols-2 md:gap-12 md:items-start space-y-8 md:space-y-0 fade-up delay-1">
+    <figure class="m-0 min-w-0">
       <Picture
         src="/media/1489594687018-VG8KQQP625TQFSNEP1FV-image-asset.jpeg"
         alt="A worker's hand holding an Aadhaar enrolment slip — fingertips worn smooth from years of manual labour."
@@ -62,7 +66,7 @@ const jsonLd = [
         eager
       />
     </figure>
-    <div class="prose font-body text-pretty">
+    <div class="prose font-body text-pretty min-w-0">
       <p>More than a decade later, evidence and testimony show the continuing destruction of welfare programmes due to their Aadhaar linkage. The Aadhaar project also presents the potential to enable mass surveillance, which threatens privacy and democratic practice.</p>
       <p>Indian residents and citizens have been lulled into believing that their privacy is the price they have to pay for better implementation of welfare programmes. In fact, the Aadhaar project threatens both our welfare, and right to privacy; and yet, even with its fundamental weaknesses and dangerous effects, it continues to grow.</p>
     </div>
@@ -70,8 +74,8 @@ const jsonLd = [
 
   <section class="container-prose mt-20 md:mt-28 fade-up delay-1">
     <p class="eyebrow mb-3 text-center">Collective statement · 10 December 2025</p>
-    <h2 class="font-display text-3xl md:text-5xl text-balance leading-tight tracking-tight uppercase text-center">{statement!.data.title}</h2>
-    <div class="prose dark:prose-invert font-body mt-10 text-pretty mx-auto" style="max-width: 65ch;">
+    <h2 class="font-display text-[clamp(1.25rem,5.5vw,3rem)] sm:tracking-tight leading-tight uppercase text-center">{statement!.data.title}</h2>
+    <div class="prose dark:prose-invert font-body mt-10 text-pretty mx-auto">
       <StatementBody />
     </div>
   </section>
@@ -84,7 +88,7 @@ const jsonLd = [
 
   <section class="container-prose mt-20 fade-up delay-2">
     <div class="flex items-baseline justify-between gap-4 mb-8">
-      <h2 class="caps text-accent text-sm">Latest updates</h2>
+      <h2 class="eyebrow !mb-0">Latest updates</h2>
       <a href={link('/blog')} class="caps text-xs hover:text-accent">All updates →</a>
     </div>
     <div class="grid sm:grid-cols-2 gap-6">
@@ -104,11 +108,11 @@ const jsonLd = [
 
   <section class="container-prose mt-20 md:mt-28 text-center fade-up">
     <p class="eyebrow mb-3">Get involved</p>
-    <h2 class="hero-title text-balance">Let's rethink Aadhaar</h2>
+    <h2 class="text-balance">Let's rethink Aadhaar</h2>
     <SignupForm />
     <div class="mt-8 flex flex-col sm:flex-row sm:justify-center gap-3">
       <DarkCTA href={link('/take-action')}>Take action now!</DarkCTA>
-      <a href={link('/campaign2025')} class="btn-outline w-full sm:w-auto">Read Campaign 2025</a>
+      <a href={link('/campaign2025')} class="btn-secondary w-full sm:w-auto">Read Campaign 2025</a>
     </div>
   </section>
 </BaseLayout>

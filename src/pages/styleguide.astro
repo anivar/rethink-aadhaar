@@ -1,0 +1,186 @@
+---
+/**
+ * Internal design-system reference. Not linked from nav, excluded from the
+ * sitemap (see `astro.config.mjs`), and `noindex` for crawlers. Toggle
+ * dark mode to verify both palettes; resize the viewport to verify the
+ * fluid type scale.
+ */
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+
+const tokens = [
+  { name: '--color-bg',      desc: 'Page background (cream / near-black)' },
+  { name: '--color-ink',     desc: 'Primary text + buttons' },
+  { name: '--color-rule',    desc: 'Hairlines, dividers' },
+  { name: '--color-surface', desc: 'Cards, panels' },
+  { name: '--color-muted',   desc: 'Secondary text (AA on bg)' },
+  { name: '--color-accent',  desc: 'Brand red — links, eyebrows, focus' },
+];
+
+const typeScale = [
+  { token: '--text-display', use: '`hero-display` utility — homepage lockup only' },
+  { token: '--text-h1',      use: 'Page titles via `<h1>` or `HeroTitle variant="page"`' },
+  { token: '--text-h2',      use: 'Section headings' },
+  { token: '--text-h3',      use: 'Subsection / card titles' },
+  { token: '--text-body',    use: 'Default body copy' },
+  { token: '--text-small',   use: 'Captions, footnotes' },
+  { token: '--text-eyebrow', use: '`eyebrow` utility — labels above titles' },
+];
+---
+
+<BaseLayout title="Styleguide" description="Design-system reference">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex,nofollow" />
+  </Fragment>
+
+  <HeroTitle eyebrow="Internal reference" variant="page">Styleguide</HeroTitle>
+
+  <article class="container-prose mt-12 md:mt-16 mb-24 space-y-16">
+
+    <!-- ── Colour tokens ──────────────────────────────────────────── -->
+    <section>
+      <p class="eyebrow mb-3">Colour</p>
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-6">Tokens</h2>
+      <p class="text-base text-ink/75 mb-6 max-w-2xl">
+        Tokens are RGB triplets so opacity utilities (<code>bg-bg/85</code>) resolve through
+        Tailwind's <code>&lt;alpha-value&gt;</code>. Use the named tokens below; never
+        hard-code hex.
+      </p>
+      <ul class="grid sm:grid-cols-2 gap-4 list-none p-0">
+        {tokens.map((t) => (
+          <li class="flex items-center gap-4 border border-rule p-4">
+            <span
+              class="block w-12 h-12 border border-ink/20 shrink-0"
+              style={`background: var(${t.name});`}
+              aria-hidden="true"
+            ></span>
+            <div>
+              <code class="font-mono text-sm">{t.name}</code>
+              <p class="text-sm text-ink/70 mt-1">{t.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ── Type scale ─────────────────────────────────────────────── -->
+    <section>
+      <p class="eyebrow mb-3">Type</p>
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-6">Scale</h2>
+      <p class="text-base text-ink/75 mb-6 max-w-2xl">
+        All sizes are <code>clamp()</code>-based and fluid between 320–1440px viewport.
+        Resize the window to verify.
+      </p>
+      <div class="space-y-6 border-t border-rule pt-6">
+        <div>
+          <code class="caps-mono text-xs text-accent">--text-display · hero-display</code>
+          <p class="hero-display mt-2">Aa</p>
+        </div>
+        <div class="border-t border-rule pt-6">
+          <code class="caps-mono text-xs text-accent">--text-h1</code>
+          <h1 class="mt-2">The quick brown fox</h1>
+        </div>
+        <div class="border-t border-rule pt-6">
+          <code class="caps-mono text-xs text-accent">--text-h2</code>
+          <h2 class="mt-2">The quick brown fox</h2>
+        </div>
+        <div class="border-t border-rule pt-6">
+          <code class="caps-mono text-xs text-accent">--text-h3</code>
+          <h3 class="mt-2">The quick brown fox</h3>
+        </div>
+        <div class="border-t border-rule pt-6">
+          <code class="caps-mono text-xs text-accent">--text-body</code>
+          <p class="mt-2">The quick brown fox jumps over the lazy dog. Body copy is Inter Variable, with <code>text-wrap: pretty</code> applied globally.</p>
+        </div>
+        <div class="border-t border-rule pt-6">
+          <code class="caps-mono text-xs text-accent">eyebrow utility</code>
+          <p class="eyebrow mt-2">Stay in the loop</p>
+        </div>
+        <div class="border-t border-rule pt-6">
+          <code class="caps-mono text-xs text-accent">caps-mono utility</code>
+          <p class="caps-mono text-sm mt-2">Q01 · 10 DEC 2025 · MYTH</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Type scale reference table ────────────────────────────── -->
+    <section>
+      <p class="eyebrow mb-3">When to use</p>
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-6">Reference</h2>
+      <ul class="border-t border-rule">
+        {typeScale.map((row) => (
+          <li class="grid grid-cols-[12rem_1fr] gap-4 py-3 border-b border-rule">
+            <code class="font-mono text-sm">{row.token}</code>
+            <p class="text-sm text-ink/80" set:html={row.use.replace(/`([^`]+)`/g, '<code class="font-mono text-[0.85em]">$1</code>')}></p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ── Buttons ────────────────────────────────────────────────── -->
+    <section>
+      <p class="eyebrow mb-3">Action</p>
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-6">Buttons</h2>
+      <p class="text-base text-ink/75 mb-6 max-w-2xl">
+        Three button utilities: <code>btn-primary</code> (filled),
+        <code>btn-secondary</code> (outline), <code>btn-link</code> (inline). All
+        use the <code>caps</code> utility for label type.
+      </p>
+      <div class="flex flex-wrap gap-3 mb-6">
+        <a href="#" class="btn-primary">Primary action</a>
+        <a href="#" class="btn-secondary">Secondary action</a>
+        <a href="#" class="btn-link">Inline link →</a>
+      </div>
+      <p class="text-xs text-ink/60">
+        WCAG 2.2 target size (≥24×24 CSS px) is satisfied by the default
+        padding; don't shrink below the utility defaults.
+      </p>
+    </section>
+
+    <!-- ── HeroTitle variants ────────────────────────────────────── -->
+    <section>
+      <p class="eyebrow mb-3">Composition</p>
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-6">HeroTitle</h2>
+      <p class="text-base text-ink/75 mb-6 max-w-2xl">
+        Use <code>variant="display"</code> only for the homepage hero
+        (Fraunces ExtraBold at <code>--text-display</code>). Every other page
+        uses <code>variant="page"</code> (the default).
+      </p>
+      <div class="border border-rule p-6 mb-4">
+        <code class="caps-mono text-xs text-accent">variant="page" (default)</code>
+        <div class="mt-4">
+          <p class="eyebrow mb-2">Eyebrow text</p>
+          <h2 class="text-balance">Page title goes here</h2>
+        </div>
+      </div>
+      <div class="border border-rule p-6">
+        <code class="caps-mono text-xs text-accent">variant="display"</code>
+        <p class="text-xs text-ink/60 mt-1 mb-4">Homepage only — wider glyphs overflow narrow viewports for any title &gt;1 word.</p>
+        <div class="mt-4">
+          <h2 class="hero-title text-balance">Aa</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Surfaces ──────────────────────────────────────────────── -->
+    <section>
+      <p class="eyebrow mb-3">Surface</p>
+      <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-6">Containers</h2>
+      <div class="space-y-4">
+        <div class="card-surface p-5">
+          <code class="caps-mono text-xs text-accent">card-surface</code>
+          <p class="text-sm mt-2">White card on cream / dark panel on near-black.</p>
+        </div>
+        <div class="surface-paper p-5">
+          <code class="caps-mono text-xs text-accent">surface-paper</code>
+          <p class="text-sm mt-2">Full-bleed paper section (top + bottom rules).</p>
+        </div>
+        <div class="hairline pt-4">
+          <code class="caps-mono text-xs text-accent">hairline</code>
+          <p class="text-sm mt-2">Single-rule divider above this paragraph.</p>
+        </div>
+      </div>
+    </section>
+
+  </article>
+</BaseLayout>

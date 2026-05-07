@@ -8,6 +8,6 @@ interface Props {
 const { href, external = false, class: cls = '', variant = 'dark' } = Astro.props;
 const rel = external ? 'noopener' : undefined;
 const target = external ? '_blank' : undefined;
-const klass = variant === 'outline' ? 'btn-outline' : 'btn-dark';
+const klass = variant === 'outline' ? 'btn-secondary' : 'btn-primary';
 ---
 <a href={href} target={target} rel={rel} class={`${klass} w-full sm:w-auto ${cls}`}><slot /></a>

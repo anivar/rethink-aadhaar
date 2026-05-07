@@ -1,117 +1,111 @@
-/* One family — Inter — across UI, display, and long-form prose.
-   Loads four weights + italic for the prose body. */
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/400-italic.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/700.css";
-@import "@fontsource/inter/800.css";
+/* ─── Fonts ────────────────────────────────────────────────────────────────
+ * Three self-hosted variable faces. fontsource-variable ships per-subset
+ * woff2s with unicode-range, so the browser only fetches the subsets that
+ * match rendered glyphs. Latin + Latin-ext + Vietnamese cover en-IN copy
+ * including ₹ (U+20B9, latin-ext).
+ */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/inter/wght-italic.css";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/jetbrains-mono";
 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* Class-based dark mode (matches the in-page bootstrap script). */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Theme tokens — colours/fonts/tracking. v3 `theme.extend` → v4 @theme. */
+/* ─── Tokens ───────────────────────────────────────────────────────────────
+ * Colour tokens live as RGB triplets in @layer base so opacity utilities
+ * (`bg-bg/85`) resolve via <alpha-value>. Type families, scale, tracking,
+ * spacing, and layout tokens are declared here in @theme.
+ */
 @theme {
   --color-bg:      rgb(var(--bg)      / <alpha-value>);
   --color-ink:     rgb(var(--ink)     / <alpha-value>);
   --color-rule:    rgb(var(--rule)    / <alpha-value>);
   --color-surface: rgb(var(--surface) / <alpha-value>);
   --color-muted:   rgb(var(--muted)   / <alpha-value>);
-  --color-primary: #D7282F;
-  --color-accent:  #D7282F;
-  --color-button:  #111111;
-  --color-myth:    #F5B81D;
-  --color-cream:   #F7F2E8;
+  --color-primary:     #D7282F;
+  --color-accent:      #D7282F;
+  --color-accent-deep: #B71F25;
+  --color-button:      #111111;
+  --color-myth:        #F5B81D;
+  --color-cream:       #F7F2E8;
 
-  --font-display: "Inter", system-ui, sans-serif;
-  --font-body:    "Inter", system-ui, sans-serif;
-  --font-sans:    "Inter", system-ui, sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-body:    "Inter Variable", system-ui, sans-serif;
+  --font-sans:    "Inter Variable", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", monospace;
 
-  --tracking-caps:  0.08em;
-  --tracking-tight: -0.02em;
+  /* Fluid type scale (320 → 1440 viewport).
+     `--text-display` is tuned so a 7-character uppercase Fraunces ExtraBold
+     word (RETHINK / AADHAAR) fits the 327-px content width on a 375-px
+     iPhone viewport. Don't widen the slope without re-checking that case. */
+  --text-display: clamp(2rem,    0.5rem  + 6vw,   6.5rem);
+  --text-h1:      clamp(2.25rem, 1.4rem  + 4vw,   4.5rem);
+  --text-h2:      clamp(1.75rem, 1.2rem  + 2.6vw, 2.75rem);
+  --text-h3:      clamp(1.25rem, 1.05rem + 1vw,   1.625rem);
+  --text-body:    clamp(1rem,    0.96rem + 0.2vw, 1.0625rem);
+  --text-small:   0.875rem;
+  --text-eyebrow: 0.78rem;
 
-  --max-width-content: 54rem;
-}
+  --tracking-caps:    0.12em;
+  --tracking-tight:  -0.02em;
+  --tracking-display:-0.035em;
 
-/* Prose tuning — v4 typography plugin reads --tw-prose-* CSS vars; we
-   override them on .prose / .prose-invert directly instead of via the v3
-   plugin options object (which v4 dropped). */
-.prose {
-  --tw-prose-body:     rgb(var(--ink));
-  --tw-prose-headings: rgb(var(--ink));
-  --tw-prose-links:    #D7282F;
-  --tw-prose-bold:     rgb(var(--ink));
-  --tw-prose-quotes:   rgb(var(--ink));
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 1.0625rem;
-  line-height: 1.75;
-  max-width: 68ch;
-  margin-inline: auto;
-}
-.prose :is(h2, h3, h4) {
-  font-family: "Inter", system-ui, sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-.prose h2           { font-size: 1.875rem; line-height: 1.2; margin-top: 2.75em; margin-bottom: 0.6em; }
-.prose h3           { font-size: 1.375rem; line-height: 1.3; margin-top: 2em; margin-bottom: 0.5em; }
-.prose h4           { font-size: 1.125rem; line-height: 1.35; margin-top: 1.75em; margin-bottom: 0.4em; }
-.prose p, .prose li { font-size: 1.0625rem; line-height: 1.75; }
-.prose ol > li, .prose ul > li { margin-top: 0.5em; margin-bottom: 0.5em; }
-.prose a            { text-decoration: underline; text-underline-offset: 3px; }
-.prose a:hover      { color: #A41C28; }
-.prose blockquote   { font-style: italic; border-left-color: #D7282F; font-size: 1.125rem; line-height: 1.6; }
+  --max-width-prose:   65ch;
+  --max-width-content: 56rem;
+  --max-width-wide:    80rem;
 
-/* Compact, scannable list of names (about page Friends / Interns). */
-.prose .people {
-  list-style: none;
-  padding: 0;
-  margin: 1.25em 0 2em;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 1.5rem;
-  row-gap: 0.45rem;
-  font-size: 0.97em;
-}
-@media (min-width: 768px) {
-  .prose .people { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-.prose .people li { margin: 0; padding: 0; }
-.prose-invert {
-  --tw-prose-body:     #EAEAEA;
-  --tw-prose-headings: #EAEAEA;
-  --tw-prose-links:    #FF5A66;
-  --tw-prose-bold:     #EAEAEA;
-  --tw-prose-quotes:   #EAEAEA;
+  /* Section padding scale (named, not numeric — defining --spacing-N
+     would overwrite Tailwind's w-N/h-N/p-N utilities). Use these via
+     CSS custom-property references inside component classes. */
+  --section-y-sm: 3rem;
+  --section-y-md: 4rem;
+  --section-y-lg: 6rem;
+  --section-y-xl: 8rem;
 }
 
 @layer base {
-  /* Light (cream paper) is the default. */
+  /* Cream paper is the default; dark is opt-in via `.dark` on <html>.
+     `color-scheme` matters even with a manual toggle: it tells the UA to
+     pick the correct native scrollbar, form-control, and selection colors
+     for each mode. Without it, dark-mode pages render light-mode scrollbars. */
   :root {
+    color-scheme: light;
     --bg:      247 242 232;   /* #F7F2E8 warm cream */
     --ink:      17  17  17;   /* #111111 */
-    --rule:     17  17  17;
+    --rule:    231 223 205;   /* #E7DFCD hairlines on cream */
     --surface: 255 255 255;   /* white cards/panels on cream */
-    --muted:    85  85  85;   /* #555555 */
+    --muted:    91  85  76;   /* #5B554C — passes AA on cream */
   }
   .dark {
-    --bg:       14  14  16;   /* #0E0E10 surface-dark */
-    --ink:     240 240 240;
-    --rule:    240 240 240;
-    --surface:  22  22  22;
-    --muted:   165 165 165;
+    color-scheme: dark;
+    --bg:       15  13  10;   /* #0F0D0A */
+    --ink:     243 236 224;   /* #F3ECE0 */
+    --rule:     42  38  32;   /* #2A2620 */
+    --surface:  26  24  20;   /* #1A1814 */
+    --muted:   168 161 149;   /* #A8A195 */
+  }
+  /* High-contrast preference: punch up rule + muted so hairlines and
+     secondary text stay visible for users who need it (WCAG 2.2 1.4.6). */
+  @media (prefers-contrast: more) {
+    :root { --rule: 180 170 145; --muted: 60 55 48; }
+    .dark { --rule: 90 82 70;    --muted: 210 200 185; }
   }
 
   html {
     background: rgb(var(--bg));
     color: rgb(var(--ink));
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  body { min-height: 100vh; overflow-x: hidden; }
+  body { min-height: 100svh; overflow-x: hidden; }
+  /* `text-wrap: pretty` is the 2026 default for body copy — same algorithm
+     as `balance` but optimised for paragraphs (no last-line orphans, fewer
+     ragged lines) without the O(n²) cost. Headings keep `balance`. */
+  p, li, blockquote { text-wrap: pretty; }
   ::selection { background: #D7282F; color: #fff; }
   :focus-visible {
     outline: 2px solid #D7282F;
@@ -119,37 +113,67 @@
     border-radius: 2px;
   }
 
-  h1, h2, h3, h4, h5, .display {
-    font-family: "Inter", system-ui, sans-serif;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+  /* Display headings use Fraunces; body H4/H5 inherit the body font. */
+  h1, h2, h3, .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
   }
+  h1 { font-size: var(--text-h1); line-height: 1.05; }
+  h2 { font-size: var(--text-h2); line-height: 1.15; }
+  h3 { font-size: var(--text-h3); line-height: 1.25; }
 }
 
-/* `caps` is used both as a standalone class in markup AND inside
-   component @apply blocks below — v4 requires @utility for that. */
+/* ─── Utilities ────────────────────────────────────────────────────────────
+ * `caps`, `eyebrow`, `hero-display` live as @utility so they're available
+ * inside component @apply blocks (Tailwind v4 requirement).
+ *
+ * `caps`      → Inter Variable, the UI all-caps style for nav, eyebrows,
+ *               buttons. Keeps the protest-poster identity.
+ * `caps-mono` → JetBrains Mono variant for documentary labels (Q01 / 01 /
+ *               MYTH / FACT / iso dates). Use sparingly.
+ */
 @utility caps {
+  font-family: var(--font-sans);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-family: "Inter", system-ui, sans-serif;
-  font-weight: 700;
+}
+
+@utility caps-mono {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+
+@utility eyebrow {
+  @apply caps;
+  font-size: var(--text-eyebrow);
+  color: #D7282F;
+}
+
+@utility hero-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: var(--tracking-display);
+  line-height: 0.92;
+  font-size: var(--text-display);
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 @utility btn {
-  @apply caps text-base md:text-lg px-8 md:px-10 py-4 md:py-5 inline-flex items-center justify-center gap-2 transition-all duration-200;
+  @apply caps inline-flex items-center justify-center gap-2 transition-colors duration-150;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.8125rem;
+  border-radius: 2px;
 }
 
 @layer base {
-
-  /* Hero — centred, massive, anchored by a 4px primary rule above. */
-  .hero-title {
-    font-family: "Inter", system-ui, sans-serif;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.035em;
-    line-height: 0.92;
-    font-size: clamp(2.5rem, 11vw, 9rem);
-  }
+  /* Hero rule above the homepage display lockup. */
+  .hero-title { @apply hero-display; }
   .hero-rule {
     width: 4rem;
     height: 4px;
@@ -164,14 +188,51 @@
     .fade-up.delay-3 { animation-delay: .24s; }
     @keyframes fadeUp { to { opacity: 1; transform: none; } }
   }
+
+  /* Disable backdrop-filter for users who request reduced transparency
+     (vestibular discomfort, low-end GPUs, screen-reader passthrough).
+     The sticky header uses `backdrop-blur` + a translucent bg — collapse
+     it to an opaque bg so the underlying page doesn't show through. */
+  @media (prefers-reduced-transparency: reduce) {
+    [class*="backdrop-blur"],
+    [class*="backdrop-filter"] {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background-color: rgb(var(--bg)) !important;
+    }
+  }
+}
+
+/* Buttons are @utility so they're @apply-able from legacy aliases below. */
+@utility btn-primary {
+  @apply btn;
+  background: #111111;
+  color: #fff;
+  border-left: 4px solid #D7282F;
+}
+@utility btn-secondary {
+  @apply btn;
+  background: transparent;
+  color: rgb(var(--ink));
+  border: 1.5px solid rgb(var(--ink));
+  border-left: 4px solid #D7282F;
+}
+@utility btn-link {
+  @apply caps inline-flex items-center gap-1 transition-colors;
+  font-size: 0.8125rem;
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 @layer components {
-  .container-prose { max-width: 56rem; margin-inline: auto; padding-inline: 1.5rem; }
-  .container-wide  { max-width: 80rem; margin-inline: auto; padding-inline: 1.5rem; }
+  .container-prose { max-width: var(--max-width-content); margin-inline: auto; padding-inline: 1.5rem; }
+  .container-wide  { max-width: var(--max-width-wide);    margin-inline: auto; padding-inline: 1.5rem; }
+  .measure         { max-width: var(--max-width-prose);   margin-inline: auto; }
 
   .nav-link {
-    @apply caps text-[0.78rem] py-2 relative inline-block transition-colors;
+    @apply caps py-2 relative inline-block transition-colors;
+    font-size: 0.78rem;
     color: rgb(var(--ink));
   }
   .nav-link:hover { color: #D7282F; }
@@ -184,41 +245,122 @@
     background: #D7282F;
   }
 
-  .btn-dark {
-    @apply btn bg-button text-white;
-    border-left: 4px solid #D7282F;
-  }
-  .btn-dark:hover { background: #D7282F; transform: translateY(-1px); }
-  .btn-dark:active { transform: translateY(0); }
+  .btn-primary:hover   { background: #D7282F; transform: translateY(-1px); }
+  .btn-primary:active  { transform: translateY(0); }
+  .btn-secondary:hover { background: rgb(var(--ink)); color: rgb(var(--bg)); transform: translateY(-1px); }
+  .btn-link:hover      { color: #D7282F; }
 
-  .btn-outline {
-    @apply btn bg-transparent;
-    color: rgb(var(--ink));
-    border: 2px solid rgb(var(--ink));
-    border-left: 4px solid #D7282F;
-  }
-  .btn-outline:hover { background: rgb(var(--ink)); color: rgb(var(--bg)); transform: translateY(-1px); }
+  .hairline { border-top: 1px solid rgb(var(--rule)); }
 
-  .btn-ghost {
-    @apply caps text-xs inline-flex items-center gap-2 hover:text-accent transition-colors;
+  /* Sticky header with scroll-driven hairline.
+     The page-top state is borderless so the header dissolves into the
+     announcement bar above; the hairline fades in once the user scrolls
+     past the title block. Uses `animation-timeline: scroll()` (Baseline
+     2024) — no scroll listener, no layout thrash. The `@supports not`
+     branch keeps the original always-on hairline for legacy UAs. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgb(var(--bg) / 0.85);
+    border-bottom: 1px solid transparent;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .site-header { background: rgb(var(--bg) / 0.7); }
+  }
+  @supports (animation-timeline: scroll()) {
+    .site-header {
+      animation: site-header-scrolled linear forwards;
+      animation-timeline: scroll();
+      animation-range: 16px 48px;
+    }
+    @keyframes site-header-scrolled {
+      to { border-bottom-color: rgb(var(--ink) / 0.12); }
+    }
+  }
+  @supports not (animation-timeline: scroll()) {
+    .site-header { border-bottom-color: rgb(var(--ink) / 0.10); }
   }
 
-  .eyebrow {
-    @apply caps text-xs;
-    color: #D7282F;
-  }
-  .hairline { border-top: 1px solid rgb(var(--ink) / 0.15); }
-
-  /* Card surface — white on cream in light, dark paper in dark mode. */
   .card-surface {
     background: rgb(var(--surface));
-    border: 1px solid rgb(var(--ink) / 0.10);
+    border: 1px solid rgb(var(--rule));
   }
-
-  /* Subtle paper panel for hero callouts (FeaturedStory). */
   .surface-paper {
     background: rgb(var(--surface));
-    border-top:    1px solid rgb(var(--ink) / 0.10);
-    border-bottom: 1px solid rgb(var(--ink) / 0.10);
+    border-top:    1px solid rgb(var(--rule));
+    border-bottom: 1px solid rgb(var(--rule));
   }
+}
+
+/* ─── Prose ────────────────────────────────────────────────────────────────
+ * Long-form article body — uses Inter Variable for body, Fraunces for
+ * headings, JetBrains Mono for inline code. Mirrors --tw-prose-* tokens
+ * so Tailwind Typography honours dark mode without a config object.
+ */
+.prose {
+  --tw-prose-body:     rgb(var(--ink));
+  --tw-prose-headings: rgb(var(--ink));
+  --tw-prose-links:    var(--color-accent-deep);
+  --tw-prose-bold:     rgb(var(--ink));
+  --tw-prose-quotes:   rgb(var(--ink));
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.75;
+  max-width: var(--max-width-prose);
+  margin-inline: auto;
+}
+.prose :is(h2, h3, h4) {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+.prose h2 { font-size: var(--text-h2); line-height: 1.2;  margin-top: 2.5em;  margin-bottom: 0.6em; }
+.prose h3 { font-size: var(--text-h3); line-height: 1.3;  margin-top: 2em;    margin-bottom: 0.5em; }
+.prose h4 { font-size: 1.125rem;       line-height: 1.35; margin-top: 1.75em; margin-bottom: 0.4em; }
+.prose p, .prose li { font-size: var(--text-body); line-height: 1.75; }
+.prose ol > li, .prose ul > li { margin-top: 0.5em; margin-bottom: 0.5em; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover { color: #D7282F; }
+.prose blockquote {
+  font-style: italic;
+  border-left: 4px solid #D7282F;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgb(var(--ink));
+}
+.prose :is(code, pre) { font-family: var(--font-mono); }
+.prose :not(pre) > code {
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--rule));
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+  font-size: 0.92em;
+}
+
+/* Two-/three-column compact list of names (about page Friends / Interns). */
+.prose .people {
+  list-style: none;
+  padding: 0;
+  margin: 1.25em 0 2em;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.5rem;
+  row-gap: 0.45rem;
+  font-size: 0.97em;
+}
+@media (min-width: 768px) {
+  .prose .people { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.prose .people li { margin: 0; padding: 0; }
+
+.prose-invert {
+  --tw-prose-body:     rgb(var(--ink));
+  --tw-prose-headings: rgb(var(--ink));
+  --tw-prose-links:    #FF8A8E;
+  --tw-prose-bold:     rgb(var(--ink));
+  --tw-prose-quotes:   rgb(var(--ink));
 }

@@ -21,6 +21,9 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
+      // Internal-only routes (design reference, etc.) shouldn't surface in
+      // search results.
+      filter: (page) => !/\/styleguide\/?$/.test(page),
       // Higher priority for the home and the actively-updated indexes.
       serialize(item) {
         const u = new URL(item.url);

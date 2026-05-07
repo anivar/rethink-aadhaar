@@ -1,15 +1,36 @@
 ---
+/**
+ * Page header lockup: optional eyebrow, optional rule, h1.
+ *
+ * Two variants:
+ *  - `page` (default) — h1 inherits the base type scale (`--text-h1`).
+ *    Used by every interior page. No rule by default; eyebrow goes above.
+ *  - `display` — h1 uses the `hero-display` utility (`--text-display`,
+ *    Fraunces ExtraBold, full-bleed). Reserved for the homepage hero —
+ *    Fraunces 800 at display size has wider glyph metrics than Inter and
+ *    overflows narrow viewports for any title >1 word, so don't reach for
+ *    it elsewhere.
+ */
 interface Props {
   eyebrow?: string;
   class?: string;
   rule?: boolean;
   align?: 'center' | 'left';
+  variant?: 'display' | 'page';
 }
-const { eyebrow, class: cls = '', rule = true, align = 'center' } = Astro.props;
+const {
+  eyebrow,
+  class: cls = '',
+  rule,
+  align = 'center',
+  variant = 'page',
+} = Astro.props;
 const alignCls = align === 'center' ? 'text-center' : 'text-left';
+const showRule = rule ?? variant === 'display';
+const h1Cls = variant === 'display' ? 'hero-title' : '';
 ---
 <header class={`container-prose pt-12 md:pt-20 fade-up ${alignCls} ${cls}`}>
-  {rule && <div class={`hero-rule ${align === 'left' ? '!ml-0' : ''}`} aria-hidden="true"></div>}
+  {showRule && <div class={`hero-rule ${align === 'left' ? '!ml-0' : ''}`} aria-hidden="true"></div>}
   {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
-  <h1 class="hero-title text-balance"><slot /></h1>
+  <h1 class={`${h1Cls} text-balance`.trim()}><slot /></h1>
 </header>
