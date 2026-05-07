@@ -6,7 +6,6 @@ import PostCard from '~/components/PostCard.astro';
 import DarkCTA from '~/components/DarkCTA.astro';
 import SignupForm from '~/components/SignupForm.astro';
 import FeaturedStory from '~/components/FeaturedStory.astro';
-import XTimeline from '~/components/XTimeline.astro';
 import Picture from '~/components/Picture.astro';
 import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
 import { collectionPage, itemList } from '~/lib/seo';
@@ -103,8 +102,6 @@ const jsonLd = [
       ))}
     </div>
   </section>
-
-  <XTimeline />
 
   <section class="container-prose mt-20 md:mt-28 text-center fade-up">
     <p class="eyebrow mb-3">Get involved</p>
