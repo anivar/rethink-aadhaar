@@ -1,0 +1,39 @@
+---
+// The compact-tier nav block — primary inline row + "More ▾" disclosure
+// + always-visible TAKE ACTION btn. Used in two positions:
+//   md (768–1023):  second row under the logo bar (full width)
+//   lg (1024–1279): inline beside the logo (right-justified)
+// Only the wrapper styling differs; the content is identical.
+
+import { link } from '~/lib/link';
+import { COMPACT_INLINE, COMPACT_OVERFLOW, TAKE_ACTION } from '~/lib/navigation';
+import NavList from '~/components/header/NavList.astro';
+
+interface Props {
+  activePath: string;
+  /** When true, the inline list scrolls on overflow (md-stack tier). */
+  scrollable?: boolean;
+}
+
+const { activePath, scrollable = false } = Astro.props;
+
+const ulClass = scrollable
+  ? 'flex items-center gap-4 flex-1 min-w-0 overflow-x-auto'
+  : 'flex items-center gap-4';
+---
+
+<NavList items={COMPACT_INLINE} ulClass={ulClass} activePath={activePath} />
+
+<details class="more-popover relative" data-more>
+  <summary class="nav-link cursor-pointer select-none flex items-center gap-1" aria-haspopup="true">
+    More <svg viewBox="0 0 12 12" class="w-3 h-3 more-chevron" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l3 3 3-3"/></svg>
+  </summary>
+  <NavList
+    items={COMPACT_OVERFLOW}
+    ulClass="more-popover-list"
+    linkClass="block px-4 py-2"
+    activePath={activePath}
+  />
+</details>
+
+<a href={link(TAKE_ACTION.href)} class="btn-primary btn-compact">{TAKE_ACTION.label}</a>

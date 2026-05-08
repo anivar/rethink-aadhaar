@@ -1,0 +1,34 @@
+---
+// Renders a <ul> of nav-link anchors with active-route highlighting.
+// Works for the desktop split-nav (left/right), the compact-inline row,
+// and the More-popover overflow list.
+
+import { link } from '~/lib/link';
+import type { NavItem } from '~/lib/navigation';
+
+interface Props {
+  items: NavItem[];
+  ulClass?: string;
+  linkClass?: string;
+  activePath: string;
+}
+
+const { items, ulClass = '', linkClass = '', activePath } = Astro.props;
+
+function isActive(href: string) {
+  if (href === '/') return activePath === '/';
+  return activePath === href || activePath.startsWith(`${href}/`);
+}
+---
+
+<ul class={ulClass}>
+  {items.map((item) => (
+    <li>
+      <a
+        href={link(item.href)}
+        class={`nav-link ${linkClass} ${isActive(item.href) ? 'active' : ''}`}
+        aria-current={isActive(item.href) ? 'page' : undefined}
+      >{item.label}</a>
+    </li>
+  ))}
+</ul>

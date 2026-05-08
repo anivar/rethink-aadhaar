@@ -262,27 +262,53 @@
     margin-top: 0.5rem;
     min-width: 12rem;
     background: rgb(var(--bg));
-    border: 1px solid rgb(var(--ink) / 0.15);
-    box-shadow: 0 8px 24px rgb(var(--ink) / 0.08);
+    border: 1px solid rgb(var(--ink) / 0.18);
+    box-shadow: 0 8px 24px rgb(var(--ink) / 0.10);
     padding: 0.25rem 0;
     z-index: 50;
     list-style: none;
+  }
+  /* Per-item hover affordance — list items get a tinted background, not
+     just a colour change, so users get the menu-item feel they expect. */
+  .more-popover-list .nav-link:hover {
+    background: rgb(var(--ink) / 0.06);
+    color: var(--color-accent);
   }
   @media (prefers-reduced-motion: reduce) {
     .more-popover .more-chevron { transition: none; }
   }
 
-  /* Compact-tier CTA — same brand, half the visual weight so it sits
-     comfortably alongside nav-link siblings. */
+  /* Compact-tier CTA — same brand, slightly smaller than full btn-primary
+     but big enough to read as a real CTA. */
   .btn-primary.btn-compact {
-    padding: 0.5rem 0.9rem;
-    font-size: 0.72rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.78rem;
     border-left-width: 3px;
   }
+
+  /* Mobile drawer panel.
+     Sized via --hdr-h so the drawer never extends past the viewport,
+     regardless of header height. flex-col + inner overflow-y-auto + the
+     CTA as the last child pins the CTA to the bottom without sticky. */
+  .mobile-nav-panel { max-height: calc(100svh - var(--hdr-h)); }
+
+  /* Hairline dividers between drawer sections — mb alone leaves the
+     groups visually weak; a rule makes the structure obvious at a glance. */
+  .mobile-nav-section { padding-bottom: 1.25rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgb(var(--rule)); }
+  .mobile-nav-section--last { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
 
   /* Drawer CTA: full-width pinned button. The base .btn-primary is
      inline-flex which already supports w-full + justify-center. */
   .mobile-cta { border-radius: 0; }
+
+  /* Hamburger button — bumped contrast so it reads on cream, plus a tap
+     feedback state that mobile users actually see (no hover on touch). */
+  .hamburger { background: transparent; }
+  .hamburger:active { background: rgb(var(--ink) / 0.10); }
+  @media (prefers-reduced-motion: reduce) {
+    .hamburger { transition: none; }
+    .hamburger:active { transform: none; }
+  }
 
   /* Landscape phones (≤480 px tall): tighten the announcement bar to a
      single ellipsised line and drop header padding so the menu has room
@@ -310,6 +336,17 @@
   .btn-link:hover      { color: var(--color-accent); }
 
   .hairline { border-top: 1px solid rgb(var(--rule)); }
+
+  /* Header height tracked as a CSS variable so the mobile drawer can size
+     itself accurately regardless of breakpoint or the user's font scaling.
+     Computed from the actual layout: at <md the logo is h-11 (44px) and
+     the bar has py-3 (12px each side); at md+ logo bumps to h-14 (56px)
+     and padding to py-4 (16px each side). */
+  :root { --hdr-h: 4.25rem; }            /* 44 + 12*2 = 68 / 16 ≈ 4.25rem */
+  @media (min-width: 768px) { :root { --hdr-h: 5.5rem; } } /* 56 + 16*2 = 88 ≈ 5.5rem */
+  @media (max-height: 480px) and (orientation: landscape) {
+    :root { --hdr-h: 3.5rem; }           /* py-2 collapse path */
+  }
 
   /* Sticky header with scroll-driven hairline.
      The page-top state is borderless so the header dissolves into the

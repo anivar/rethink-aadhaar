@@ -1,0 +1,42 @@
+---
+// One labelled section inside the mobile drawer (Primary / Learn /
+// Newsroom). The visible <h2> uses `.eyebrow` so the styling is free.
+
+import { link } from '~/lib/link';
+import type { NavItem } from '~/lib/navigation';
+
+interface Props {
+  id: string;
+  label: string;
+  items: NavItem[];
+  activePath: string;
+  /** Last section drops the bottom hairline. */
+  last?: boolean;
+}
+
+const { id, label, items, activePath, last = false } = Astro.props;
+
+function isActive(href: string) {
+  if (href === '/') return activePath === '/';
+  return activePath === href || activePath.startsWith(`${href}/`);
+}
+---
+
+<section
+  aria-labelledby={id}
+  class={`mobile-nav-section ${last ? 'mobile-nav-section--last' : ''}`}
+>
+  <h2 id={id} class="eyebrow mb-3">{label}</h2>
+  <ul class="flex flex-col gap-1">
+    {items.map((item) => (
+      <li>
+        <a
+          href={link(item.href)}
+          class={`nav-link block py-3 ${isActive(item.href) ? 'active' : ''}`}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+          data-mobile-nav-link
+        >{item.label}</a>
+      </li>
+    ))}
+  </ul>
+</section>
