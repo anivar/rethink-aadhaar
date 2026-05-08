@@ -2,43 +2,49 @@
 import LogoMark from '~/components/LogoMark.astro';
 import ThemeToggle from '~/components/ThemeToggle.astro';
 import { link } from '~/lib/link';
+import {
+  NAV,
+  DESKTOP_LEFT,
+  DESKTOP_RIGHT,
+  COMPACT_INLINE,
+  COMPACT_OVERFLOW,
+  TAKE_ACTION,
+  type NavItem,
+} from '~/lib/navigation';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-
-// Canonical layout: Myths · Exclusion · Updates · Take Action  | LOGO |
-//                   FAQs · Resources · Press · About · Campaign 2025
-const navLeft = [
-  { label: 'Myths', href: '/myths' },
-  { label: 'Exclusion', href: '/testimonials' },
-  { label: 'Updates', href: '/blog' },
-  { label: 'Take action', href: '/take-action' },
-];
-const navRight = [
-  { label: 'FAQs', href: '/faqs' },
-  { label: 'Resources', href: '/resources' },
-  { label: 'Press', href: '/press-coverage' },
-  { label: 'About', href: '/about' },
-  { label: 'Campaign 2025', href: '/campaign2025' },
-];
-const all = [...navLeft, ...navRight].map((n) => ({ ...n, hrefAbs: link(n.href) }));
-const left = navLeft.map((n) => ({ ...n, hrefAbs: link(n.href) }));
-const right = navRight.map((n) => ({ ...n, hrefAbs: link(n.href) }));
 
 function isActive(href: string) {
   if (href === '/') return path === '/';
   return path === href || path.startsWith(`${href}/`);
 }
+
+function withAbs(items: NavItem[]) {
+  return items.map((n) => ({ ...n, hrefAbs: link(n.href) }));
+}
+
+// Three nav datasets, each pre-resolved through link() so SSR output is
+// final and no client-side rewriting is required.
+const left = withAbs(DESKTOP_LEFT);
+const right = withAbs(DESKTOP_RIGHT);
+const compact = withAbs(COMPACT_INLINE);
+const overflow = withAbs(COMPACT_OVERFLOW);
+const ta = { ...TAKE_ACTION, hrefAbs: link(TAKE_ACTION.href) };
+const mobilePrimary = withAbs(NAV.primary);
+const mobileLearn = withAbs(NAV.learn);
+const mobileNewsroom = withAbs(NAV.newsroom);
 ---
 
 <header class="site-header">
-  <!-- Mobile (< lg): simple flex row — logo on the left, controls on the right.
-       Grid kept for lg+ where the centred-logo / split-nav lockup is canonical.
-       The grid-on-mobile version centres the logo within whatever space the
-       right-hand controls leave, which visually drifts left of true centre. -->
-  <div class="container-wide flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between gap-3 lg:gap-4 py-3 md:py-4">
+  <!-- Three breakpoints share this top row.
+       0–767  mobile  : logo + theme + hamburger      (flex)
+       768–1023 compact: top row identical to mobile, compact nav drops below
+       1024–1279 compact: compact nav inline beside logo (flex)
+       1280+ full       : canonical 3-col split-nav   (xl:grid)               -->
+  <div class="container-wide flex xl:grid xl:grid-cols-[1fr_auto_1fr] items-center justify-between gap-3 lg:gap-4 py-3 md:py-4 hdr-bar">
 
-    <!-- LEFT NAV (desktop only) -->
-    <nav class="hidden lg:flex lg:justify-end" aria-label="Primary (left)">
+    <!-- LEFT NAV (full only, ≥1280) -->
+    <nav class="hidden xl:flex xl:justify-end" aria-label="Primary (left)">
       <ul class="flex items-center gap-5 xl:gap-7">
         {left.map((item) => (
           <li>
@@ -52,22 +58,24 @@ function isActive(href: string) {
       </ul>
     </nav>
 
-    <!-- LOGO (mark only — wordmark lives in the H1 of the home page).
-         Left-aligned on mobile, centred at lg+. -->
+    <!-- LOGO — left-aligned at <xl, centred at xl+. The mark IS the home
+         link on desktop, so add aria-current when on `/`. -->
     <a
       href={link('/')}
-      class="lg:justify-self-center flex items-center group shrink-0"
+      class="xl:justify-self-center flex items-center group shrink-0"
       aria-label="Rethink Aadhaar — home"
+      aria-current={path === '/' ? 'page' : undefined}
     >
       <LogoMark class="h-11 w-11 md:h-14 md:w-14 transition-transform group-hover:rotate-[-3deg]" />
       <span class="sr-only">Rethink Aadhaar</span>
     </a>
 
-    <!-- RIGHT GROUP: nav (desktop) sits flush against the logo; theme toggle
-         + hamburger drift to the far right so the nav is symmetrical with the
-         left side. -->
-    <div class="flex items-center gap-2 lg:gap-5 xl:gap-7 lg:w-full">
-      <nav class="hidden lg:flex lg:flex-1 lg:justify-start" aria-label="Primary (right)">
+    <!-- RIGHT GROUP — grows to fill remaining width at md+ so children can
+         right-justify. At xl+ it occupies the third grid column.            -->
+    <div class="flex items-center gap-2 lg:gap-3 xl:gap-7 md:flex-1 md:justify-end xl:w-full">
+
+      <!-- FULL right nav (xl+) -->
+      <nav class="hidden xl:flex xl:flex-1 xl:justify-start" aria-label="Primary (right)">
         <ul class="flex items-center gap-5 xl:gap-7">
           {right.map((item) => (
             <li>
@@ -81,64 +89,196 @@ function isActive(href: string) {
         </ul>
       </nav>
 
-      <div class="lg:ml-auto flex items-center gap-2 lg:gap-5 xl:gap-7">
+      <!-- COMPACT-INLINE nav (lg only, 1024–1279) -->
+      <nav class="hidden lg:flex xl:hidden lg:flex-1 lg:justify-end items-center gap-4" aria-label="Compact">
+        <ul class="flex items-center gap-4">
+          {compact.map((item) => (
+            <li>
+              <a
+                href={item.hrefAbs}
+                class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+        <details class="more-popover relative" data-more>
+          <summary class="nav-link cursor-pointer select-none flex items-center gap-1" aria-haspopup="true">
+            More <svg viewBox="0 0 12 12" class="w-3 h-3 more-chevron" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l3 3 3-3"/></svg>
+          </summary>
+          <ul class="more-popover-list">
+            {overflow.map((item) => (
+              <li>
+                <a
+                  href={item.hrefAbs}
+                  class={`nav-link block px-4 py-2 ${isActive(item.href) ? 'active' : ''}`}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </details>
+        <a href={ta.hrefAbs} class="btn-primary btn-compact">{ta.label}</a>
+      </nav>
+
       <ThemeToggle />
 
       <button
         type="button"
-        class="lg:hidden inline-flex items-center justify-center w-11 h-11 border border-ink/20 hover:border-accent transition-colors"
+        class="md:hidden inline-flex items-center justify-center w-11 h-11 border border-ink/20 hover:border-accent transition-colors"
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="mobile-nav"
         data-menu-toggle
       >
         <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 6h16M4 12h16M4 18h16" />
+          <path d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
-      </div>
     </div>
   </div>
 
-  <!-- MOBILE PANEL.
-       `max-h` + `overflow-y-auto` is critical for landscape phones:
-       9 nav items at 40px tall = 360px, but a landscape iPhone is
-       ~375px tall total. Without scroll, the menu would push past
-       the viewport and leave the bottom items unreachable.
-       `100svh` (small viewport height) respects mobile browser
-       chrome (URL bar, tab strip), unlike `100vh`. -->
-  <div
-    id="mobile-nav"
-    class="lg:hidden hidden border-t border-ink/10 bg-bg max-h-[calc(100svh-3.5rem)] overflow-y-auto overscroll-contain"
-    data-mobile-nav
-  >
-    <nav class="container-wide py-4" aria-label="Mobile">
-      <ul class="flex flex-col gap-3">
-        {all.map((item) => (
+  <!-- COMPACT-STACK (768–1023): nav row drops below the logo bar -->
+  <div class="hidden md:block lg:hidden border-t border-ink/10">
+    <nav class="container-wide py-2 flex items-center gap-3" aria-label="Compact (row)">
+      <ul class="flex items-center gap-4 flex-1 min-w-0 overflow-x-auto">
+        {compact.map((item) => (
           <li>
             <a
               href={item.hrefAbs}
-              class={`nav-link block py-2 ${isActive(item.href) ? 'active' : ''}`}
+              class={`nav-link ${isActive(item.href) ? 'active' : ''}`}
               aria-current={isActive(item.href) ? 'page' : undefined}
-              data-mobile-nav-link
             >{item.label}</a>
           </li>
         ))}
       </ul>
+      <details class="more-popover relative" data-more>
+        <summary class="nav-link cursor-pointer select-none flex items-center gap-1" aria-haspopup="true">
+          More <svg viewBox="0 0 12 12" class="w-3 h-3 more-chevron" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l3 3 3-3"/></svg>
+        </summary>
+        <ul class="more-popover-list">
+          {overflow.map((item) => (
+            <li>
+              <a
+                href={item.hrefAbs}
+                class={`nav-link block px-4 py-2 ${isActive(item.href) ? 'active' : ''}`}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+      <a href={ta.hrefAbs} class="btn-primary btn-compact">{ta.label}</a>
     </nav>
+  </div>
+
+  <!-- MOBILE PANEL (< md). Three named groups + a pinned CTA at the
+       bottom. The panel uses `flex-col` with the link list set to
+       `flex-1 overflow-y-auto`, so the CTA sits flush against the
+       bottom edge without needing `position: sticky`. -->
+  <div
+    id="mobile-nav"
+    class="md:hidden hidden border-t border-ink/10 bg-bg max-h-[calc(100svh-3.5rem)] flex flex-col overscroll-contain"
+    data-mobile-nav
+  >
+    <div class="flex-1 overflow-y-auto">
+      <nav class="container-wide py-4" aria-label="Mobile">
+        <section aria-labelledby="m-primary" class="mb-5">
+          <h2 id="m-primary" class="eyebrow mb-3">Primary</h2>
+          <ul class="flex flex-col gap-1">
+            {mobilePrimary.map((item) => (
+              <li>
+                <a
+                  href={item.hrefAbs}
+                  class={`nav-link block py-3 ${isActive(item.href) ? 'active' : ''}`}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  data-mobile-nav-link
+                >{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section aria-labelledby="m-learn" class="mb-5">
+          <h2 id="m-learn" class="eyebrow mb-3">Learn</h2>
+          <ul class="flex flex-col gap-1">
+            {mobileLearn.map((item) => (
+              <li>
+                <a
+                  href={item.hrefAbs}
+                  class={`nav-link block py-3 ${isActive(item.href) ? 'active' : ''}`}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  data-mobile-nav-link
+                >{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section aria-labelledby="m-news">
+          <h2 id="m-news" class="eyebrow mb-3">Newsroom</h2>
+          <ul class="flex flex-col gap-1">
+            {mobileNewsroom.map((item) => (
+              <li>
+                <a
+                  href={item.hrefAbs}
+                  class={`nav-link block py-3 ${isActive(item.href) ? 'active' : ''}`}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  data-mobile-nav-link
+                >{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </nav>
+    </div>
+    <a
+      href={link('/take-action')}
+      class="btn-primary w-full justify-center text-sm py-4 mobile-cta"
+      data-mobile-nav-link
+    >Take action now →</a>
   </div>
 </header>
 
 <script>
+  // Document-level listeners must register exactly once across the entire
+  // page lifetime — re-binding on every astro:page-load would leak handlers.
+  // Per-element bindings (toggle, drawer links) are guarded inside init()
+  // via dataset markers; see #46.
+  function initOnce() {
+    const w = window as Window & { __rethinkHdrInit?: boolean };
+    if (w.__rethinkHdrInit) return;
+    w.__rethinkHdrInit = true;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
+      const btn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+      if (panel && !panel.classList.contains('hidden')) {
+        panel.classList.add('hidden');
+        btn?.setAttribute('aria-expanded', 'false');
+        btn?.setAttribute('aria-label', 'Open menu');
+        btn?.focus();
+        return;
+      }
+      document.querySelectorAll<HTMLDetailsElement>('details[data-more]').forEach((d) => {
+        if (d.open) {
+          d.open = false;
+          d.querySelector<HTMLElement>('summary')?.focus();
+        }
+      });
+    });
+
+    // "More ▾" closes when the user clicks anywhere outside it.
+    document.addEventListener('click', (e) => {
+      document.querySelectorAll<HTMLDetailsElement>('details[data-more]').forEach((d) => {
+        if (d.open && !d.contains(e.target as Node)) d.open = false;
+      });
+    });
+  }
+
   function init() {
     const btn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
     const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
     if (!btn || !panel) return;
-    // Astro's ClientRouter fires `astro:page-load` on the initial paint as
-    // well as subsequent navigations, so the bare `init()` call below would
-    // attach a second click handler — first tap then opens AND immediately
-    // closes the menu, looking like the button is dead. Mark the button so
-    // re-entry is a no-op.
     if (btn.dataset.menuBound === 'true') return;
     btn.dataset.menuBound = 'true';
 
@@ -146,27 +286,27 @@ function isActive(href: string) {
       panel!.classList.toggle('hidden', !open);
       btn!.setAttribute('aria-expanded', String(open));
       btn!.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      // Minimal focus management: pull focus into the drawer on open and
+      // hand it back to the toggle on close. Not a full Tab-cycling trap —
+      // intentional, so users can still Shift-Tab back to the announcement
+      // bar above the header.
+      if (open) {
+        panel!.querySelector<HTMLAnchorElement>('[data-mobile-nav-link]')?.focus();
+      } else {
+        btn!.focus();
+      }
     }
 
     btn.addEventListener('click', () => {
       setOpen(panel.classList.contains('hidden'));
     });
 
-    // Close on Escape so keyboard users can dismiss without re-finding the
-    // toggle button.
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !panel.classList.contains('hidden')) {
-        setOpen(false);
-        btn.focus();
-      }
-    });
-
-    // Close after tapping any nav link — otherwise the panel stays open
-    // behind the next page until the user re-toggles.
     panel.querySelectorAll<HTMLAnchorElement>('[data-mobile-nav-link]').forEach((a) => {
       a.addEventListener('click', () => setOpen(false));
     });
   }
+
+  initOnce();
   init();
   document.addEventListener('astro:page-load', init);
 </script>
