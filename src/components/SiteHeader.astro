@@ -7,7 +7,14 @@ import MobileNavSection from '~/components/header/MobileNavSection.astro';
 import { link } from '~/lib/link';
 import { NAV, DESKTOP_LEFT, DESKTOP_RIGHT } from '~/lib/navigation';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+// Astro.url.pathname includes the configured `base` (e.g. /rethink-aadhaar/).
+// Nav hrefs in src/lib/navigation.ts are stored base-less, so strip the
+// prefix before string-matching — otherwise aria-current and .active never
+// fire on production deploys.
+const BASE = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const raw = Astro.url.pathname;
+const stripped = BASE && raw.startsWith(BASE) ? raw.slice(BASE.length) : raw;
+const path = stripped.replace(/\/$/, '') || '/';
 const isHome = path === '/';
 ---
 
