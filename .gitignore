@@ -22,3 +22,8 @@ public/media/*.avif
 .vscode/
 .idea/
 *.swp
+
+# Claude Code runtime state (lock files, per-user local settings).
+# Project-shared `.claude/settings.json` SHOULD be committed when added.
+.claude/scheduled_tasks.lock
+.claude/settings.local.json

@@ -63,33 +63,61 @@ behalf of the CMS and hands the resulting access token back.
 
 ---
 
-## Auth proxy options
+## Auth options
 
-### Option A — Sveltia's hosted proxy (fast start)
+### Option A — Personal Access Token (no backend) ★ default
 
-`config.yml` ships pointing at `https://auth.sveltia.dev`, the
-free open-source proxy maintained by the Sveltia project.
+`config.yml` ships with no `backend.base_url` set, which switches Sveltia
+into PAT (Personal Access Token) mode. **No OAuth App, no callback URL,
+no auth proxy, no Cloudflare Worker.**
 
-**Setup (10 minutes):**
+**Setup per editor (~2 minutes):**
 
-1. **Register a GitHub OAuth App** at
-   <https://github.com/settings/applications/new>:
-   - Application name: `Rethink Aadhaar CMS`
-   - Homepage URL: `https://anivar.github.io/rethink-aadhaar/`
-   - Authorization callback URL: `https://auth.sveltia.dev/callback`
-   - **Save** and note the **Client ID** and **Client Secret**.
-2. **Register the OAuth App with Sveltia's proxy**: open
-   <https://auth.sveltia.dev/admin/> and follow the on-screen instructions
-   to register your `client_id` + `client_secret`. Sveltia stores it
-   server-side; you don't put it in this repo.
-3. Visit `/admin/` on the deployed site, click **Sign in with GitHub**,
-   approve the OAuth scope, you're in.
+1. Editor visits <https://anivar.github.io/rethink-aadhaar/admin/>.
+2. Clicks **Sign In with Token**.
+3. Follows the GitHub link in the prompt — it lands on the fine-grained
+   PAT page with the required scopes pre-selected (Contents + Pull
+   Requests on this repo only).
+4. Generates the token, copies it, pastes it into Sveltia's dialog.
+5. Token is stored in the editor's browser `localStorage`; subsequent
+   visits sign in automatically until the token expires.
 
-**Trust trade-off:** you depend on the Sveltia maintainer's worker being
-up. If they ever take it offline, you reconfigure `base_url` to your own
-worker (Option B). The data is in your Git repo — you can never lose it.
+**Trade-offs:**
+- ✅ Zero infrastructure. No third-party uptime dependency.
+- ✅ Each editor's token is independently revocable at
+  <https://github.com/settings/tokens>.
+- ⚠️ Editors manage their own token rotation (90-day default expiry).
+- ⚠️ Token sits in browser localStorage — a malicious browser extension
+  could exfiltrate it. Editors should use a profile they trust for CMS
+  work; revoke immediately if a browser is compromised.
 
-### Option B — Self-hosted Cloudflare Worker (recommended for production)
+### Option B — OAuth via self-hosted auth proxy (multi-editor convenience)
+
+> **Note:** the previously-recommended hosted proxy at `auth.sveltia.dev`
+> was decommissioned. The domain now serves an unrelated site. Don't
+> point any new OAuth Apps at that callback URL.
+
+You can run Sveltia's auth proxy yourself on Cloudflare Workers, Vercel,
+Netlify Functions, or Deno Deploy — any platform that lets you deploy a
+single serverless function with two secrets (`GITHUB_CLIENT_ID`,
+`GITHUB_CLIENT_SECRET`). Once you have the worker URL, register a
+GitHub OAuth App at <https://github.com/settings/applications/new> with:
+
+- Homepage URL: `https://anivar.github.io/rethink-aadhaar/`
+- Authorization callback URL: `https://YOUR-PROXY-URL/callback`
+
+Then add to `config.yml`:
+
+```yaml
+backend:
+  base_url: https://your-proxy.example/
+  auth_scope: public_repo
+```
+
+Editors then sign in with **Sign in with GitHub** instead of pasting a
+PAT. Only the proxy holds the `client_secret` — never the repo.
+
+#### Worked example: Cloudflare Workers
 
 Run the same proxy on Cloudflare Workers' free tier. Full control, no
 third-party dependency.
@@ -130,11 +158,19 @@ third-party dependency.
 
 - **Editorial workflow on.** `publish_mode: editorial_workflow` in
   `config.yml` means every save in the CMS becomes a PR against `main`,
-  never a direct commit. The branch protection on `main` (no direct push)
-  is the safety net.
-- **Minimum OAuth scope.** `auth_scope: public_repo` requests only
-  read/write to public repos — not your private repos. Editors can revoke
-  the OAuth grant anytime at <https://github.com/settings/applications>.
+  never a direct commit.
+- **⚠ Branch protection.** For the editorial workflow to be more than
+  honour-system, `main` must reject direct pushes — otherwise an editor
+  with write access can bypass the CMS entirely. Verify with
+  `gh api repos/anivar/rethink-aadhaar/branches/main/protection`. If it
+  returns 404, see CONTRIBUTING.md for the recommended `gh api -X PUT`
+  command.
+- **Minimum token / OAuth scope.** PAT mode prompts for a fine-grained
+  token scoped to *this repo only* (Contents + Pull Requests). OAuth
+  mode (Option B) uses `auth_scope: public_repo` — read/write to public
+  repos only. Either way, editors revoke at
+  <https://github.com/settings/tokens> (PAT) or
+  <https://github.com/settings/applications> (OAuth).
 - **Editorial drafts are public.** `chore/cms-edit-*` branches are
   pushed to a public repo. Do not paste private info into in-flight drafts.
 - **Image uploads are immediately public** the moment the PR merges.
@@ -176,13 +212,18 @@ To **delete**: click delete in `/admin/`. Same PR flow.
 
 ## Updating the CMS itself
 
-`index.html` loads from `cdn.jsdelivr.net/npm/@sveltia/cms/dist/sveltia-cms.js`
-without a version pin — you always get the latest stable. To pin a version
-(e.g. for a regression):
+`index.html` pins an exact Sveltia version with a Subresource Integrity hash
+so a compromised CDN can't serve us a tampered bundle. To upgrade:
 
-```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@sveltia/cms@1.2.3/dist/sveltia-cms.js"></script>
+```sh
+VER=0.160.0   # the new version
+SRI=$(curl -sSL "https://cdn.jsdelivr.net/npm/@sveltia/cms@${VER}/dist/sveltia-cms.js" \
+       | openssl dgst -sha384 -binary | openssl base64 -A)
+echo "src = ...@${VER}/...   integrity = sha384-${SRI}"
 ```
+
+Then update both the version in the `src=` URL and the `integrity=` value
+in `public/admin/index.html` in lockstep, open a PR, merge.
 
 ---
 

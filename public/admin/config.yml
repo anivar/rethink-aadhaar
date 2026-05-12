@@ -15,13 +15,19 @@ backend:
   name: github
   repo: anivar/rethink-aadhaar
   branch: main
-  # ▼▼▼ EDIT THIS BEFORE LAUNCHING THE CMS ▼▼▼
-  # Either point at the official Sveltia auth proxy (fast start, third-party
-  # dependency) OR your own Cloudflare Worker (recommended for production).
-  # See README.md → "Auth proxy options".
-  base_url: https://auth.sveltia.dev
-  # ▲▲▲
-  auth_scope: public_repo   # minimal scope for a public repo
+  # No `base_url` / `auth_scope` set on purpose: that triggers Sveltia's
+  # PAT (Personal Access Token) sign-in flow — the editor clicks
+  # "Sign In with Token" on /admin/, follows the GitHub link with the
+  # required scopes pre-selected, generates a fine-grained PAT, pastes it.
+  # The token is stored in browser localStorage, never reaches the repo.
+  # No backend, no OAuth App, no callback URL, no Cloudflare Worker.
+  #
+  # When you're ready to upgrade to OAuth (avoids per-editor token
+  # management), self-host the Sveltia CMS Authenticator on Cloudflare
+  # Workers / Vercel / Netlify Functions and re-add:
+  #   base_url: https://your-proxy.example/
+  #   auth_scope: public_repo
+  # See README.md → "Auth proxy options" for setup.
 
 # Every CMS save creates a PR against `main`, never a direct commit.
 # Merging the PR triggers .github/workflows/deploy.yml → live in ~2 min.
