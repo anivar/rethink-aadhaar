@@ -16,3 +16,5 @@ We view Aadhaar, and therefore India Stack, as a failed and objectionable model 
 What is being exported under the brand "India Stack" is this same architecture, dressed up in the language of "open public infrastructure". We urge the greatest caution from countries considering its replication, for the same reasons we resist its use here.
 
 → Read our full statement: [**Beware of Aadhaar — A Warning on India's Biometric Identity Model**](/campaign2025) (Campaign 2025, released on Human Rights Day, 10 December 2025).
+
+→ Further reading on the architectural critique: [**India Stack Watch**](https://indiastack.in/) — a structured framework (Five Tests, Evidence, Components, Framework) examining India Stack as Digital Public Infrastructure. CC0; fork-able.
