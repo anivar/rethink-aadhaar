@@ -8,6 +8,8 @@
 // public/media/ at build time, so we serve .webp to browsers that accept it
 // and fall back to the original for download. Originals stay full-resolution.
 
+import { link } from '~/lib/link';
+
 interface Item {
   title: string;
   href: string;
@@ -35,15 +37,15 @@ const downloadName = (path: string) => decodeURIComponent(path.split('/').pop() 
     {sorted.map((item) => (
       <li>
         <a
-          href={item.href}
+          href={link(item.href)}
           download={downloadName(item.href)}
           class="group block card-surface p-3 hover:border-accent/60 transition-colors"
           title={`Download ${item.title}`}
         >
           <picture>
-            <source type="image/webp" srcset={webpOf(item.image!)} />
+            <source type="image/webp" srcset={link(webpOf(item.image!))} />
             <img
-              src={item.image}
+              src={link(item.image!)}
               alt={item.title}
               loading="lazy"
               decoding="async"
