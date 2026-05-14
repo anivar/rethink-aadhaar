@@ -1,0 +1,33 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import { breadcrumb } from '~/lib/seo';
+
+const page = await getEntry('page', 'code-of-conduct');
+const data = page!.data;
+const { Content } = await render(page!);
+
+const description =
+  data.intro ??
+  'How Rethink Aadhaar conducts itself, what we expect of members and collaborators, and how to report a violation.';
+
+const jsonLd = breadcrumb([
+  { name: 'Home', url: '/' },
+  { name: 'Code of Conduct', url: '/code-of-conduct' },
+]);
+---
+
+<BaseLayout title={data.title} description={description} jsonLd={jsonLd}>
+  <HeroTitle eyebrow="How we work">{data.title}</HeroTitle>
+
+  {data.intro && (
+    <p class="container-prose mt-8 md:mt-10 text-center text-lg md:text-xl text-ink/85 max-w-[60ch] mx-auto fade-up">
+      {data.intro}
+    </p>
+  )}
+
+  <article class="container-prose mt-14 md:mt-20 mb-24 prose dark:prose-invert font-body text-pretty fade-up">
+    <Content />
+  </article>
+</BaseLayout>

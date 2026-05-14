@@ -184,7 +184,27 @@ collections:
         fields:
           - { name: title, label: Title, widget: string }
           - { name: intro, label: Intro, widget: string,   required: false }
-          - { name: body,  label: Body,  widget: markdown }
+          - { name: tagline, label: Tagline, widget: string, required: false }
+          - { name: hashtags, label: Hashtags, widget: list, required: false, field: { name: tag, label: Tag, widget: string } }
+          - { name: friends, label: Friends of Rethink Aadhaar, widget: list, required: false, field: { name: name, label: Name, widget: string } }
+          - { name: interns, label: Interns, widget: list, required: false, field: { name: name, label: Name, widget: string } }
+          - { name: internsNote, label: Interns note, widget: string, required: false }
+          - name: contact
+            label: Contact
+            widget: object
+            required: false
+            fields:
+              - { name: email,       label: Email,        widget: string, required: false }
+              - { name: twitter,     label: Twitter handle, widget: string, required: false }
+              - { name: facebook,    label: Facebook handle, widget: string, required: false }
+              - { name: mailingList, label: Mailing list URL, widget: string, required: false, pattern: ['^https?://', 'Must be a full http(s) URL'] }
+      - name: code_of_conduct
+        label: Code of Conduct
+        file: src/content/page/code-of-conduct.md
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: intro, label: Intro, widget: string,   required: false }
+          - { name: body,  label: Body,  widget: markdown, hint: 'The full Code of Conduct text. Numbered sections render as ordered list.' }
       - name: campaign2025
         label: Campaign 2025
         file: src/content/page/campaign2025.md

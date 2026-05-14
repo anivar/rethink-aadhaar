@@ -1,12 +1,12 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import { aboutPage, breadcrumb } from '~/lib/seo';
+import { link } from '~/lib/link';
 
 const page = await getEntry('page', 'about');
 const data = page!.data;
-const { Content } = await render(page!);
 const description =
   "A non-partisan campaign concerned about India's Unique Identification (UID) or Aadhaar project.";
 const jsonLd = [
@@ -91,12 +91,18 @@ const contact = data.contact ?? {};
     </section>
   )}
 
-  {/* Code of Conduct — rendered from the markdown body, in a callout. */}
+  {/* Code of Conduct — pointer to the dedicated page. */}
   <section class="container-prose mt-20 md:mt-28 fade-up">
     <div class="surface-paper p-7 md:p-10 border-l-4 border-accent">
-      <article class="prose dark:prose-invert font-body text-pretty max-w-none">
-        <Content />
-      </article>
+      <h2 class="text-2xl md:text-3xl font-display font-extrabold tracking-tight">Code of Conduct</h2>
+      <p class="mt-4 font-body text-base md:text-lg text-ink/80 max-w-[60ch]">
+        How Rethink Aadhaar conducts itself, what we expect of members and collaborators, and how to report a violation.
+      </p>
+      <p class="mt-5">
+        <a href={link('/code-of-conduct')} class="caps text-sm text-accent hover:underline">
+          Read the Code of Conduct →
+        </a>
+      </p>
     </div>
   </section>
 

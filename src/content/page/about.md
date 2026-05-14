@@ -52,9 +52,3 @@ contact:
   facebook: "no2uid"
   mailingList: "https://lists.riseup.net/www/subscribe/rethink-aadhaar"
 ---
-
-## Code of Conduct
-
-We have a zero-tolerance policy towards discrimination, harassment, bullying, or sexual harassment. The Code of Conduct applies to anyone participating in the campaign — members, volunteers, interns, and collaborators.
-
-To report a violation, write to [contact@rethinkaadhaar.in](mailto:contact@rethinkaadhaar.in). Complaints are reviewed by the campaign's committee. Violations may result in removal from the campaign and loss of access to its channels.
