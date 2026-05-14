@@ -4,10 +4,11 @@
 // click target is the original full-resolution asset (download attribute set
 // so browsers save rather than open inline).
 //
-// scripts/optimize-images.ts emits a .webp sibling for every JPG/PNG under
-// public/media/ at build time, so we serve .webp to browsers that accept it
-// and fall back to the original for download. Originals stay full-resolution.
+// Display thumbnails go through <Picture>, which serves a .webp sibling
+// when the browser accepts it. Originals stay full-resolution under
+// public/media/ so the download attribute saves the unmodified asset.
 
+import Picture from '~/components/Picture.astro';
 import { link } from '~/lib/link';
 
 interface Item {
@@ -25,7 +26,6 @@ interface Props {
 const { section, id, items } = Astro.props;
 const sorted = [...items].filter((i) => i.image).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-const webpOf = (path: string) => path.replace(/\.(jpe?g|png)$/i, '.webp');
 const downloadName = (path: string) => decodeURIComponent(path.split('/').pop() ?? '');
 ---
 <section class="py-12 md:py-16 border-t border-ink/15 first:border-t-0" id={id}>
@@ -42,16 +42,11 @@ const downloadName = (path: string) => decodeURIComponent(path.split('/').pop() 
           class="group block card-surface p-3 hover:border-accent/60 transition-colors"
           title={`Download ${item.title}`}
         >
-          <picture>
-            <source type="image/webp" srcset={link(webpOf(item.image!))} />
-            <img
-              src={link(item.image!)}
-              alt={item.title}
-              loading="lazy"
-              decoding="async"
-              class="w-full h-auto aspect-[3/4] object-contain bg-ink/5"
-            />
-          </picture>
+          <Picture
+            src={item.image!}
+            alt={item.title}
+            class="w-full h-auto aspect-[3/4] object-contain bg-ink/5"
+          />
           <p class="mt-3 font-body text-xs md:text-sm text-ink/80 leading-snug text-pretty group-hover:text-accent transition-colors">
             {item.title}
             <span class="text-accent" aria-hidden="true"> ↓</span>

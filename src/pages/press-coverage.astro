@@ -2,10 +2,10 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
+import Picture from '~/components/Picture.astro';
 import { byDateDesc, groupByYear } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
 import { itemList } from '~/lib/seo';
-import { link } from '~/lib/link';
 
 const page = await getEntry('page', 'press-coverage');
 const data = page!.data;
@@ -38,13 +38,7 @@ const jsonLd = itemList({
 
   {data.hero && (
     <figure class="container-prose mt-10 fade-up delay-1">
-      <img
-        src={link(data.hero)}
-        alt=""
-        loading="eager"
-        decoding="async"
-        class="w-full h-auto"
-      />
+      <Picture src={data.hero} alt="" eager class="w-full h-auto" />
     </figure>
   )}
 

@@ -1,4 +1,6 @@
 ---
+import { link } from '~/lib/link';
+
 interface Item {
   title: string;
   href: string;
@@ -12,6 +14,9 @@ interface Props {
 }
 const { section, id, items } = Astro.props;
 const sorted = [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+// External (https://) links open as-is; root paths get the deploy base prefix.
+const isExternal = (h: string) => /^https?:\/\//.test(h);
 ---
 <section class="py-12 md:py-16 border-t border-ink/15 first:border-t-0" id={id}>
   <header class="mb-6 md:mb-8">
@@ -22,9 +27,9 @@ const sorted = [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     {sorted.map((item) => (
       <li>
         <a
-          href={item.href}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={isExternal(item.href) ? item.href : link(item.href)}
+          target={isExternal(item.href) ? '_blank' : undefined}
+          rel={isExternal(item.href) ? 'noopener noreferrer' : undefined}
           class="group block h-full p-5 md:p-6 card-surface hover:border-accent/60 transition-colors"
         >
           <p class="font-display font-bold text-base md:text-lg leading-snug text-balance group-hover:text-accent transition-colors">
