@@ -100,6 +100,8 @@ const page = defineCollection({
   schema: z.object({
     title: z.string(),
     intro: z.string().optional(),
+    /** Optional hero image (root path under public/, e.g. /media/...). */
+    hero: z.string().optional(),
     /** Optional structured fields rendered by the about template. */
     tagline: z.string().optional(),
     hashtags: z.array(z.string()).optional(),
