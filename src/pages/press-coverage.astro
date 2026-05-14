@@ -5,6 +5,7 @@ import HeroTitle from '~/components/HeroTitle.astro';
 import Picture from '~/components/Picture.astro';
 import { byDateDesc, groupByYear } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
+import { renderMarkdown } from '~/lib/markdown';
 import { itemList } from '~/lib/seo';
 
 const page = await getEntry('page', 'press-coverage');
@@ -39,6 +40,9 @@ const jsonLd = itemList({
   {data.hero && (
     <figure class="container-prose mt-10 fade-up delay-1">
       <Picture src={data.hero} alt="" eager class="w-full h-auto" />
+      {data.heroCaption && (
+        <figcaption class="hero-caption" set:html={renderMarkdown(data.heroCaption)} />
+      )}
     </figure>
   )}
 

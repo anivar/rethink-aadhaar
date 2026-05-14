@@ -230,6 +230,24 @@
   .container-wide  { max-width: var(--max-width-wide);    margin-inline: auto; padding-inline: 1.5rem; }
   .measure         { max-width: var(--max-width-prose);   margin-inline: auto; }
 
+  .hero-caption {
+    margin-top: 0.85rem;
+    max-width: var(--max-width-prose);
+    margin-inline: auto;
+    font-family: var(--font-body, inherit);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgb(var(--ink) / 0.72);
+    text-align: left;
+  }
+  .hero-caption a {
+    color: var(--color-accent-deep);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    word-break: break-word;
+  }
+  .hero-caption a:hover { color: var(--color-accent); }
+
   .nav-link {
     @apply caps py-2 relative inline-block transition-colors;
     font-size: 0.78rem;

@@ -2,49 +2,51 @@
 title: "Press coverage"
 intro: "Selected reporting, opinion and investigations on Aadhaar — surveillance concerns, exclusion stories, court orders and analysis. Compiled and updated by the Rethink Aadhaar collective."
 hero: "/media/acb61f4f-52f0-420f-a6ed-b600956cdc5b-Screenshot-2025-10-23-at-4.19.57 PM.png"
+heroCaption: |
+  Aparna Kalra in the news site TheWire.in documents the distress of Indian residents excluded from basic services such as schools over lack of timely and accurate Aadhaar updates and enrolment. Introduced with a promise of efficiency, the real everyday experience of those forced to get Aadhaar is captured by Kalra who found that "slight spelling anomalies and mismatched fingerprints keep a child out of school or a family from their ration entitlements." <https://thewire.in/special/tears-queues-and-a-never-ending-search-for-kagaz-the-real-story-of-aadhaar>
+
+  *Illustration: Pariplab Chakraborty in TheWire.in*
 ---
 
-Aparna Kalra in the news site TheWire.in documents the distress of Indian residents excluded from basic services such as schools over lack of timely and accurate Aadhaar updates and enrolment. Introduced with a promise of efficiency, the real everyday experience of those forced to get Aadhaar is captured by Kalra who found that “slight spelling anomalies and mismatched fingerprints keep a child out of school or a family from their ration entitlements.” <https://thewire.in/special/tears-queues-and-a-never-ending-search-for-kagaz-the-real-story-of-aadhaar> Illustration: Pariplab Chakraborty in TheWire.in
-
-## **March 2026**
+## March 2026
 
 Venkateswarlu Kuruva and Chakradhar Buddha explain in [*IDR*](https://idronline.org/article/rights/indias-digital-welfare-system-is-quietly-eroding-peoples-basic-rights/) how India’s digital welfare system is producing life-altering exclusions by prioritising administrative control over constitutional guarantees of access and dignity, and how the entire onus of correction is passed on to the people least equipped to bear it.
 
-The Delhi government plans to replace the pink ticket system for women’s free bus travel with the [Saheli smart cards](https://www.theindiaforum.in/forum/saheli-cards-and-surveillance-public-welfare). In the absence of public evidence that such a change is needed, this is yet another example of technology-driven welfare that will exclude the people who will benefit the most from affordable transport. 
+The Delhi government plans to replace the pink ticket system for women’s free bus travel with the [Saheli smart cards](https://www.theindiaforum.in/forum/saheli-cards-and-surveillance-public-welfare). In the absence of public evidence that such a change is needed, this is yet another example of technology-driven welfare that will exclude the people who will benefit the most from affordable transport. 
 
 The government’s proposal to[ pre-install the Aadhaar app ](https://indianexpress.com/article/business/aadhaar-apps-pre-installation-industry-pushback-technical-infeasibility-10592951/)to enable a single sign-on feature for all online services that require Aadhaar authentication or identity verification has received resistance from the Manufacturers’ Association for Information Technology (MAIT), an industry body representing manufacturing companies, citing privacy and security concerns and manufacturing and operational ramifications for global smartphone companies.
 
-The draft policy for Responsible Digital Use Among Students, released by the Karnataka government, [has a provision for linking social media accounts to Aadhaar](https://www.thenewsminute.com/karnataka/karnatakas-draft-digital-use-for-students-policy-calls-for-aadhar-enabled-sign-up) to ensure age, authenticity and restrict fake or multiple accounts. This has been criticized by internet advocacy groups because it is not only unconstitutional but also can be used as a tool for extensive profiling of individuals. 
+The draft policy for Responsible Digital Use Among Students, released by the Karnataka government, [has a provision for linking social media accounts to Aadhaar](https://www.thenewsminute.com/karnataka/karnatakas-draft-digital-use-for-students-policy-calls-for-aadhar-enabled-sign-up) to ensure age, authenticity and restrict fake or multiple accounts. This has been criticized by internet advocacy groups because it is not only unconstitutional but also can be used as a tool for extensive profiling of individuals. 
 
 The [Parliamentary Standing Panel on Rural Development and Panchayati Raj](https://m.economictimes.com/news/india/make-aadhaar-based-payment-system-optional-under-mgnregs-parliamentary-panel/articleshow/129853760.cms) has recommended making the Aadhaar-Based Payment System optional for wage transfers under MGNREGA and shifting to other alternatives because of low biometric authentication success in remote areas and for the elderly.
 
-The AI transition in India can disrupt the labour market and have multiplier effects on [household income, urban migration patterns and consumption demand](https://www.moneycontrol.com/news/opinion/ai-s-social-costs-india-cannot-ignore-13851146.html). This [article](https://www.moneycontrol.com/news/opinion/ai-led-transformation-is-inevitable-but-its-social-costs-are-not-13858510.html#google_vignette) makes the case for an "AI Transition Scheme" when AI-led task automation will gradually replace entry-level to mid-skills jobs before new jobs can emerge at scale. 
+The AI transition in India can disrupt the labour market and have multiplier effects on [household income, urban migration patterns and consumption demand](https://www.moneycontrol.com/news/opinion/ai-s-social-costs-india-cannot-ignore-13851146.html). This [article](https://www.moneycontrol.com/news/opinion/ai-led-transformation-is-inevitable-but-its-social-costs-are-not-13858510.html#google_vignette) makes the case for an "AI Transition Scheme" when AI-led task automation will gradually replace entry-level to mid-skills jobs before new jobs can emerge at scale. 
 
-**February 2026**
+## February 2026
 
 The Indian government is pushing Aadhaar deeper into everyday life [through a new app and offline verification support](https://techcrunch.com/2026/02/09/india-makes-aadhaar-more-ubiquitous-but-critics-say-privacy-concerns-remain/), a step that raises new questions about security, consent, and the broader use of the massive database.
 
-In this [blog](https://srajagopalan.substack.com/p/indias-ai-wedding-buffet-generous?r=kpgj1), Shruti Rajgopalan from the Mercatus Center dives deep to explain the political economy of the AI race. 
+In this [blog](https://srajagopalan.substack.com/p/indias-ai-wedding-buffet-generous?r=kpgj1), Shruti Rajgopalan from the Mercatus Center dives deep to explain the political economy of the AI race. 
 
-India is chasing the AI dream, but there are other less visible costs of AI that have grave implications. Data centres will significantly [drive up India’s energy and water demands](https://www.theindiaforum.in/forum/can-india-power-ai-dream), while generating noise and air pollution and affecting the health of neighboring communities. This comes amid a growing number of studies highlighting the rising [environmental, economic and health impacts of data centres in the US](https://www.wionews.com/world/india-s-data-centre-boom-comes-amid-environmental-questions-in-the-us-what-does-it-mean-1772088842838). India needs to pave its own way during this AI boom while ensuring [transparency, sustainability and efficiency in the whole process](https://www.ndtv.com/india-news/worlds-data-centres-are-guzzling-power-water-does-india-have-solutions-india-ai-impact-summit-11116709). 
+India is chasing the AI dream, but there are other less visible costs of AI that have grave implications. Data centres will significantly [drive up India’s energy and water demands](https://www.theindiaforum.in/forum/can-india-power-ai-dream), while generating noise and air pollution and affecting the health of neighboring communities. This comes amid a growing number of studies highlighting the rising [environmental, economic and health impacts of data centres in the US](https://www.wionews.com/world/india-s-data-centre-boom-comes-amid-environmental-questions-in-the-us-what-does-it-mean-1772088842838). India needs to pave its own way during this AI boom while ensuring [transparency, sustainability and efficiency in the whole process](https://www.ndtv.com/india-news/worlds-data-centres-are-guzzling-power-water-does-india-have-solutions-india-ai-impact-summit-11116709). 
 
-This [report](https://beyondfossilfuels.org/wp-content/uploads/2026/02/AI-for-climate-claims-Report_FEB-2026_FINAL-2-16.pdf) highlights how prominent AI claims obscure information about the benefits and environmental impact of traditional AI versus generative AI models, and how these claims of traditional AI climate benefits often tend to draw on weaker forms of evidence. 
+This [report](https://beyondfossilfuels.org/wp-content/uploads/2026/02/AI-for-climate-claims-Report_FEB-2026_FINAL-2-16.pdf) highlights how prominent AI claims obscure information about the benefits and environmental impact of traditional AI versus generative AI models, and how these claims of traditional AI climate benefits often tend to draw on weaker forms of evidence. 
 
-**January 2026 **
+## January 2026
 
-As per a [report](https://timesofindia.indiatimes.com/city/dehradun/long-queues-delays-in-aadhaar-updation-leaving-people-frustrated/articleshow/126587449.cms) in *The Times of India*, across Uttarakhand, residents are skipping work and school and queuing outside post offices to rectify errors in their Aadhaar cards. The situation worsened after Aadhaar updation was discontinued at several common service centres (CSCs) due to data irregularities. These complications are worse in hill districts and remote villages, where people have to travel to overcrowded district headquarters, where long waits are a routine. 
+As per a [report](https://timesofindia.indiatimes.com/city/dehradun/long-queues-delays-in-aadhaar-updation-leaving-people-frustrated/articleshow/126587449.cms) in *The Times of India*, across Uttarakhand, residents are skipping work and school and queuing outside post offices to rectify errors in their Aadhaar cards. The situation worsened after Aadhaar updation was discontinued at several common service centres (CSCs) due to data irregularities. These complications are worse in hill districts and remote villages, where people have to travel to overcrowded district headquarters, where long waits are a routine. 
 
-In an [article](https://www.washingtonpost.com/opinions/2026/01/09/india-surveillance-state-democracy/) in *The Washington Post*, Rana Ayyub explains how India has become a laboratory for a massive state digital surveillance system. This has created an information symmetry between those who control the system and those who use it.   
+In an [article](https://www.washingtonpost.com/opinions/2026/01/09/india-surveillance-state-democracy/) in *The Washington Post*, Rana Ayyub explains how India has become a laboratory for a massive state digital surveillance system. This has created an information symmetry between those who control the system and those who use it.   
 
-**December 2025** 
+## December 2025
 
-The government cleared the Digital Personal Data Protection (DPDP) Rules, which [dilute the transparency rights and safeguards for investigative journalists ](https://idronline.org/article/rights/indias-new-data-rules-put-the-state-above-citizens/)and others probing the government. The independence of the body set up to ensure accountability is being questioned, as it will operate under the Ministry of Electronics and Information Technology. The rules can be seen as a way of indirect censorship and surveillance of lawful newsgathering activities. 
+The government cleared the Digital Personal Data Protection (DPDP) Rules, which [dilute the transparency rights and safeguards for investigative journalists ](https://idronline.org/article/rights/indias-new-data-rules-put-the-state-above-citizens/)and others probing the government. The independence of the body set up to ensure accountability is being questioned, as it will operate under the Ministry of Electronics and Information Technology. The rules can be seen as a way of indirect censorship and surveillance of lawful newsgathering activities. 
 
-This [article](https://competitiveness.in/ai-without-boundaries-understanding-the-hidden-cost/) in *The Economic Times* sheds light on the hidden costs of AI, from its environmental impact to risking the development of cognitive skills in children. Unregulated access and lax data privacy laws further complicate solving the issues. 
+This [article](https://competitiveness.in/ai-without-boundaries-understanding-the-hidden-cost/) in *The Economic Times* sheds light on the hidden costs of AI, from its environmental impact to risking the development of cognitive skills in children. Unregulated access and lax data privacy laws further complicate solving the issues. 
 
 This [report](https://thewire.in/government/restrict-dismantle-repeal-how-modi-government-killed-mgnrega-before-vb-g-ram-g-was-tabled) in *The Wire* explains how the current government weakened MGNREGA before VB-G RAM G was tabled. This can be partially attributed to forced technocracy through in the form of the Aadhaar-based payment system (ABPS) for wage transfers, which has wrongfully excluded multiple people from the system.
 
-## OCTOBER 2025
+## October 2025
 
 Keir Starmer said he may consider Aadhaar as model for ID for UK, but Indian lawyers, activists warn of [\#Aadhaar](https://x.com/hashtag/Aadhaar?src=hashtag_click) 's ‘digital coercion’, data breaches ["**Your basis to live is checked at each and every step**",](https://www.theguardian.com/world/2025/oct/14/india-id-system-divide-opinion) warn civil liberty activists.
 
@@ -52,7 +54,7 @@ Previously, The Guardian has reported how [a glitch in Aadhaar system](https://w
 
 Indians activists reiterated that there is no way to know if there has been a reported data breach and no oversight into how Aadhaar data may be bundled with other databases. Ultimately, it’s a system that undermines access to essential social security and welfare, they said.
 
-## septemBER 2025
+## September 2025
 
 Activist Srinivas Kodali filed a complaint that Telangana Govt [used EPIC election photos for facial recognition](https://x.com/digitaldutta/status/1965248293669347719) “Government of Telangana used photographs from Electoral Rolls to build a facial recognition/AI system.” He said: “This has happened because ECI has shared our data during Aadhaar Voter ID linking exercise”
 
@@ -60,170 +62,149 @@ News coverage of this in [NewsMinute](https://www.thenewsminute.com/telangana/te
 
 Central government [mandates Aadhaar now](https://%20%20https://www.thehindu.com/news/national/revised-soo-pact-with-kuki-zo-groups-requires-them-to-get-aadhaar-cards/article70013541.ece) in an armistice agreement
 
-At same time as[ Rajasthan](https://thewire.in/rights/companies-gain-elders-lose-in-rajasthans-turn-to-cradle-to-grave-digital-governance), Maharashtra considers proposal to [monetise resident voters’ data ](https://indianexpress.com/article/cities/mumbai/maharashtra-considering-proposal-to-monetise-golden-data-of-beneficiaries-of-govt-schemes-10267510/%C2%A0)
+At same time as[ Rajasthan](https://thewire.in/rights/companies-gain-elders-lose-in-rajasthans-turn-to-cradle-to-grave-digital-governance), Maharashtra considers proposal to [monetise resident voters’ data ](https://indianexpress.com/article/cities/mumbai/maharashtra-considering-proposal-to-monetise-golden-data-of-beneficiaries-of-govt-schemes-10267510/%C2%A0)
 
 Even as residents struggle with Aadhaar coercion and lack of redress, tech firms profit. Companies such as this [company’s shares surge after it bags orders from UIDAI](https://shares%20surge%2011%%20after%20₹1,160%20crore%20order%20win%20from%20the%20UIDAI%20-%20CNBC%20TV18%20%20https://www.cnbctv18.com/market/protean-egov-shares-wins-rs-1160-crore-uidai-order-to-set-up-aadhaar-centres-ws-l-19659055.htm)  
 
-## Aadhaar: Costs of Digital Red Tape’
+### Aadhaar: Costs of Digital Red Tape
 
 *A* [*recent study by*](https://www.epw.in/journal/2024/19/insight/aadhaar-costs-digital-red-tape.html) *Reetika Khera and Amod Moharil based on a survey of nearly 300 people interviewed at centers trying to correct and update Aadhaar in centers in the national capital Delhi found excessive bureaucracy, dysfunctional or closed centers, residents having to make multiple trips with no accountability*
 
 Here in New York Times Opinion, Khera’s analysed why and how the so-called [“Big Fix” of Aadhaar has turned out to be Big Flub](https://www.nytimes.com/2018/01/21/opinion/india-aadhaar-biometric-id.html) , and in The Washington Post earlier how the digital ID is costing people [their privacy and even their lives](https://www.washingtonpost.com/world/asia_pacific/indias-vast-biometric-program-was-supposed-to-end-corruption-but-the-neediest-may-be-hit-hardest/2018/03/24/bb212a86-289c-11e8-a227-fd2b009466bc_story.html)
 
-### Customer ID verification framework USING AADHAAR makes life difficult for the poor
+### Customer ID verification framework using Aadhaar makes life difficult for the poor
 
 Jean Dreze investigates and explains in The Economic Times how poor people find themselves locked out of their own bank accounts over minor Aadhaar and data mismatches with not even a prior notice; [the stress and the hurdles of correcting it](https://economictimes.indiatimes.com/opinion/et-commentary/kyc-unlock-kar-diya-jaye-customer-id-verification-framework-is-making-life-difficult-for-the-poor/articleshow/118186588.cms?from=mdr) even proved fatal such for this elderly man Ramman in Uttar Pradesh
 
-### ON PROBLEMS OF ‘LOST AADHAAR’
+### On problems of 'lost Aadhaar'
 
-‘**Without Aadhaar, without identity’**
+**Without Aadhaar, without identity**
 
 *Vyom Anil, Jean Dreze* [*write in The Indian Express:*](https://indianexpress.com/article/opinion/columns/flaw-in-aadhaar-architecture-uidai-card-enrolment-7389133/) *People who lose their Aadhaar number may not be able to retrieve it, and risk losing all social benefits.* They point out the problem that the only record many people have of their Aadhaar number is their Aadhaar card. If they misplace it, such as in the case of Reena Devi, such individuals are rejected when they try to re-enroll and resolving this is not easy, takes months; and they get cut off from all essential services in the interim. Read this article without paywall [here](https://How%20a%20Villager's%20'Wild%20Chase'%20to%20Retrieve%20Aadhaar%20Number%20Reflects%20a%20Crushing%20Lack%20of%20System)
 
-  
-
-## INFRASTRUCTURES OF EXCLUSION
+### Infrastructures of exclusion
 
 A study by scholars at LibTech, how Aadhaar-centered digital systems requiring constant updates [threaten people’s access to food](https://idronline.org/article/rights/infrastructures-of-exclusion-how-e-kyc-impacts-access-to-food/) under the public distribution system
 
-*E-KYC verification involves confirming the identity of a person through biometric authentication, followed by matching the demographic data on their Aadhaar card with their ration card. The process requires all members listed on a ration card to link it to their individual Aadhaar numbers, and to undergo biometric or IRIS authentication through electronic point-of-sale (e-POS) machines at a fair price shop. Activists and observers *[*reported*](https://thewire.in/food/migrants-are-going-home-this-time-to-save-their-ration)* that marginalised communities have encountered major disruptions to accessing food in this process.*    
+*E-KYC verification involves confirming the identity of a person through biometric authentication, followed by matching the demographic data on their Aadhaar card with their ration card. The process requires all members listed on a ration card to link it to their individual Aadhaar numbers, and to undergo biometric or IRIS authentication through electronic point-of-sale (e-POS) machines at a fair price shop. Activists and observers *[*reported*](https://thewire.in/food/migrants-are-going-home-this-time-to-save-their-ration)* that marginalised communities have encountered major disruptions to accessing food in this process.*    
   
 Earlier, in February 2025, LibTech scholars [documented how mandatory Aadhaar OTPs are depriving](https://scroll.in/article/1078995/mandatory-aadhaar-otps-are-depriving-the-marginalised-of-food-rations-in-jharkhand) the marginalised of food rations in Jharkhand, and arbitrary new requirement create new hurdles for vulnerable groups and women with poor digital literacy and access
 
-## AUGUST 2025
+## August 2025
 
-**Aadhaar continues to be arbitrarily inaccessible and unworkable: **
+### Aadhaar continues to be arbitrarily inaccessible and unworkable
+- A detailed investigation into the working of an [Aadhaar Seva Kendra in Ranchi](https://m.thewire.in/article/government/queues-rejections-ambiguity-the-daily-trials-of-wanting-a-working-aadhaar) illustrates the bureaucratic ordeals imposed on people trying to update or enrol in Aadhaar. 
 
-- A detailed investigation into the working of an [Aadhaar Seva Kendra in Ranchi](https://m.thewire.in/article/government/queues-rejections-ambiguity-the-daily-trials-of-wanting-a-working-aadhaar) illustrates the bureaucratic ordeals imposed on people trying to update or enrol in Aadhaar. 
+- Assam’s government announced it will [stop issuing Aadhaar numbers to adults](https://indianexpress.com/article/india/assam-will-stop-issuing-aadhaar-to-adults-himanta-biswa-sarma-bangladeshis-10201442/) to prevent non-Indian citizens from obtaining them, despite the fact that Aadhaar can be legally provided to non-citizens, and this move will likely disenfranchise people seeking access to benefits. 
 
-- Assam’s government announced it will [stop issuing Aadhaar numbers to adults](https://indianexpress.com/article/india/assam-will-stop-issuing-aadhaar-to-adults-himanta-biswa-sarma-bangladeshis-10201442/) to prevent non-Indian citizens from obtaining them, despite the fact that Aadhaar can be legally provided to non-citizens, and this move will likely disenfranchise people seeking access to benefits. 
+- The endless cycle of KYC continues as [DBT beneficiaries are set to be audited again](https://economictimes.indiatimes.com/news/economy/policy/dbt-recipients-of-central-schemes-to-face-fresh-audit/articleshow/123004196.cms?from=mdr). 
 
-- The endless cycle of KYC continues as [DBT beneficiaries are set to be audited again](https://economictimes.indiatimes.com/news/economy/policy/dbt-recipients-of-central-schemes-to-face-fresh-audit/articleshow/123004196.cms?from=mdr). 
+- Aadhaar is the new [“weak link” in insurance processes](https://economictimes.indiatimes.com/industry/banking/finance/insure/aadhaar-is-new-weak-link-in-insurance/articleshow/123103660.cms?from=mdr), allowing an opening for identity-based fraud through insurance claims. 
 
-- Aadhaar is the new [“weak link” in insurance processes](https://economictimes.indiatimes.com/industry/banking/finance/insure/aadhaar-is-new-weak-link-in-insurance/articleshow/123103660.cms?from=mdr), allowing an opening for identity-based fraud through insurance claims. 
+### Digitisation fails to serve the people’s interests, but continues to expand
+- A look at the impact of [corporate-driven tech initiatives in agriculture](https://www.globalresearch.ca/india-independence-myth-dispossessed-reality/5897636). 
 
-**Digitisation fails to serve the people’s interests, but continues to expand:**
+- Mandating Aadhaar linkage, digital data entry, and unreliable tech has led to exclusion of [89 lakh potential scholarship beneficiaries](https://news.careers360.com/89-lakh-drop-sc-st-obc-scholarship-students-aadhaar-card-link-pre-post-matric-pms-yasasvi-shreshta-nsp-ssp-portal-delays-nep) from the most vulnerable groups including SC, ST, and OBC beneficiaries. 
 
-- A look at the impact of [corporate-driven tech initiatives in agriculture](https://www.globalresearch.ca/india-independence-myth-dispossessed-reality/5897636). 
+- Unique IDs and digitisation do nothing to stop corruption or false claims: thousands of [fake teacher IDs were created in Maharashtra](https://economictimes.indiatimes.com/news/india/how-maharashtra-education-officers-created-thousands-of-ghost-teachers-to-siphon-off-rs-3000-crore/articleshow/122813436.cms?from=mdr) in a Rs.3000 crore scam. 
 
-- Mandating Aadhaar linkage, digital data entry, and unreliable tech has led to exclusion of [89 lakh potential scholarship beneficiaries](https://news.careers360.com/89-lakh-drop-sc-st-obc-scholarship-students-aadhaar-card-link-pre-post-matric-pms-yasasvi-shreshta-nsp-ssp-portal-delays-nep) from the most vulnerable groups including SC, ST, and OBC beneficiaries. 
+- The Rajasthan Government’s attempt to build digital “golden data” records on every citizen has led to the [most vulnerable being denied pensions](https://thewire.in/rights/companies-gain-elders-lose-in-rajasthans-turn-to-cradle-to-grave-digital-governance), wrongly declared “dead” or absent. 
 
-- Unique IDs and digitisation do nothing to stop corruption or false claims: thousands of [fake teacher IDs were created in Maharashtra](https://economictimes.indiatimes.com/news/india/how-maharashtra-education-officers-created-thousands-of-ghost-teachers-to-siphon-off-rs-3000-crore/articleshow/122813436.cms?from=mdr) in a Rs.3000 crore scam. 
+- In Maharashtra, tribal [children are turned away from school](https://www.thehindu.com/news/national/maharashtra/an-anonymous-life-without-an-aadhar-identity/article69939921.ece) because of lack of Aadhaar. 
 
-- The Rajasthan Government’s attempt to build digital “golden data” records on every citizen has led to the [most vulnerable being denied pensions](https://thewire.in/rights/companies-gain-elders-lose-in-rajasthans-turn-to-cradle-to-grave-digital-governance), wrongly declared “dead” or absent. 
+- The UP government plans to introduce [AI tools in MGNREGA operations](https://timesofindia.indiatimes.com/city/allahabad/ai-to-help-ensure-transparency-in-mnrega-scheme-implementation/amp_articleshow/123370134.cms) without consideration for the impact on beneficiaries. 
 
-- In Maharashtra, tribal [children are turned away from school](https://www.thehindu.com/news/national/maharashtra/an-anonymous-life-without-an-aadhar-identity/article69939921.ece) because of lack of Aadhaar. 
+- The Delhi government is expanding [mandatory ID requirements for public schemes](https://indianexpress.com/article/cities/delhi/aadhaar-mandatory-avail-benefits-delhi-govt-schemes-10171754/), to exclusionary effect. The pink ticket free bus scheme for women is being replaced with a [“smart card” ](https://x.com/avinashchanchl/status/1951654626866201052)which requires Delhi residency, [excluding vulnerable women](https://www.thehindu.com/news/cities/Delhi/excluded-by-address-migrant-women-transgender-persons-decry-dtcs-saheli-cards/article69890935.ece) who work in the NCR or have other difficulty getting address proof. Simultaneously, Aadhaar enrolment is set to get [more onerous in Delhi](https://www.millenniumpost.in/amp/delhi/saxena-flags-aadhaar-misuse-orders-monthly-centre-audits-618552). 
 
-- The UP government plans to introduce [AI tools in MGNREGA operations](https://timesofindia.indiatimes.com/city/allahabad/ai-to-help-ensure-transparency-in-mnrega-scheme-implementation/amp_articleshow/123370134.cms) without consideration for the impact on beneficiaries. 
+- Odisha’s [mass ration card deletion](https://drive.google.com/file/d/10wdegSy-lhUcB_aMfZYk51NFvAqlmLHS/view) is yet to be revoked despite [clear problems in the KYC process](https://idronline.org/article/rights/infrastructures-of-exclusion-how-e-kyc-impacts-access-to-food/) and people’s reliance on ration to correct the [high burden of malnutrition](https://www.downtoearth.org.in/governance/how-has-odishas-public-distribution-system-fared-after-one-year-of-its-new-government).
 
-- The Delhi government is expanding [mandatory ID requirements for public schemes](https://indianexpress.com/article/cities/delhi/aadhaar-mandatory-avail-benefits-delhi-govt-schemes-10171754/), to exclusionary effect. The pink ticket free bus scheme for women is being replaced with a [“smart card” ](https://x.com/avinashchanchl/status/1951654626866201052)which requires Delhi residency, [excluding vulnerable women](https://www.thehindu.com/news/cities/Delhi/excluded-by-address-migrant-women-transgender-persons-decry-dtcs-saheli-cards/article69890935.ece) who work in the NCR or have other difficulty getting address proof. Simultaneously, Aadhaar enrolment is set to get [more onerous in Delhi](https://www.millenniumpost.in/amp/delhi/saxena-flags-aadhaar-misuse-orders-monthly-centre-audits-618552). 
+- More than [23% of Jan Dhan bank accounts are inactive](https://www.moneylife.in/article/over-23-percentage-or-13-crore-jan-dhan-accounts-out-of-56-crore-are-inactive-govt/78012.html#:~:text=More%20than%2023%25%20or%2013.04,government%20informed%20the%20Lok%20Sabha), reflecting the lack of actual access and ease of digitisation and banking. 
 
-- Odisha’s [mass ration card deletion](https://drive.google.com/file/d/10wdegSy-lhUcB_aMfZYk51NFvAqlmLHS/view) is yet to be revoked despite [clear problems in the KYC process](https://idronline.org/article/rights/infrastructures-of-exclusion-how-e-kyc-impacts-access-to-food/) and people’s reliance on ration to correct the [high burden of malnutrition](https://www.downtoearth.org.in/governance/how-has-odishas-public-distribution-system-fared-after-one-year-of-its-new-government).
+- Telangana plans [digitisation of health systems](https://www.deccanchronicle.com/southern-states/telangana/telangana-to-partner-with-estonia-in-e-governance-digital-health-records-sridhar-babu-1893640) in partnership with Estonia.
 
-- More than [23% of Jan Dhan bank accounts are inactive](https://www.moneylife.in/article/over-23-percentage-or-13-crore-jan-dhan-accounts-out-of-56-crore-are-inactive-govt/78012.html#:~:text=More%20than%2023%25%20or%2013.04,government%20informed%20the%20Lok%20Sabha), reflecting the lack of actual access and ease of digitisation and banking. 
+### Aadhaar, data, and surveillance
+- The MHA wants prison authorities to [conduct Aadhaar authentication for persons imprisoned and their visitors](https://www.mha.gov.in/sites/default/files/Aadhaar_07072025.pdf), a move that has no link to welfare benefits, and could only serve to further surveillance of imprisoned people and affect their legal defences and the privacy and dignity of their families. [Family members without Aadhaar are being turned away](https://mainstreamweekly.net/article16069.html) in a violation of human rights. 
 
-- Telangana plans [digitisation of health systems](https://www.deccanchronicle.com/southern-states/telangana/telangana-to-partner-with-estonia-in-e-governance-digital-health-records-sridhar-babu-1893640) in partnership with Estonia.
+- In [Mizoram, refugees are being forced to give up biometric data](https://scroll.in/article/1085733/as-mizoram-collects-biometric-data-of-myanmar-refugees-experts-flag-risks), making them even more vulnerable to targeting persecution. 
 
-**Aadhaar, data, and surveillance: **
+- Parents and experts urge the Karnataka Government to not introduce [facial recognition systems for school attendance](https://indianexpress.com/article/cities/bangalore/it-can-have-unimaginable-consequences-experts-urge-karnataka-govt-to-scrap-facial-recognition-attendance-in-schools-10200109/), warning of misuse. 
 
-- The MHA wants prison authorities to [conduct Aadhaar authentication for persons imprisoned and their visitors](https://www.mha.gov.in/sites/default/files/Aadhaar_07072025.pdf), a move that has no link to welfare benefits, and could only serve to further surveillance of imprisoned people and affect their legal defences and the privacy and dignity of their families. [Family members without Aadhaar are being turned away](https://mainstreamweekly.net/article16069.html) in a violation of human rights. 
+## July 2025
 
-- In [Mizoram, refugees are being forced to give up biometric data](https://scroll.in/article/1085733/as-mizoram-collects-biometric-data-of-myanmar-refugees-experts-flag-risks), making them even more vulnerable to targeting persecution. 
-
-- Parents and experts urge the Karnataka Government to not introduce [facial recognition systems for school attendance](https://indianexpress.com/article/cities/bangalore/it-can-have-unimaginable-consequences-experts-urge-karnataka-govt-to-scrap-facial-recognition-attendance-in-schools-10200109/), warning of misuse. 
-
-## JULY 2025
-
-Getting, keeping, and “verifying” Aadhaar becomes more difficult: 
-
+### Getting, keeping, and “verifying” Aadhaar becomes more difficult
 - ‘From the [trenches of Aadhaar distress](https://www.youtube.com/watch?v=pT-Xdhy_fxo)’, a video story by Aparna Kalra
 
 - The Manipur government is adopting a stringent verification process to enroll and update Aadhaar, including [mandatory biometric updates at ages 5-7 and after 15, and headquarter approval for “adult Aadhaar” cases](https://www.dailyworld.in/national/manipur-adopts-highly-stringent-norms-for-aadhaar-issuance-623926.html).
 
-- The Assam government has proposed requiring [District Commissioners’ approval for adult Aadhaar applications](https://indianexpress.com/article/india/assam-mulls-giving-district-commissioners-power-to-approve-aadhaar-for-applicants-over-18-10093186/). 
+- The Assam government has proposed requiring [District Commissioners’ approval for adult Aadhaar applications](https://indianexpress.com/article/india/assam-mulls-giving-district-commissioners-power-to-approve-aadhaar-for-applicants-over-18-10093186/). 
 
-- The Odisha government plans to suspend [20.58 lakh ration cards](https://www.thehindu.com/news/national/odisha/odisha-to-suspend-ration-cards-of-2058-lakh-people-for-not-doing-e-kyc-verification-minister/article69755600.ece) for lack of e-KYC verification, forcing people to come to PDS stores or face deactivation of their ration cards. Previously, [19 lakh people were denied the right to food](https://rethinkaadhaar.in/blog/2019/10/13/press-statement-verify-19-lakh-beneficiaries-left-out-of-odisha-pds-after-mandatory-aadhaar-linking-demand-activists) when the Odisha PDS mandated linking Aadhaar with ration cards. 
+- The Odisha government plans to suspend [20.58 lakh ration cards](https://www.thehindu.com/news/national/odisha/odisha-to-suspend-ration-cards-of-2058-lakh-people-for-not-doing-e-kyc-verification-minister/article69755600.ece) for lack of e-KYC verification, forcing people to come to PDS stores or face deactivation of their ration cards. Previously, [19 lakh people were denied the right to food](https://rethinkaadhaar.in/blog/2019/10/13/press-statement-verify-19-lakh-beneficiaries-left-out-of-odisha-pds-after-mandatory-aadhaar-linking-demand-activists) when the Odisha PDS mandated linking Aadhaar with ration cards. 
 
 - Jan Dhan bank accounts, which were supposed to enable DBTs, are [at risk of closure in an ongoing re-KYC exercise](https://the-ken.com/newsletter/make-india-competitive-again/indias-financial-inclusion-project-is-titanic-kyc-could-be-the-iceberg-that-sinks-it/). (needs verification as the link is paywalled; [the Govt insists there will be no closure of inactive accounts](https://www.thehindu.com/business/no-directive-issued-to-close-inactive-jan-dhan-accounts-finance-ministry/article69788325.ece))
 
-- De-activating an individual’s Aadhar after their death is slow: only 1[.15 crore Aadhaar numbers have been de-activated](https://www.indiatoday.in/india/story/millions-dead-aadhaar-still-active-rti-finds-only-115-crore-cards-deactivated-2756437-2025-07-16), leading to inflated numbers which spark rumours of Aadhaar fraud or duplication.  
+- De-activating an individual’s Aadhar after their death is slow: only 1[.15 crore Aadhaar numbers have been de-activated](https://www.indiatoday.in/india/story/millions-dead-aadhaar-still-active-rti-finds-only-115-crore-cards-deactivated-2756437-2025-07-16), leading to inflated numbers which spark rumours of Aadhaar fraud or duplication.  
 
-Digitisation drawbacks: The push for UPI adoption is leading to[ GST notices for small vendors in Karnataka](https://economictimes.indiatimes.com/tech/technology/cash-may-return-as-king-as-small-vendors-shun-upi/articleshow/122427672.cms), with plans to[ expand nationally](https://indianexpress.com/article/business/cash-based-unregistered-trade-under-gst-scrutiny-10133738/).
+### Digitisation drawbacks
 
-Criminal justice and surveillance: A special two-part investigation into the use of facial recognition technology by the Delhi Police exposes how[ marginalised communities suffer the consequences of FRT’s failures](https://thewire.in/rights/delhi-police-ai-facial-recognition), and how the[ Delhi Police ignored bias, abuse, data leaks, and human rights violations](https://thewire.in/rights/delhi-police-ai-companies) in sourcing this tech. 
+The push for UPI adoption is leading to[ GST notices for small vendors in Karnataka](https://economictimes.indiatimes.com/tech/technology/cash-may-return-as-king-as-small-vendors-shun-upi/articleshow/122427672.cms), with plans to[ expand nationally](https://indianexpress.com/article/business/cash-based-unregistered-trade-under-gst-scrutiny-10133738/).
 
-Tech and state power: 
+### Criminal justice and surveillance
 
-- How technology companies are furthering colonial oppression through “[colonial algorithms](https://substack.com/inbox/post/166930544?selection=2d4a6f73-7da9-49e4-a15c-fab88cf3954f&utm_medium=web&textColor=%23ffffff&triedRedirect=true)”, with AI-targeting software, surveillance mechanisms, and censorship tools to enable violence against Palestinians, and maintain repressive power structures. 
+A special two-part investigation into the use of facial recognition technology by the Delhi Police exposes how[ marginalised communities suffer the consequences of FRT’s failures](https://thewire.in/rights/delhi-police-ai-facial-recognition), and how the[ Delhi Police ignored bias, abuse, data leaks, and human rights violations](https://thewire.in/rights/delhi-police-ai-companies) in sourcing this tech. 
 
-- An exploration of how the [Indian state is expanding its powers and undermining democracy](https://theleaflet.in/information-and-transparency/the-indian-states-expanding-sovereign-power-has-everything-to-do-with-the-incline-of-digital-governance) as the relationship between the governed and the governors is increasingly controlled through digital technologies. 
+### Tech and state power
+- How technology companies are furthering colonial oppression through “[colonial algorithms](https://substack.com/inbox/post/166930544?selection=2d4a6f73-7da9-49e4-a15c-fab88cf3954f&utm_medium=web&textColor=%23ffffff&triedRedirect=true)”, with AI-targeting software, surveillance mechanisms, and censorship tools to enable violence against Palestinians, and maintain repressive power structures. 
 
-From around the world: the Aadhaar experience serves as a cautionary tale for the[ Sri Lankan digitisation project](https://www.commonedge.asia/wp-content/uploads/2025/06/DPI-Backgrounder.pdf). 
+- An exploration of how the [Indian state is expanding its powers and undermining democracy](https://theleaflet.in/information-and-transparency/the-indian-states-expanding-sovereign-power-has-everything-to-do-with-the-incline-of-digital-governance) as the relationship between the governed and the governors is increasingly controlled through digital technologies. 
 
-  
+### From around the world
 
-## JUNE 2025
+the Aadhaar experience serves as a cautionary tale for the[ Sri Lankan digitisation project](https://www.commonedge.asia/wp-content/uploads/2025/06/DPI-Backgrounder.pdf). 
+
+## June 2025
 
 In spite of all the reports of hardship and exclusion as well as continuing fraud from the use of Aadhaar, the government keeps expanding its scope and making it mandatory for legal entitlements as well. We are sharing a round-up of recent developments. We urge you to share these updates with your networks as well.
 
-**Exclusions continue**
+### Exclusions continue
+[Difficulties faced by victims of acid attacks](https://ohrh.law.ox.ac.uk/access-denied-disability-and-digital-identification-in-india-reflections-after-pragya-prasun-and-amar-jain/) in enrolling for Aadhaar – they had to go to Court to find a way, by John Simte \| A [video story](https://www.youtube.com/watch?v=Enm8jKS07Bk) on this from Scroll.in
 
-[Difficulties faced by victims of acid attacks](https://ohrh.law.ox.ac.uk/access-denied-disability-and-digital-identification-in-india-reflections-after-pragya-prasun-and-amar-jain/) in enrolling for Aadhaar – they had to go to Court to find a way, by John Simte \| A [video story](https://www.youtube.com/watch?v=Enm8jKS07Bk) on this from Scroll.in
-
-Here’s another by him on the same issue, in [The India Forum](https://www.theindiaforum.in/law/rights-aadhar-machine)
+Here’s another by him on the same issue, in [The India Forum](https://www.theindiaforum.in/law/rights-aadhar-machine)
 
 [Problems – and queues – to keep Aadhaar up to date and usable](https://thewire.in/rights/tears-queues-and-a-never-ending-search-for-kagaz-the-real-story-of-aadhaar), by Aparna Kalra.
 
 [On Aadhaar and adivasis](https://www.theindiaforum.in/forum/lessons-pm-janmans-effort-cross-last-mile), by Chakradhar Buddha and BDS Kishore
 
+### Its usefulness continues to be questioned
+Andy Mukherjee (Bloomberg columnist): [https://x.com/andymukherjee70/status/1934939679125917703](https://x.com/andymukherjee70/status/1934939679125917703)  
   
 
-**…Its usefulness continues to be questioned:**
-
-Andy Mukherjee (Bloomberg columnist): [https://x.com/andymukherjee70/status/1934939679125917703](https://x.com/andymukherjee70/status/1934939679125917703)  
-  
-
-**…Fraud continues in spite of Aadhaar or even because of Aadhaar**
-
-[Mastermind who cheated 26 crores, only 'alive' on Aadhar card](https://www.bhaskarenglish.in/local/rajasthan/jaipur/news/mastermind-who-cheated-26-crores-alive-only-on-aadhar-took-flats-on-rent-in-posh-jaipur-duped-people-135131960.html), Dainik Bhaskar 
+### Fraud continues in spite of Aadhaar or even because of Aadhaar
+[Mastermind who cheated 26 crores, only 'alive' on Aadhar card](https://www.bhaskarenglish.in/local/rajasthan/jaipur/news/mastermind-who-cheated-26-crores-alive-only-on-aadhar-took-flats-on-rent-in-posh-jaipur-duped-people-135131960.html), Dainik Bhaskar 
 
 [Using Aadhaar to defraud people of their PDS rations in UP](https://www.dailypioneer.com/2025/india/ration-loot-in-uttar-pradesh--one-aadhaar-card-used-to-distribute-rations-to-100-ineligible-people.html), Daily Pioneer
 
 [Its role in helping candidates cheat in MP constable exam](https://indianexpress.com/article/india/madhya-pradesh-police-constable-recruitment-exam-2023-renting-aadhaar-logins-manipulating-data-how-hackers-helped-job-aspirants-cheat-10054138/), Indian Express  
+
+### Yet, the use of Aadhaar keeps expanding
+Mandatory for tatkal bookings: [https://x.com/AshwiniVaishnaw/status/1930292913579147360](https://x.com/AshwiniVaishnaw/status/1930292913579147360)
+
+“Facial recognition” [mandatory for ‘take-home rations’](https://www.thehindu.com/sci-tech/health/pregnant-women-put-to-hardship-by-new-facial-recognition-system-to-get-nutritious-kit/article69299183.ece) given to pregnant women at anganwadis.
+
+Many reacted angrily (as they should): see [Sucheta Dalal](https://x.com/suchetadalal/status/1935365265920872781), [Rathin Roy](https://x.com/EmergingRoy/status/1935308284753563673), [Martin Haus](https://x.com/MartinHaus93/status/1935310291845484880), [Neel Kolhe](https://x.com/neel_kolhe/status/1935283576020307977).  
+
+In Jan 2024, [Anganwadi workers in Andhra Pradesh](https://www.thenewsminute.com/andhra-pradesh/amid-govt-clampdown-andhra-pradesh-anganwadi-workers-continue-strike-for-fair-wages) were already raising issues related to over-use of apps. 
+
+Book on [facial recognition](https://www.techpolicy.press/the-landscape-of-facial-recognition-technologies-in-india/) by Amber Sinha and old article on this by [Gautam Bhatia](https://www.hindustantimes.com/columns/facial-surveillance-is-a-threat-to-privacy/story-hjtQCSMbpGteftjuzzB7cN.html)  
   
 
-  
-
-**Yet, the use of Aadhaar keeps expanding**
-
-Mandatory for tatkal bookings: [https://x.com/AshwiniVaishnaw/status/1930292913579147360](https://x.com/AshwiniVaishnaw/status/1930292913579147360)
-
-“Facial recognition” [mandatory for ‘take-home rations’](https://www.thehindu.com/sci-tech/health/pregnant-women-put-to-hardship-by-new-facial-recognition-system-to-get-nutritious-kit/article69299183.ece) given to pregnant women at anganwadis.
-
-Many reacted angrily (as they should): see [Sucheta Dalal](https://x.com/suchetadalal/status/1935365265920872781), [Rathin Roy](https://x.com/EmergingRoy/status/1935308284753563673), [Martin Haus](https://x.com/MartinHaus93/status/1935310291845484880), [Neel Kolhe](https://x.com/neel_kolhe/status/1935283576020307977).  
-
-In Jan 2024, [Anganwadi workers in Andhra Pradesh](https://www.thenewsminute.com/andhra-pradesh/amid-govt-clampdown-andhra-pradesh-anganwadi-workers-continue-strike-for-fair-wages) were already raising issues related to over-use of apps. 
-
-Book on [facial recognition](https://www.techpolicy.press/the-landscape-of-facial-recognition-technologies-in-india/) by Amber Sinha and old article on this by [Gautam Bhatia](https://www.hindustantimes.com/columns/facial-surveillance-is-a-threat-to-privacy/story-hjtQCSMbpGteftjuzzB7cN.html)  
-  
-
-**Related news, wider reading and from around the world**
-
+### Related news, wider reading and from around the world
 [Biometrics of arrestees being collected in Rajasthan and Delhi](https://www.thehindu.com/news/national/rajasthan-delhi-police-start-recording-iris-retina-fingerprints-of-all-arrestees-under-2022-law-no-dna-collection-yet/article69669115.ece), Vijaita Singh
 
 [https://www.medianama.com/2025/06/223-uidai-anonymised-aadhaar-data-risks/](https://www.medianama.com/2025/06/223-uidai-anonymised-aadhaar-data-risks/)
 
-Two perspectives on doorstep delivery of PDS grain –– a [rollback in AP](https://thewire.in/rights/andhra-pradeshs-rollback-doorstep-ration-delivery-project) and one that never took off (perhaps just as well that it didn’t) in [Delhi](https://scroll.in/article/997300/doorstep-delivery-of-rations-sounds-like-a-good-idea-but-it-actually-raises-many-hard-questions) (from 2021)
+Two perspectives on doorstep delivery of PDS grain –– a [rollback in AP](https://thewire.in/rights/andhra-pradeshs-rollback-doorstep-ration-delivery-project) and one that never took off (perhaps just as well that it didn’t) in [Delhi](https://scroll.in/article/997300/doorstep-delivery-of-rations-sounds-like-a-good-idea-but-it-actually-raises-many-hard-questions) (from 2021)
 
-**Three stories on the growing worries about Palantir: **[The Daily Show](https://x.com/TheDailyShow/status/1929708286984511623), [Rob Reich’s subtack](https://open.substack.com/pub/robertreich/p/palantir-the-worst-of-the-corporate?), in [The New York Times](https://www.nytimes.com/2025/05/30/technology/trump-palantir-data-americans.html)
-
-  
-
-  
-
-  
-
-  
+**Three stories on the growing worries about Palantir: **[The Daily Show](https://x.com/TheDailyShow/status/1929708286984511623), [Rob Reich’s subtack](https://open.substack.com/pub/robertreich/p/palantir-the-worst-of-the-corporate?), in [The New York Times](https://www.nytimes.com/2025/05/30/technology/trump-palantir-data-americans.html)
 
 ## JULY 2019
 
@@ -284,39 +265,39 @@ For whom is the Aadhaar Amendments Bill: only to please Telecom companies
 
 ## JULY 2017
 
-[Forthcoming Supreme Court decision on right to privacy one of the most important legal decisions in the world this year](http://blogs.timesofindia.indiatimes.com/toi-edit-page/forthcoming-supreme-court-decision-on-right-to-privacy-one-of-the-most-important-legal-decisions-in-the-world-this-year/) (Times of India, Elen Maglen and Mishi Chaudhary, July 25 2017)
+[Forthcoming Supreme Court decision on right to privacy one of the most important legal decisions in the world this year](http://blogs.timesofindia.indiatimes.com/toi-edit-page/forthcoming-supreme-court-decision-on-right-to-privacy-one-of-the-most-important-legal-decisions-in-the-world-this-year/) (Times of India, Elen Maglen and Mishi Chaudhary, July 25 2017)
 
-[Aadhaar rebels find ways to avoid PAN linkage](http://timesofindia.indiatimes.com/india/aadhaar-rebels-find-ways-to-avoid-pan-linkage/articleshow/59719243.cms) (Times of India, Namita Devidayal and Lubna Kalby, July 23, 2017)
+[Aadhaar rebels find ways to avoid PAN linkage](http://timesofindia.indiatimes.com/india/aadhaar-rebels-find-ways-to-avoid-pan-linkage/articleshow/59719243.cms) (Times of India, Namita Devidayal and Lubna Kalby, July 23, 2017)
 
-[Govt has been speaking in two tongues on right to privacy: Reetika Khera](http://www.business-standard.com/article/economy-policy/govt-has-been-speaking-in-two-tongues-on-right-to-privacy-reetika-khera-117072200818_1.html#.WXQUqtqLEzs.twitter) (Business Standard, Ranjita Ganesan, July 22, 2017)
+[Govt has been speaking in two tongues on right to privacy: Reetika Khera](http://www.business-standard.com/article/economy-policy/govt-has-been-speaking-in-two-tongues-on-right-to-privacy-reetika-khera-117072200818_1.html#.WXQUqtqLEzs.twitter) (Business Standard, Ranjita Ganesan, July 22, 2017)
 
-[Parliamentary committee questions MHA officials on security, Aadhar](http://www.moneycontrol.com/news/trends/current-affairs-trends/parliamentary-committee-questions-mha-officials-on-security-aadhar-2332807.html) (Money Control, July 21, 2017)
+[Parliamentary committee questions MHA officials on security, Aadhar](http://www.moneycontrol.com/news/trends/current-affairs-trends/parliamentary-committee-questions-mha-officials-on-security-aadhar-2332807.html) (Money Control, July 21, 2017)
 
-[UIDAI says it won’t act on alleged Jio data leaks till police complete investigation](https://scroll.in/article/844468/uidai-says-it-wont-act-on-alleged-jio-data-leaks-till-police-complete-investigation) (The Wire, Mayank Jain, July 21, 2017)
+[UIDAI says it won’t act on alleged Jio data leaks till police complete investigation](https://scroll.in/article/844468/uidai-says-it-wont-act-on-alleged-jio-data-leaks-till-police-complete-investigation) (The Wire, Mayank Jain, July 21, 2017)
 
-[Errors and Exclusion Mark Jharkhand’s Aadhaar-MGNREGA Link](https://thewire.in/158692/aadhaar-card-jharkhand-mgnrega/) (The Wire, Jahnavi Sen, July 20, 2017)  
+[Errors and Exclusion Mark Jharkhand’s Aadhaar-MGNREGA Link](https://thewire.in/158692/aadhaar-card-jharkhand-mgnrega/) (The Wire, Jahnavi Sen, July 20, 2017)  
 
-[Fake caller held for threatening to kill activist Shabnam Hashmi](http://www.hindustantimes.com/delhi-news/fake-caller-held-for-threatening-to-kill-activist-shabnam-hashmi/story-UfOH6USaG9YfGCJVOWmvAI.html) (Hindustan Times, July 19, 2017)
+[Fake caller held for threatening to kill activist Shabnam Hashmi](http://www.hindustantimes.com/delhi-news/fake-caller-held-for-threatening-to-kill-activist-shabnam-hashmi/story-UfOH6USaG9YfGCJVOWmvAI.html) (Hindustan Times, July 19, 2017)
 
-[The Different Ways in Which Aadhaar Infringes on Privacy](https://thewire.in/159092/privacy-aadhaar-supreme-court/) (The Wire, Reetika Khera, July 19, 2017)
+[The Different Ways in Which Aadhaar Infringes on Privacy](https://thewire.in/159092/privacy-aadhaar-supreme-court/) (The Wire, Reetika Khera, July 19, 2017)
 
-[Nine months of no ration: Villagers pleas fall on deaf ears](http://timesofindia.indiatimes.com/city/jaipur/9-months-of-no-ration-villagers-pleas-fall-on-deaf-ears/articleshow/59624284.cms) (Times of India, July 17,2017)
+[Nine months of no ration: Villagers pleas fall on deaf ears](http://timesofindia.indiatimes.com/city/jaipur/9-months-of-no-ration-villagers-pleas-fall-on-deaf-ears/articleshow/59624284.cms) (Times of India, July 17,2017)
 
-[In One Police Officer’s Threat, a Glimpse of How  Aadhaar Drive Could Be Misused](https://thewire.in/158107/fear-around-misuse-of-aadhar-by-the-state-coming-true/) (The Wire, Gaurav Vivek Bhatnagar, July 16, 2017)
+[In One Police Officer’s Threat, a Glimpse of How  Aadhaar Drive Could Be Misused](https://thewire.in/158107/fear-around-misuse-of-aadhar-by-the-state-coming-true/) (The Wire, Gaurav Vivek Bhatnagar, July 16, 2017)
 
-[Aadhaar Card will now be mandatory for students of State Government-run schools to get mid-day meals](http://www.indialivetoday.com/aadhaar-card-will-now-mandatory-students-state-government-run-schools-get-mid-day-meals/177077.html) (India Live Today, Avinash Nandakumar, July 14, 2017)
+[Aadhaar Card will now be mandatory for students of State Government-run schools to get mid-day meals](http://www.indialivetoday.com/aadhaar-card-will-now-mandatory-students-state-government-run-schools-get-mid-day-meals/177077.html) (India Live Today, Avinash Nandakumar, July 14, 2017)
 
-[The Aadhaar scramble in Uttar Pradesh schools might keep some children out of the classroom](https://scroll.in/article/843286/it-cannot-be-done-schools-in-uttar-pradesh-fear-they-will-miss-the-july-15-aadhaar-deadline) (Scroll, Shreya Roy Choudhary, July 12 2017)
+[The Aadhaar scramble in Uttar Pradesh schools might keep some children out of the classroom](https://scroll.in/article/843286/it-cannot-be-done-schools-in-uttar-pradesh-fear-they-will-miss-the-july-15-aadhaar-deadline) (Scroll, Shreya Roy Choudhary, July 12 2017)
 
-[Corruption in Aadhaar enrolment raises fears of compromising biometric details](http://www.hindustantimes.com/india-news/corruption-in-aadhaar-enrolment-raises-fears-of-compromising-biometric-details/story-AQltC1ZdhZ1SyaOViTyvmK.html) (Hindustan Times, Saubhadra Chatterji, July 12, 2017)
+[Corruption in Aadhaar enrolment raises fears of compromising biometric details](http://www.hindustantimes.com/india-news/corruption-in-aadhaar-enrolment-raises-fears-of-compromising-biometric-details/story-AQltC1ZdhZ1SyaOViTyvmK.html) (Hindustan Times, Saubhadra Chatterji, July 12, 2017)
 
-[Aadhaar jolt for PF pensioners in Karnataka](http://www.thehindu.com/news/national/karnataka/aadhaar-jolt-for-pf-pensioners-in-karnataka/article19259532.ece?homepage=true) (The Hindu, Sharath S. Srivatsa, July 11, 2017)
+[Aadhaar jolt for PF pensioners in Karnataka](http://www.thehindu.com/news/national/karnataka/aadhaar-jolt-for-pf-pensioners-in-karnataka/article19259532.ece?homepage=true) (The Hindu, Sharath S. Srivatsa, July 11, 2017)
 
 ## June 2017
 
-[No Aadhaar, no banking and threat to privacy: Do you have a choice?](http://indiatoday.intoday.in/story/aadhaar-bank-accounts-income-tax-pan-card-privacy/1/980954.html) (India Today, Prabash K Dutta, June 17, 2017)  
+[No Aadhaar, no banking and threat to privacy: Do you have a choice?](http://indiatoday.intoday.in/story/aadhaar-bank-accounts-income-tax-pan-card-privacy/1/980954.html) (India Today, Prabash K Dutta, June 17, 2017)  
   
-[The Supreme Court’s Refusal To Stay The Requirement Of Aadhaar For Income-Tax Returns Raises Several Troubling Questions](http://www.caravanmagazine.in/vantage/sc-aadhaar-income-tax-returns-raises-several-troubling-questions) (The Caravan, Anupam Kumar, June 12, 2017)
+[The Supreme Court’s Refusal To Stay The Requirement Of Aadhaar For Income-Tax Returns Raises Several Troubling Questions](http://www.caravanmagazine.in/vantage/sc-aadhaar-income-tax-returns-raises-several-troubling-questions) (The Caravan, Anupam Kumar, June 12, 2017)
 
 [Four pressing questions that emerge from the Supreme Court’s judgment on PAN-Aadhaar linking](https://scroll.in/article/840334/four-pressing-questions-that-emerge-from-the-supreme-courts-judgment-on-pan-aadhaar-linking) (Scroll, Rohan Venkataramakrishnan, June 12, 2017)
 
@@ -330,7 +311,7 @@ For whom is the Aadhaar Amendments Bill: only to please Telecom companies
 
 [Government’s claims of Aadhaar savings for the LPG scheme are overstated](http://www.medianama.com/2017/06/223-aadhaar-lpg-scheme/) (Mediumnama, Anand Venkatanarayanan, June 8, 2017)
 
-[Criminals will be able to crack UID system easily: Jacob Appelbaum](http://www.business-standard.com/article/economy-policy/criminals-will-be-able-to-crack-uid-system-easily-jacob-appelbaum-113053100728_1.html) (Business Standard, Indulekha Aravind, June 1, 2013)
+[Criminals will be able to crack UID system easily: Jacob Appelbaum](http://www.business-standard.com/article/economy-policy/criminals-will-be-able-to-crack-uid-system-easily-jacob-appelbaum-113053100728_1.html) (Business Standard, Indulekha Aravind, June 1, 2013)
 
 [Aadhaar: It’s Not Black &White](http://outlineindia.com/downloadFolder/Article_Aadhaar%20Survey_%20Outline%20India.pdf) (Outline Survey)
 
@@ -392,7 +373,7 @@ Foundation, Jyoti Panday, June 1, 2017)
 
 [Aadhaar: My body, My rights](http://mitalisaranop-ed.blogspot.in/2017/05/aadhaar-my-body-my-rights.html?m=1) ((Mitali Saran, May 11, 2017))
 
-[आधार से नागरिकों की जान माल को भारी खतरा। तेरह करोड़ नागरिकों की जानकारी लीक](http://www.hastakshep.com/opinion-debate-hindi/thirteen-million-aadhar-card-information-leaks-portal-of-aadhar--14068) (Hastakshep.com, Palash Vishwas, May 9, 2017)
+[आधार से नागरिकों की जान माल को भारी खतरा। तेरह करोड़ नागरिकों की जानकारी लीक](http://www.hastakshep.com/opinion-debate-hindi/thirteen-million-aadhar-card-information-leaks-portal-of-aadhar--14068) (Hastakshep.com, Palash Vishwas, May 9, 2017)
 
 [Journey from Civilian Application to Defence Application](http://www.livelaw.in/journey-civilian-application-defence-application-aadhaar/) (The Live Law, Gopal Krishna, May 9, 2017)
 
@@ -462,7 +443,7 @@ Foundation, Jyoti Panday, June 1, 2017)
 
 [Hello Aadhaar, Goodbye Privacy](https://thewire.in/118655/hello-aadhaar-goodbye-privacy/) (Jean Dreze, March 24, 2017)
 
-[Privacy, security and legality are not the only serious problems with Aadhaar. Here are four more](https://scroll.in/article/832595/privacy-security-and-egality-are-not-the-only-serious-problems-with-aadhaar-here-are-four-more) (Scroll, March 23, 2017)
+[Privacy, security and legality are not the only serious problems with Aadhaar. Here are four more](https://scroll.in/article/832595/privacy-security-and-egality-are-not-the-only-serious-problems-with-aadhaar-here-are-four-more) (Scroll, March 23, 2017)
 
 [Central Government, State government departments publicly expose personal data of lakhs of Indians](https://thewire.in/118250/government-expose-personal-data-thousands-indians/) (Wire Staff, March 23, 2017)
 
@@ -516,7 +497,7 @@ Foundation, Jyoti Panday, June 1, 2017)
 
 [Aadhaar in MNREGA likely to be hugely disruptive for workers](https://thewire.in/102103/aadhaar-mgnrega-errors-corruption/) (Inayat Sabhikhi, January 2017)
 
-[Watch: India's Ambitious UID programme often fails to deliver](http://blogs.wsj.com/indiarealtime/2017/01/13/watch-how-indias-ambitious-aadhaar-identification-program-often-fails-to-deliver/) (Wall Street Journal, Jan 13, 2017) 
+[Watch: India's Ambitious UID programme often fails to deliver](http://blogs.wsj.com/indiarealtime/2017/01/13/watch-how-indias-ambitious-aadhaar-identification-program-often-fails-to-deliver/) (Wall Street Journal, Jan 13, 2017) 
 
 ‘[O Brave New World’: The Supreme Court’s Evolving Doctrine of Constitutional Evasion](https://indconlawphil.wordpress.com/2017/01/06/o-brave-new-world-the-supreme-courts-evolving-doctrine-of-constitutional-evasion/) (Gautam Bhatia, Jan 6 2017)
 
