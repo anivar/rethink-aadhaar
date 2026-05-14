@@ -52,17 +52,37 @@ const RESOURCE_SECTIONS = [
   'Case documents',
   'Templates',
   'Articles archive',
+  'Posters for online and print',
+  'Leaflets and advisories',
+  '2017 Day of Action posters',
+  'Protest and event posters',
 ] as const;
+
+// `image` carries the original download asset (kept full-resolution under
+// public/media). Sections in POSTER_SECTIONS render as a thumbnail grid in
+// resources.astro; everything else stays as a text-link card list.
+export const POSTER_SECTIONS: readonly string[] = [
+  'Posters for online and print',
+  'Leaflets and advisories',
+  '2017 Day of Action posters',
+  'Protest and event posters',
+];
 
 const resource = defineCollection({
   loader: md('resource'),
-  schema: z.object({
-    title: z.string(),
-    section: z.enum(RESOURCE_SECTIONS),
-    href: z.string().url(),
-    description: z.string().optional(),
-    order: z.number().optional().default(0),
-  }),
+  schema: z
+    .object({
+      title: z.string(),
+      section: z.enum(RESOURCE_SECTIONS),
+      href: z.string(),
+      image: z.string().optional(),
+      description: z.string().optional(),
+      order: z.number().optional().default(0),
+    })
+    .refine((v) => v.href.startsWith('/') || /^https?:\/\//.test(v.href), {
+      message: 'href must be a full URL or a site-relative path',
+      path: ['href'],
+    }),
 });
 
 const press = defineCollection({
