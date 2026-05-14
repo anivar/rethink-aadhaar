@@ -9,6 +9,7 @@ dist/
 # crawl artefacts (kept locally for re-runs but not committed — too large)
 content-source/raw/
 content-source/crawl-tmp/
+Squarespace-Wordpress-Export-*.xml
 
 # local design / debug screenshots (kept out of repo — large binaries)
 design/screenshots/
