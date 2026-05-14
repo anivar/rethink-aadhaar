@@ -3,7 +3,7 @@
 Two paths in:
 
 - **Editor (no Git, no terminal):** use the in-browser CMS at
-  <https://anivar.github.io/rethink-aadhaar/admin/>. Sign in with GitHub,
+  <https://no2uid.github.io/rethink-aadhaar/admin/>. Sign in with GitHub,
   fill the form, hit Publish — Sveltia opens a pull request on your behalf.
   Skip to [Editorial workflow](#editorial-workflow-via-admin).
 - **Developer / power editor:** clone the repo, edit Markdown directly,
@@ -16,8 +16,8 @@ the result to GitHub Pages on merge.
 
 ## Editorial workflow (via /admin/)
 
-1. Open <https://anivar.github.io/rethink-aadhaar/admin/> and sign in with
-   GitHub. (You need write access to `anivar/rethink-aadhaar`. Ask an
+1. Open <https://no2uid.github.io/rethink-aadhaar/admin/> and sign in with
+   GitHub. (You need write access to `No2UID/rethink-aadhaar`. Ask an
    admin to add you as a collaborator if you don't.)
 2. Pick a collection — Updates, Exclusion stories, Press, Myths, FAQs,
    Resources, or Pages.
@@ -145,7 +145,7 @@ Raw `<a href="/myths">` will 404 in production.
 
 Every merge to `main` triggers `.github/workflows/deploy.yml`:
 build → upload `dist/` → `actions/deploy-pages`. Live in ~2 minutes at
-<https://anivar.github.io/rethink-aadhaar/>.
+<https://no2uid.github.io/rethink-aadhaar/>.
 
 To verify a deploy from the CLI:
 

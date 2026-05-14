@@ -39,7 +39,7 @@ jobs:
       - name: Compute base path
         id: base
         run: |
-          # configure-pages outputs base_url like https://anivar.github.io/rethink-aadhaar
+          # configure-pages outputs base_url like https://no2uid.github.io/rethink-aadhaar
           BASE_URL="${{ steps.pages.outputs.base_url }}"
           BASE_PATH=$(echo "$BASE_URL" | sed -E 's|^https?://[^/]+||')
           ORIGIN=$(echo "$BASE_URL" | sed -E 's|(^https?://[^/]+).*|\1|')

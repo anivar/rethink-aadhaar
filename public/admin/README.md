@@ -4,7 +4,7 @@ This site uses [Sveltia CMS](https://github.com/sveltia/sveltia-cms), a
 modern static-CMS that edits Markdown files in this Git repository via the
 GitHub API.
 
-- **For editors:** open <https://anivar.github.io/rethink-aadhaar/admin/>,
+- **For editors:** open <https://no2uid.github.io/rethink-aadhaar/admin/>,
   click **Sign in with GitHub**, write content. Every save creates a pull
   request — nothing goes live until the PR is reviewed and merged.
 - **For admins:** the rest of this document.
@@ -73,7 +73,7 @@ no auth proxy, no Cloudflare Worker.**
 
 **Setup per editor (~2 minutes):**
 
-1. Editor visits <https://anivar.github.io/rethink-aadhaar/admin/>.
+1. Editor visits <https://no2uid.github.io/rethink-aadhaar/admin/>.
 2. Clicks **Sign In with Token**.
 3. Follows the GitHub link in the prompt — it lands on the fine-grained
    PAT page with the required scopes pre-selected (Contents + Pull
@@ -103,7 +103,7 @@ single serverless function with two secrets (`GITHUB_CLIENT_ID`,
 `GITHUB_CLIENT_SECRET`). Once you have the worker URL, register a
 GitHub OAuth App at <https://github.com/settings/applications/new> with:
 
-- Homepage URL: `https://anivar.github.io/rethink-aadhaar/`
+- Homepage URL: `https://no2uid.github.io/rethink-aadhaar/`
 - Authorization callback URL: `https://YOUR-PROXY-URL/callback`
 
 Then add to `config.yml`:
@@ -133,7 +133,7 @@ third-party dependency.
    ```
 3. **Register a GitHub OAuth App** at
    <https://github.com/settings/applications/new>:
-   - Homepage URL: `https://anivar.github.io/rethink-aadhaar/`
+   - Homepage URL: `https://no2uid.github.io/rethink-aadhaar/`
    - Authorization callback URL: `https://YOUR-WORKER.YOUR-CF-SUBDOMAIN.workers.dev/callback`
      (you'll know the worker URL after step 5).
 4. **Set the secrets** (these live ONLY in Cloudflare, never in the repo):
@@ -162,7 +162,7 @@ third-party dependency.
 - **⚠ Branch protection.** For the editorial workflow to be more than
   honour-system, `main` must reject direct pushes — otherwise an editor
   with write access can bypass the CMS entirely. Verify with
-  `gh api repos/anivar/rethink-aadhaar/branches/main/protection`. If it
+  `gh api repos/No2UID/rethink-aadhaar/branches/main/protection`. If it
   returns 404, see CONTRIBUTING.md for the recommended `gh api -X PUT`
   command.
 - **Minimum token / OAuth scope.** PAT mode prompts for a fine-grained

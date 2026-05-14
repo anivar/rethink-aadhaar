@@ -2,7 +2,7 @@
 
 The official redesign of [rethinkaadhaar.in](https://rethinkaadhaar.in) — a static, accessibility-first build on Astro 6 with Tailwind v4, MDX content collections, view transitions and dark mode. Content is published under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) by Rethink Aadhaar.
 
-> **Live preview:** https://anivar.github.io/rethink-aadhaar/ (GH Pages, auto-deployed from `main`)
+> **Live preview:** https://no2uid.github.io/rethink-aadhaar/ (GH Pages, auto-deployed from `main`)
 
 ## Stack
 
@@ -166,7 +166,7 @@ import { link } from '~/lib/link';
 <a href={link('/blog')}>All updates</a>
 ```
 
-This makes the site portable between root deploys (rethinkaadhaar.in) and sub-path deploys (anivar.github.io/rethink-aadhaar). The build is driven by `SITE_URL` and `BASE_PATH` env vars.
+This makes the site portable between root deploys (rethinkaadhaar.in) and sub-path deploys (no2uid.github.io/rethink-aadhaar). The build is driven by `SITE_URL` and `BASE_PATH` env vars.
 
 ## Deploying
 

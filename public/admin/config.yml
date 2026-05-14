@@ -13,7 +13,7 @@
 
 backend:
   name: github
-  repo: anivar/rethink-aadhaar
+  repo: No2UID/rethink-aadhaar
   branch: main
   # No `base_url` / `auth_scope` set on purpose: that triggers Sveltia's
   # PAT (Personal Access Token) sign-in flow — the editor clicks
@@ -39,8 +39,8 @@ media_folder: public/media
 public_folder: /media
 
 # Cosmetic.
-site_url: https://anivar.github.io/rethink-aadhaar
-display_url: https://anivar.github.io/rethink-aadhaar
+site_url: https://no2uid.github.io/rethink-aadhaar
+display_url: https://no2uid.github.io/rethink-aadhaar
 logo_url: /brand/logo-mark.png
 
 # ----------------------------------------------------------------------
