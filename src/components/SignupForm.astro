@@ -1,11 +1,52 @@
 ---
-// The original site sends mailing-list signups to riseup.net.
+// Sympa (the mailing-list software Riseup runs) rejects cross-origin
+// POSTs to /www/subscribe — its anti-bot/CSRF layer requires a session
+// cookie from the same origin. The previous direct POST form returned
+// a 403 from Apache. The two paths Riseup actively supports are:
+//   1. mailto: <list>-subscribe@lists.riseup.net  → Sympa replies with
+//      a confirmation link by email
+//   2. the same-origin web form at /www/info/<list> → click Subscribe
+//      there, Sympa runs its JS confirm flow within its own origin.
+// We surface (1) as the primary CTA and (2) as a fallback for users
+// without a configured mail client.
+
+interface Props {
+  variant?: 'inline' | 'footer';
+}
+
+const { variant = 'inline' } = Astro.props;
+
+const SUBSCRIBE_EMAIL = 'rethink-aadhaar-subscribe@lists.riseup.net';
+const WEB_FALLBACK = 'https://lists.riseup.net/www/info/rethink-aadhaar';
+const mailtoHref = `mailto:${SUBSCRIBE_EMAIL}?subject=${encodeURIComponent('subscribe')}`;
 ---
-<form action="https://lists.riseup.net/www/subscribe/rethink-aadhaar" method="post" class="grid sm:grid-cols-[minmax(0,1fr)_auto] gap-3 my-6 max-w-xl mx-auto">
-  <label class="sr-only" for="email">Email address</label>
-  <input id="email" name="email" type="email" autocomplete="email" required
-         placeholder="your-email@example.com"
-         class="font-body text-base px-4 py-4 border border-ink/30 bg-bg text-ink focus:border-accent outline-none w-full" />
-  <button type="submit" class="btn-primary whitespace-nowrap">Sign up</button>
-</form>
-<p class="text-xs text-ink/60 caps text-center">We use riseup.net for the list. Unsubscribe any time.</p>
+
+{variant === 'footer' ? (
+  <div class="flex flex-col gap-2">
+    <a href={mailtoHref} class="btn-primary text-center text-sm">Subscribe by email</a>
+    <a
+      href={WEB_FALLBACK}
+      target="_blank"
+      rel="noopener"
+      class="text-xs text-ink/60 hover:text-ink hover:underline"
+    >
+      No mail client? Subscribe on Riseup &rarr;
+    </a>
+  </div>
+) : (
+  <div class="my-6 max-w-xl mx-auto text-center">
+    <a href={mailtoHref} class="btn-primary inline-block">Subscribe by email</a>
+    <p class="text-xs text-ink/60 caps mt-3">
+      Opens your mail client &middot; Sympa replies with a confirmation link
+      <br />
+      <a
+        href={WEB_FALLBACK}
+        target="_blank"
+        rel="noopener"
+        class="hover:text-ink hover:underline"
+      >
+        No mail client? Subscribe on Riseup &rarr;
+      </a>
+    </p>
+  </div>
+)}

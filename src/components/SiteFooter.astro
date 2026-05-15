@@ -1,5 +1,6 @@
 ---
 import LogoMark from '~/components/LogoMark.astro';
+import SignupForm from '~/components/SignupForm.astro';
 import { link } from '~/lib/link';
 const year = new Date().getFullYear();
 
@@ -77,25 +78,7 @@ const rays = Array.from({ length: RAYS }, (_, i) => {
       <p class="font-body text-sm text-ink/75 mb-3 leading-relaxed">
         Low-traffic updates. Hosted on Riseup; you'll get a confirmation email.
       </p>
-      <form
-        action="https://lists.riseup.net/www/subscribe/rethink-aadhaar"
-        method="post"
-        class="flex flex-col gap-2"
-      >
-        <label class="sr-only" for="footer-subscribe-email">Email address</label>
-        <input
-          id="footer-subscribe-email"
-          name="email"
-          type="email"
-          required
-          autocomplete="email"
-          placeholder="you@example.org"
-          class="font-body text-sm px-3 py-2.5 bg-surface border border-ink/25 focus:border-accent outline-none w-full"
-        />
-        <button type="submit" class="caps text-xs px-4 py-2.5 bg-button text-white border-l-4 border-accent hover:bg-accent transition-colors">
-          Subscribe
-        </button>
-      </form>
+      <SignupForm variant="footer" />
     </div>
   </div>
 

@@ -44,6 +44,4 @@ For help, write to [contact@rethinkaadhaar.in](mailto:contact@rethinkaadhaar.in)
 
 ### Add yourself to the mailing list
 
-Get an email when we publish updates, statements, or actions.
-
-→ [Subscribe via riseup.net](https://lists.riseup.net/www/subscribe/rethink-aadhaar)
+Get an email when we publish updates, statements, or actions. Use the form at the bottom of this page, or write to [rethink-aadhaar-subscribe@lists.riseup.net](mailto:rethink-aadhaar-subscribe@lists.riseup.net?subject=subscribe) — Riseup will send you a confirmation link to click.

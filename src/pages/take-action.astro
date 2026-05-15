@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import SignupForm from '~/components/SignupForm.astro';
 import { breadcrumb } from '~/lib/seo';
 import { link } from '~/lib/link';
 
@@ -36,23 +37,7 @@ const jsonLd = breadcrumb([
     <p class="text-base md:text-lg text-ink/75 font-body text-pretty mb-6 max-w-2xl">
       We use Riseup for the list — you'll get a confirmation email after signing up. Unsubscribe any time.
     </p>
-    <form
-      action="https://lists.riseup.net/www/subscribe/rethink-aadhaar"
-      method="post"
-      class="grid sm:grid-cols-[minmax(0,1fr)_auto] gap-3 max-w-xl"
-    >
-      <label class="sr-only" for="ta-email">Email address</label>
-      <input
-        id="ta-email"
-        name="email"
-        type="email"
-        autocomplete="email"
-        required
-        placeholder="your-email@example.com"
-        class="font-body text-base px-4 py-4 border border-ink/30 bg-bg text-ink focus:border-accent outline-none w-full"
-      />
-      <button type="submit" class="btn-primary whitespace-nowrap">Sign up</button>
-    </form>
+    <SignupForm />
   </section>
 </BaseLayout>
 

@@ -50,5 +50,5 @@ contact:
   email: "contact@rethinkaadhaar.in"
   twitter: "no2uid"
   facebook: "no2uid"
-  mailingList: "https://lists.riseup.net/www/subscribe/rethink-aadhaar"
+  mailingList: "https://lists.riseup.net/www/info/rethink-aadhaar"
 ---
