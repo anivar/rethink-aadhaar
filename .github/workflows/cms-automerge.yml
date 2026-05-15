@@ -1,0 +1,34 @@
+name: Auto-merge CMS PRs
+
+# CMS-opened PRs (Sveltia commits to cms/<collection>/<slug>) are gated
+# only by CI here — branch protection on main requires 0 reviews. This
+# workflow enables GitHub's auto-merge so a CMS save squash-merges as
+# soon as the required `check` status is green, with no human click.
+#
+# Filtered to:
+#   - PRs from this repo (forks excluded)
+#   - branches starting with cms/   (Sveltia's prefix)
+#   - non-draft PRs only
+#
+# Human-opened PRs on any other prefix still require a manual merge.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable:
+    if: |
+      github.event.pull_request.head.repo.full_name == github.repository
+      && startsWith(github.head_ref, 'cms/')
+      && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh pr merge --auto --squash "$PR"
+        env:
+          PR: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
