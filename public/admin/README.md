@@ -1,8 +1,12 @@
-# Sveltia CMS — editor + admin guide
+# Rethink Aadhaar CMS — editor + admin guide
 
-This site uses [Sveltia CMS](https://github.com/sveltia/sveltia-cms), a
-modern static-CMS that edits Markdown files in this Git repository via the
-GitHub API.
+The site's `/admin/` is a custom-branded instance of
+[Sveltia CMS](https://github.com/sveltia/sveltia-cms) — a modern
+static-CMS that edits Markdown files in this Git repository via the
+GitHub API. We refer to it everywhere user-facing as the **Rethink
+Aadhaar CMS**; the rest of this document calls out "Sveltia" only when
+something is specific to the underlying engine (version pin, upstream
+docs, etc.).
 
 - **For editors:** open <https://rethinkaadhaar.in/admin/>, click **Sign in
   with GitHub**, write content. Every save creates a pull request — nothing
@@ -107,16 +111,6 @@ full security model.
 Both the GitHub OAuth App and the Cloudflare Worker live in accounts
 owned by Rethink Aadhaar — no individual's GitHub or Cloudflare account
 is in the critical path.
-
-### Fallback: per-editor PAT mode
-
-If the worker is ever unavailable, you can temporarily switch back to
-PAT mode by removing `base_url` and `auth_scope` from `backend:` in
-`config.yml`. Editors then click **Sign In with Token** on `/admin/`,
-generate a fine-grained PAT (Contents + Pull Requests on this repo
-only), and paste it. Token sits in browser localStorage; revoke at
-<https://github.com/settings/tokens>. This is documented as a fallback,
-not the steady state.
 
 ---
 

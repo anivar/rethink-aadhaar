@@ -1,4 +1,4 @@
-# Sveltia CMS — content config for Rethink Aadhaar
+# Rethink Aadhaar CMS — content config (powered by Sveltia CMS)
 #
 # Reviewers, editors: see ./README.md for setup, security notes, and how
 # the editorial-workflow PR flow ties into deploys.
@@ -15,7 +15,7 @@ backend:
   # OAuth proxy worker — source: https://github.com/No2UID/rethink-cms-auth.
   # Runs on the campaign's Cloudflare account; secrets in GitHub Actions.
   # Editors are gated by an explicit allowlist + repo push permission
-  # before any access token reaches the browser. No PATs to rotate.
+  # before any access token reaches the browser.
   base_url: https://rethink-cms-auth.no2uid.workers.dev
   auth_scope: public_repo
 
