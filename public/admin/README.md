@@ -1,12 +1,11 @@
 # Rethink Aadhaar CMS — editor + admin guide
 
 The site's `/admin/` is a custom-branded instance of
-[Sveltia CMS](https://github.com/sveltia/sveltia-cms) — a modern
-static-CMS that edits Markdown files in this Git repository via the
-GitHub API. We refer to it everywhere user-facing as the **Rethink
-Aadhaar CMS**; the rest of this document calls out "Sveltia" only when
-something is specific to the underlying engine (version pin, upstream
-docs, etc.).
+[Decap CMS](https://github.com/decaporg/decap-cms) — a static CMS that
+edits Markdown files in this Git repository via the GitHub API. We
+refer to it everywhere user-facing as the **Rethink Aadhaar CMS**; the
+rest of this document calls out "Decap" only when something is specific
+to the underlying engine (version pin, upstream docs, etc.).
 
 - **For editors:** open <https://rethinkaadhaar.in/admin/>, click **Sign in
   with GitHub**, write content. Every save creates a pull request — nothing
@@ -19,7 +18,7 @@ docs, etc.).
 
 | File | Purpose | Contains secrets? |
 |---|---|---|
-| `index.html`  | One-line CMS shell, loads Sveltia from jsDelivr CDN. | No |
+| `index.html`  | One-line CMS shell, loads Decap from jsDelivr CDN.   | No |
 | `config.yml`  | Collection schema. Mirrors `src/content/config.ts`.  | No |
 | `README.md`   | This file.                                           | No |
 
@@ -37,7 +36,7 @@ worker's environment — never in the repo.
        │  /admin/  (static HTML on Pages)  │
        │     │                             │
        │     ▼                             │
-       │  Sveltia CMS (browser app)        │
+       │  Decap CMS (browser app)          │
        │     │                             │
        │     │   1. "Sign in with GitHub"  │
        │     ▼                             │
@@ -78,7 +77,7 @@ The site uses a custom Cloudflare Worker as its OAuth proxy:
   login` on their laptop.
 
 The worker is a 270-line, single-file proxy — not the upstream
-`sveltia-cms-auth`. It adds two hard gates **before** the access token
+`decap-server`. It adds two hard gates **before** the access token
 ever reaches the browser:
 
 1. The signed-in GitHub `login` must be in the worker's `ALLOWED_USERS`
@@ -129,8 +128,9 @@ is in the critical path.
   to public repos only, no access to private repos or org admin. Editors
   revoke at <https://github.com/settings/applications> (Authorized OAuth
   Apps → Rethink Aadhaar CMS).
-- **Editorial drafts are public.** `chore/cms-edit-*` branches are
-  pushed to a public repo. Do not paste private info into in-flight drafts.
+- **Editorial drafts are public.** `cms/<collection>/<slug>` branches
+  are pushed to a public repo. Do not paste private info into in-flight
+  drafts.
 - **Image uploads are immediately public** the moment the PR merges.
   `media_folder: public/media` commits images to this public repo.
   Editors must understand this. The CMS shows file size + name on upload
@@ -138,8 +138,8 @@ is in the critical path.
 - **`/admin/` is publicly reachable** but useless without OAuth login.
   `robots.txt` includes `Disallow: /admin/` so it won't appear in search
   results.
-- **Schema validation is enforced twice:** Sveltia's UI guards against
-  bad input at write-time, AND `astro check` (in `npm run build`) re-runs
+- **Schema validation is enforced twice:** Decap's UI guards against
+  bad input at write-time, AND `astro check` (in `bun run build`) re-runs
   the Zod schemas at PR-build time. Either layer alone would be enough;
   having both means a malformed front-matter PR fails CI before merge.
 
@@ -149,14 +149,17 @@ is in the critical path.
 
 1. Editor visits `/admin/` and signs in with GitHub.
 2. Editor picks a collection (e.g. **Updates**), clicks **+ New**.
-3. Sveltia generates a slug like `2026-05-12-statement-on-pension-denial`.
+3. Decap generates a slug like `2026-05-12-statement-on-pension-denial`.
 4. Editor fills the form, attaches a hero image, hits **Save** then
-   **Publish (open PR)**.
-5. Sveltia commits to a branch like `cms/update/2026-05-12-statement…`,
+   sets status **Ready** and clicks **Publish now**.
+5. Decap commits to a branch like `cms/update/2026-05-12-statement…`,
    pushes it, opens a PR titled `Create Updates "Statement on…"`.
-6. CI runs `npm run build` (= `astro check && astro build`). If the Zod
+6. CI runs `bun run build` (= `astro check && astro build`). If the Zod
    schema rejects anything, the PR is red.
-7. A reviewer with merge rights approves and squash-merges.
+7. `.github/workflows/cms-automerge.yml` enables auto-merge on the PR;
+   GitHub squash-merges as soon as the `check` status goes green. No
+   human click needed — branch protection still requires the check to
+   pass.
 8. `.github/workflows/deploy.yml` fires on the push to `main`,
    rebuilds the static site, and deploys to GitHub Pages.
 9. New post is live in ~2 minutes.
@@ -170,12 +173,12 @@ To **delete**: click delete in `/admin/`. Same PR flow.
 
 ## Updating the CMS itself
 
-`index.html` pins an exact Sveltia version with a Subresource Integrity hash
+`index.html` pins an exact Decap version with a Subresource Integrity hash
 so a compromised CDN can't serve us a tampered bundle. To upgrade:
 
 ```sh
-VER=0.160.0   # the new version
-SRI=$(curl -sSL "https://cdn.jsdelivr.net/npm/@sveltia/cms@${VER}/dist/sveltia-cms.js" \
+VER=3.12.2   # the new version
+SRI=$(curl -sSL "https://cdn.jsdelivr.net/npm/decap-cms@${VER}/dist/decap-cms.js" \
        | openssl dgst -sha384 -binary | openssl base64 -A)
 echo "src = ...@${VER}/...   integrity = sha384-${SRI}"
 ```

@@ -4,7 +4,7 @@ Two paths in:
 
 - **Editor (no Git, no terminal):** use the in-browser CMS at
   <https://no2uid.github.io/rethink-aadhaar/admin/>. Sign in with GitHub,
-  fill the form, hit Publish — Sveltia opens a pull request on your behalf.
+  fill the form, hit Publish — Decap opens a pull request on your behalf.
   Skip to [Editorial workflow](#editorial-workflow-via-admin).
 - **Developer / power editor:** clone the repo, edit Markdown directly,
   open a PR. Skip to [Local development](#local-development).
@@ -25,10 +25,11 @@ the result to GitHub Pages on merge.
 4. Fill the form. The CMS validates required fields and URL patterns
    inline; `astro check` re-validates against the Zod schemas at PR-build
    time, so a malformed entry fails CI.
-5. **Save → Publish (open PR).** Sveltia commits to a branch like
-   `cms/update/2026-05-12-…` and opens a PR titled
+5. **Save → set status Ready → Publish now.** Decap commits to a branch
+   like `cms/update/2026-05-12-…` and opens a PR titled
    `Create Updates "..."`.
-6. A maintainer reviews, requests changes if needed, and squash-merges.
+6. `cms-automerge.yml` enables auto-merge; the PR squash-merges as soon
+   as the `check` CI status passes (no human click needed).
 7. `deploy.yml` fires, rebuilds, and the entry is live in ~2 minutes.
 
 **Drafts.** New `update/` entries default to `draft: true`. Drafts are

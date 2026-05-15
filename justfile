@@ -73,13 +73,13 @@ verify-deploy:
 admin-open:
     xdg-open https://anivar.github.io/rethink-aadhaar/admin/
 
-# Usage: just admin-sri 0.160.0
+# Usage: just admin-sri 3.12.2
 # Then update both @VERSION in src= and integrity= in public/admin/index.html.
-# Recompute the SRI hash for a Sveltia version (for CMS upgrades).
+# Recompute the SRI hash for a Decap version (for CMS upgrades).
 admin-sri VERSION:
-    @SRI=$(curl -sSL "https://cdn.jsdelivr.net/npm/@sveltia/cms@{{VERSION}}/dist/sveltia-cms.js" \
+    @SRI=$(curl -sSL "https://cdn.jsdelivr.net/npm/decap-cms@{{VERSION}}/dist/decap-cms.js" \
             | openssl dgst -sha384 -binary | openssl base64 -A); \
-     printf "  src       = https://cdn.jsdelivr.net/npm/@sveltia/cms@{{VERSION}}/dist/sveltia-cms.js\n  integrity = sha384-%s\n" "$SRI"
+     printf "  src       = https://cdn.jsdelivr.net/npm/decap-cms@{{VERSION}}/dist/decap-cms.js\n  integrity = sha384-%s\n" "$SRI"
 
 # ---- PR helpers --------------------------------------------------------
 

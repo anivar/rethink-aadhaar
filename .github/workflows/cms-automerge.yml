@@ -1,13 +1,13 @@
 name: Auto-merge CMS PRs
 
-# CMS-opened PRs (Sveltia commits to cms/<collection>/<slug>) are gated
+# CMS-opened PRs (Decap commits to cms/<collection>/<slug>) are gated
 # only by CI here — branch protection on main requires 0 reviews. This
 # workflow enables GitHub's auto-merge so a CMS save squash-merges as
 # soon as the required `check` status is green, with no human click.
 #
 # Filtered to:
 #   - PRs from this repo (forks excluded)
-#   - branches starting with cms/   (Sveltia's prefix)
+#   - branches starting with cms/   (Decap's editorial-workflow prefix)
 #   - non-draft PRs only
 #
 # Human-opened PRs on any other prefix still require a manual merge.

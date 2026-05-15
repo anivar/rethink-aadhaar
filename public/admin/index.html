@@ -7,10 +7,10 @@
     <title>Rethink Aadhaar CMS</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <!--
-      Sveltia CMS, pinned to an exact version with SRI so a compromised CDN
+      Decap CMS, pinned to an exact version with SRI so a compromised CDN
       cannot serve us a tampered bundle. To upgrade: bump the version in
       the URL, recompute the integrity hash with
-        curl -sSL https://cdn.jsdelivr.net/npm/@sveltia/cms@<ver>/dist/sveltia-cms.js \
+        curl -sSL https://cdn.jsdelivr.net/npm/decap-cms@<ver>/dist/decap-cms.js \
           | openssl dgst -sha384 -binary | openssl base64 -A
       and update both fields in lockstep.
 
@@ -22,9 +22,8 @@
   </head>
   <body>
     <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/@sveltia/cms@0.160.1/dist/sveltia-cms.js"
-      integrity="sha384-DDDY69GD1bCvzusXnEkOgAZ/MVnNT0yYG8fe0+P0D/p4n68pQug2TYVPQ2LSZgLr"
+      src="https://cdn.jsdelivr.net/npm/decap-cms@3.12.2/dist/decap-cms.js"
+      integrity="sha384-Vwwn7nyPZTJRhuncX5Dci57xwjBjzTzQLSJefKuvOaT3x952fh4vT96UuHDi34zb"
       crossorigin="anonymous"
     ></script>
   </body>
