@@ -5,6 +5,8 @@ import HeroTitle from '~/components/HeroTitle.astro';
 import MythCard from '~/components/MythCard.astro';
 import { byOrder } from '~/lib/entries';
 import { itemList, claimReview } from '~/lib/seo';
+import { link } from '~/lib/link';
+import { mythSlug } from '~/lib/myth-slug';
 
 const myths = (await getCollection('myth')).sort(byOrder);
 const rendered = await Promise.all(myths.map(async (m) => ({ ...m, ...(await render(m)) })));
@@ -14,7 +16,11 @@ const jsonLd = [
   itemList({
     name: 'Myths about Aadhaar',
     url: '/myths',
-    items: myths.map((m) => ({ name: m.data.myth, url: '/myths', description: m.data.fact })),
+    items: myths.map((m) => ({
+      name: m.data.myth,
+      url: `/myths/${mythSlug(m.data.myth)}`,
+      description: m.data.fact,
+    })),
   }),
   // One ClaimReview per myth — eligible for Google fact-check rich
   // results and read by answer engines as an authoritative verdict.
@@ -42,7 +48,7 @@ const jsonLd = [
         {rendered.map((m, i) => (
           <li>
             <a
-              href={`#myth-${i + 1}`}
+              href={link(`/myths/${mythSlug(m.data.myth)}/`)}
               class="group flex items-baseline gap-3 py-1.5 text-sm text-ink/70 hover:text-accent transition-colors"
             >
               <span class="caps text-[0.7rem] text-accent w-6 shrink-0 tracking-[0.08em]">{String(i + 1).padStart(2, '0')}</span>
@@ -56,7 +62,12 @@ const jsonLd = [
 
   <section class="container-prose mt-10 md:mt-14 mb-24">
     {rendered.map((m, i) => (
-      <MythCard myth={m.data.myth} fact={m.data.fact} index={i + 1}>
+      <MythCard
+        myth={m.data.myth}
+        fact={m.data.fact}
+        index={i + 1}
+        href={link(`/myths/${mythSlug(m.data.myth)}/`)}
+      >
         <m.Content />
       </MythCard>
     ))}

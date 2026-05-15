@@ -1,0 +1,91 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import ShareRow from '~/components/ShareRow.astro';
+import StickyAction from '~/components/StickyAction.astro';
+import { byOrder } from '~/lib/entries';
+import { breadcrumb, claimReview } from '~/lib/seo';
+import { link } from '~/lib/link';
+import { mythSlug } from '~/lib/myth-slug';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('myth')).sort(byOrder);
+  return all.map((entry, idx) => ({
+    params: { slug: mythSlug(entry.data.myth) },
+    props: {
+      entry,
+      prev: all[idx - 1] ?? null,
+      next: all[idx + 1] ?? null,
+      index: idx + 1,
+      total: all.length,
+    },
+  }));
+}
+
+const { entry, prev, next, index, total } = Astro.props;
+const { Content } = await render(entry);
+const url = new URL(`/myths/${mythSlug(entry.data.myth)}/`, Astro.site).toString();
+
+const jsonLd = [
+  claimReview({
+    url,
+    claim: entry.data.myth,
+    verdict: entry.data.fact ?? 'See full evidence on this page.',
+  }),
+  breadcrumb([
+    { name: 'Home', url: '/' },
+    { name: 'Myths', url: '/myths' },
+    { name: entry.data.myth, url: `/myths/${mythSlug(entry.data.myth)}` },
+  ]),
+];
+---
+
+<BaseLayout
+  title={`Myth ${index}: ${entry.data.myth}`}
+  description={entry.data.fact ?? `Myth ${index} of ${total} examined by Rethink Aadhaar.`}
+  article
+  jsonLd={jsonLd}
+>
+  <HeroTitle eyebrow={`Myth ${String(index).padStart(2, '0')} of ${String(total).padStart(2, '0')}`}>
+    {entry.data.myth}
+  </HeroTitle>
+
+  {entry.data.fact && (
+    <div class="container-prose mt-8 fade-up">
+      <div class="border-l-2 border-accent/70 pl-4 md:pl-5">
+        <p class="caps text-ink/55 text-xs md:text-sm mb-2 md:mb-3">Fact</p>
+        <p class="font-display font-bold text-lg sm:text-xl md:text-2xl text-balance leading-snug">
+          {entry.data.fact}
+        </p>
+      </div>
+    </div>
+  )}
+
+  <article class="container-prose mt-10 prose dark:prose-invert font-body text-pretty fade-up">
+    <Content />
+  </article>
+
+  <div class="container-prose">
+    <ShareRow title={entry.data.myth} />
+
+    <nav class="mt-12 mb-12 grid sm:grid-cols-2 gap-4 text-sm" aria-label="Other myths">
+      {prev ? (
+        <a class="block border border-ink/15 p-4 hover:border-accent hover:text-accent" href={link(`/myths/${mythSlug(prev.data.myth)}/`)}>
+          <span class="caps text-xs text-ink/55 block mb-1">← Previous myth</span>
+          <span class="font-body text-pretty">{prev.data.myth}</span>
+        </a>
+      ) : <span></span>}
+      {next ? (
+        <a class="block border border-ink/15 p-4 hover:border-accent hover:text-accent text-right" href={link(`/myths/${mythSlug(next.data.myth)}/`)}>
+          <span class="caps text-xs text-ink/55 block mb-1">Next myth →</span>
+          <span class="font-body text-pretty">{next.data.myth}</span>
+        </a>
+      ) : <span></span>}
+    </nav>
+
+    <p class="mt-12 mb-12"><a class="caps text-xs text-accent" href={link('/myths')}>← All myths</a></p>
+  </div>
+
+  <StickyAction />
+</BaseLayout>
