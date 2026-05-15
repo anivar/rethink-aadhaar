@@ -3,7 +3,6 @@ order: 2
 myth: "Aadhaar is a voluntary ID scheme. No services are linked to Aadhaar per se."
 fact: "Aadhaar was sold to the public on the claim that enrolment was 'voluntary' — but in practice it has become mandatory."
 ---
-
 Though the government stated in court and in parliament, that Aadhaar is voluntary, or it is "just a identity number" not linked to anything, it has over the years, repeatedly made Aadhaar mandatory for an [ever-widening range of facilities and services](https://in.news.yahoo.com/three-supreme-court-orders-later--what-s-the-deal-with-aadhaar-094316180.html): to receive scholarships, food grain and cooking gas subsidies, access pensions and provident fund, to open bank accounts, to vote, and even to register a marriage, or adopt a child.
 
 It was made clear, life without Aadhaar would be very difficult. In these circumstances, saying that Aadhaar is voluntary is like saying that breathing or eating is voluntary.

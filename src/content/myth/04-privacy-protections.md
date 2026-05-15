@@ -3,7 +3,6 @@ order: 4
 myth: "Aadhaar law has privacy protections comparable to the best in the world."
 fact: "The Aadhaar Act allows authorities to share your personal data in the 'interest of national security' — a term that is left undefined."
 ---
-
 The Aadhaar law allows sharing your ID information and all authentication record in interest of "national security", even as the phrase "national security" is undefined in the present bill, as well as the General Clauses Act. Thus, the circumstances in which an individual's information may be disclosed remains open to interpretation.
 
 Aadhaar Act allows sharing your ID information, all authentication records on direction of an authorised officer of rank of Joint Secretary.

@@ -2,7 +2,6 @@
 title: "Code of Conduct"
 intro: "How Rethink Aadhaar conducts itself, what we expect of members and collaborators, and how to report a violation."
 ---
-
 ***This code of conduct may be edited and changed upon occasion following collective deliberation by members of the Campaign and/or members of the Complaints Committee along with members of the Campaign.***
 
 1. Rethink Aadhaar is a non-partisan campaign and a network of volunteers concerned about the Unique Identification/ Aadhaar project, and issues related to digitization of the welfare state. We are a campaign and network that works across administrative, national and international boundaries.

@@ -3,7 +3,6 @@ order: 6
 question: "What is India Stack?"
 short: "India Stack is Aadhaar plus the rails built on top of it. We view it as a failed and objectionable model that should not be replicated abroad."
 ---
-
 "India Stack" is the umbrella term that the IT industry, through **iSPIRT** and allied actors, uses to brand the bundle of state systems built on top of Aadhaar from around 2012 onwards. The pieces include Aadhaar identity and Aadhaar‑based biometric authentication (ABBA), the UPI and Aadhaar‑enabled payment rails (AePS), e‑KYC, eSign, DigiLocker, the Account Aggregator framework, FASTag (mandatory by law), the Ayushman Bharat Digital Mission, ONDC and a growing list of "Digital Public Infrastructure" (DPI) layers in welfare, health, education and commerce.
 
 We view Aadhaar, and therefore India Stack, as a failed and objectionable model that should not be replicated in other countries. The case is set out in full in our Campaign 2025 statement; in short:

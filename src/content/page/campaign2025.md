@@ -2,7 +2,6 @@
 title: "Campaign 2025"
 intro: "Despite a mountain of evidence on Aadhaar's failure, 'Aadhaar evangelism' is being exported across the world. Rethink Aadhaar campaigns to caution other countries and share our concerns."
 ---
-
 > *Despite a mountain of evidence on Aadhaar's failure, "Aadhaar evangelism" — efforts to convert other countries to the Aadhaar biometric identity model — is spreading across the world. Rethink Aadhaar campaigned to caution other countries and share our concerns. The statement below, endorsed by more than 50 Indian organisations aside from many individual signatories, was released on 10 December 2025 (Human Rights Day).*
 
 ## Beware of Aadhaar

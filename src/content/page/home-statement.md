@@ -2,7 +2,6 @@
 title: "Beware of Aadhaar — A Warning on India's Biometric Identity Model"
 intro: "A collective statement endorsed by more than 50 Indian organisations and many individual signatories, released on 10 December 2025 (Human Rights Day)."
 ---
-
 We are deeply concerned that efforts are being made to promote biometric identity systems similar to Aadhaar in other countries.
 
 Aadhaar is India's unique identity number, linked with a person's biometrics — fingerprints, iris, photograph. Rolled out from 2009 onwards in close collaboration with the IT industry, it was supposed to be voluntary but quickly became as good as compulsory: most social benefits are now out of reach without it.

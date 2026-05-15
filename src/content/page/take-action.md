@@ -2,7 +2,6 @@
 title: "Take Action"
 intro: "What can I do? Perhaps the better question is: what can't we do?"
 ---
-
 There are several active ways to push back. Pick one, or several.
 
 ### Resist the Voter ID — Aadhaar linkage

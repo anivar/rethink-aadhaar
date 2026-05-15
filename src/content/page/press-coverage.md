@@ -7,7 +7,6 @@ heroCaption: |
 
   *Illustration: Pariplab Chakraborty in TheWire.in*
 ---
-
 ## March 2026
 
 Venkateswarlu Kuruva and Chakradhar Buddha explain in [*IDR*](https://idronline.org/article/rights/indias-digital-welfare-system-is-quietly-eroding-peoples-basic-rights/) how India’s digital welfare system is producing life-altering exclusions by prioritising administrative control over constitutional guarantees of access and dignity, and how the entire onus of correction is passed on to the people least equipped to bear it.

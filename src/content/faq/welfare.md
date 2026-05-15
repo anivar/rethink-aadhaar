@@ -3,7 +3,6 @@ order: 2
 question: "Does welfare actually need Aadhaar?"
 short: "Welfare needs Aadhaar like a fish needs a bicycle."
 ---
-
 ## Has Aadhaar given identity to those who lacked one?
 
 One of the claims made by UIDAI and GoI is that Aadhar has empowered people who did not have an ID by providing them one. However, these claims are bogus since Aadhaar ID has been allocated based on existing IDs themselves. To get Aadhaar, one has to submit Proof of identity and Proof of address.

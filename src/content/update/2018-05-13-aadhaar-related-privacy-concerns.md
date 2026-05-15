@@ -4,12 +4,11 @@ date: 2018-05-13
 excerpt: "Under the Aadhaar Act, “identity information” consists of Aadhaar number, biometric information and demographic information. “Biometric information”, as of now, consists of fingerprints, iris scan and photograph, but its scope can be expanded at UIDAI’s discretion. “Demographic information” refers t"
 sourceUrl: "https://rethinkaadhaar.in/blog/2018/5/13/aadhaar-related-privacy-concerns"
 ---
-
 <p>Aadhaar-related privacy concerns tend to get confused and mixed up. The main concerns are as outlined in this post.</p><p>Reminder: Under the Aadhaar Act, “identity information” consists of Aadhaar number, biometric information and demographic information. “Biometric information”, as of now, consists of fingerprints, iris scan and photograph, but its scope can be expanded at UIDAI’s discretion. “Demographic information” refers to demographic details (name, date of birth, address etc.) collected at the time of Aadhaar enrolment. The term “personal information”, not used in the Aadhaar Act (except in Section 30) can be understood in more general terms as any information of a private nature.</p><h2>Confidentiality of “core biometrics”</h2><p>The core biometrics (as of now, fingerprints and iris scan) are supposed to be safely stored in the Central Identities Data Repository (CIDR) and not shared with anyone. Some IT experts, however, believe that it is only a matter of time until the CIDR is hacked. That would be a serious breach: if your biometrics are stolen, you would be vulnerable to identity fraud for life. Further, fingerprints are easy to clone or steal outside the CIDR (as Nandan Nilekani himself said put it to a <em>Financial Times</em> reporter, “I can steal your fingerprint off your glass”). That, too presents a threat of identity fraud, given the numerous uses of biometrics in the proposed Aadhaar ecosystem.</p><h2>Confidentiality of Aadhaar numbers</h2><p>Aadhaar numbers are not supposed to be “displayed or posted publicly” (Aadhaar Act, Section 29(4)). However, this has happened many times, and keeps happening. When Aadhaar numbers are displayed along with other sensitive information such as bank account numbers, it makes the victims vulnerable to various types of fraud.</p><h2>Wide sharing of demographic information</h2><p>In the draft of the Aadhaar Act (the “NIDAI Bill 2010”), demographic information collected at the time of Aadhaar enrolment was supposed to be confidential – authentication only consisted of a “yes/no” response to a query whether a person’s biometrics matched the Aadhaar number being submitted. The Aadhaar Act, however, now allows demographic information to be shared with the requesting entity (Section 8). Further, there is very little protection against this information being shared or misused by the requesting entity, except for a weak “consent” clause whereby this entity is supposed to use that information only for the purpose to which the person has consented at the time of authentication. This is just a cosmetic safeguard. In effect, demographic information is up for grabs. The wide dissemination of demographic information will facilitate large-scale mining of personal information by private businesses. It is well known that private businesses already thrive on this type of information for numerous purposes, from targeted advertisement and credit rating to manipulating elections (the recent Cambridge-Analytica and Facebook affairs are just the tip of that mountain). Aadhaar is likely to take the mining of personal information – not just demographic information – to new levels. As someone put it in an insightful tweet, “data is the new oil and Aadhaar is the drill”.</p>
 
 <hr />
 
-  <h2>Help us help you</h2>
+<h2>Help us help you</h2>
 
 <hr />
 
@@ -18,8 +17,8 @@ sourceUrl: "https://rethinkaadhaar.in/blog/2018/5/13/aadhaar-related-privacy-con
 
 <hr />
 
-  <p>This is an guest post by <strong>Jean Dreze</strong>, which formed the basis of an article published in the Indian Express:&nbsp;<a target="_blank" href="http://indianexpress.com/article/opinion/columns/aadhaar-privacy-supreme-court-hearing-bill-gates-uidai-5167209/">Know your Aadhaar / 8th May 2018</a></p><p>Featured image sourced from the Indian Express article / credit: CR Sasikumar</p>
+<p>This is an guest post by <strong>Jean Dreze</strong>, which formed the basis of an article published in the Indian Express:&nbsp;<a target="_blank" href="http://indianexpress.com/article/opinion/columns/aadhaar-privacy-supreme-court-hearing-bill-gates-uidai-5167209/">Know your Aadhaar / 8th May 2018</a></p><p>Featured image sourced from the Indian Express article / credit: CR Sasikumar</p>
 
 <hr />
 
-  <p><strong>Engage with us on Twitter:</strong></p>
+<p><strong>Engage with us on Twitter:</strong></p>

@@ -3,7 +3,6 @@ order: 4
 question: "Isn't Aadhaar just like the US Social Security Number?"
 short: "Aadhaar is not comparable to the SSN. They are very different things."
 ---
-
 Social Security Number (SSN), the nine-digit number, which is used widely by government agencies in the US, is often used as an example of an advance economy successfully doing something similar to India's unique identity project. But there are important differences between the two, starting with the fact that the Social Security Number is, well, not an identity number.
 
 ## Aadhaar is an identification number. Social Security Number is not.

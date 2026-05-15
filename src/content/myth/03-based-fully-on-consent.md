@@ -3,7 +3,6 @@ order: 3
 myth: "Aadhaar is based fully on consent."
 fact: "You may have to compulsorily enrol under Aadhaar, despite your privacy concerns."
 ---
-
 If a service agent asks for Aadhaar mandatorily, then as a beneficiary, citizens have no option but to get an Aadhaar number.
 
 The new Aadhaar Act does not incorporate a categorical clause saying Aadhaar will be voluntary, or that it will NOT be made mandatory. Instead, it broadens the scope of Aadhaar. In parliament in March, Finance Minister Arun Jaitley said the Aadhaar Act will allow the government to ask a citizen to produce an Aadhaar number to avail of any "government subsidy".
