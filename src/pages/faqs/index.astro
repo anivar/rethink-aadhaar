@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import FAQItem from '~/components/FAQItem.astro';
-import { byOrder } from '~/lib/entries';
+import { byOrder, entryHref } from '~/lib/entries';
 import { faqPage } from '~/lib/seo';
 
 const faqs = (await getCollection('faq')).sort(byOrder);
@@ -28,10 +28,10 @@ const jsonLd = faqPage(
   {rendered.length > 1 && (
     <nav class="container-prose mt-8 fade-up delay-1" aria-label="Jump to a question">
       <ul class="flex flex-wrap gap-2">
-        {rendered.map((_f, i) => (
+        {rendered.map((f, i) => (
           <li>
             <a
-              href={`#faq-${i + 1}`}
+              href={entryHref('faq', f)}
               class="caps text-[0.7rem] tracking-[0.08em] inline-block px-3 py-2 border border-ink/20 hover:border-accent hover:text-accent transition-colors"
             >
               Q{String(i + 1).padStart(2, '0')}
@@ -44,7 +44,7 @@ const jsonLd = faqPage(
 
   <section class="container-prose mt-10 md:mt-14 mb-24">
     {rendered.map((f, i) => (
-      <FAQItem question={f.data.question} short={f.data.short} index={i + 1}>
+      <FAQItem question={f.data.question} short={f.data.short} index={i + 1} href={entryHref('faq', f)} summary>
         <f.Content />
       </FAQItem>
     ))}

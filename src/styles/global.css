@@ -520,6 +520,59 @@
   background: rgb(var(--ink) / 0.06);
 }
 
+/* Tweet embeds. Two states:
+   1. Pre-enhancement (or JS blocked) — the inner blockquote shows a single
+      "View tweet on X" link in a quiet card. No layout jump.
+   2. Post-enhancement — Twitter's widgets.js replaces the blockquote with
+      its own iframe. Center it and cap the width so it doesn't span the
+      full prose column. */
+.prose .tweet-embed,
+.prose .twitter-tweet {
+  margin: 1.75em auto;
+  max-width: 550px;
+}
+.prose .tweet-embed > .twitter-tweet {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--color-accent);
+  background: rgb(var(--ink) / 0.04);
+  font-style: normal;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  quotes: none;
+}
+.prose .tweet-embed > .twitter-tweet::before,
+.prose .tweet-embed > .twitter-tweet::after { content: none; }
+.prose .twitter-tweet a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+/* Hide the fallback link once Twitter's iframe is rendered (it's added as
+   a sibling node when widgets.js converts the blockquote in place). */
+.prose .twitter-tweet[data-tweet-id] > a { display: none; }
+
+/* Facebook embeds — static card, no SDK. */
+.prose .fb-embed {
+  margin: 1.75em 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--color-accent);
+  background: rgb(var(--ink) / 0.04);
+}
+.prose .fb-embed-meta {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--ink) / 0.6);
+}
+.prose .fb-embed-link { margin: 0; font-weight: 600; }
+.prose .fb-embed-link a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .prose-invert {
   --tw-prose-body:     rgb(var(--ink));
   --tw-prose-headings: rgb(var(--ink));

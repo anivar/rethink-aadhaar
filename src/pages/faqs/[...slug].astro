@@ -1,0 +1,90 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import ShareRow from '~/components/ShareRow.astro';
+import StickyAction from '~/components/StickyAction.astro';
+import { byOrder } from '~/lib/entries';
+import { breadcrumb, faqPage } from '~/lib/seo';
+import { link } from '~/lib/link';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('faq')).sort(byOrder);
+  return all.map((entry, idx) => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: {
+      entry,
+      prev: all[idx - 1] ?? null,
+      next: all[idx + 1] ?? null,
+      index: idx + 1,
+      total: all.length,
+    },
+  }));
+}
+
+const { entry, prev, next, index, total } = Astro.props;
+const { Content } = await render(entry);
+const slug = entry.id.replace(/\.mdx?$/, '');
+const url = new URL(`/faqs/${slug}/`, Astro.site).toString();
+
+const answer =
+  entry.data.short ?? entry.body?.replace(/\s+/g, ' ').trim().slice(0, 280) ?? entry.data.question;
+
+const jsonLd = [
+  faqPage([{ question: entry.data.question, answer }]),
+  breadcrumb([
+    { name: 'Home', url: '/' },
+    { name: 'FAQs', url: '/faqs' },
+    { name: entry.data.question, url: `/faqs/${slug}` },
+  ]),
+];
+---
+
+<BaseLayout
+  title={entry.data.question}
+  description={entry.data.short ?? `FAQ ${index} of ${total} — Rethink Aadhaar.`}
+  article
+  jsonLd={jsonLd}
+>
+  <HeroTitle eyebrow={`FAQ ${String(index).padStart(2, '0')} of ${String(total).padStart(2, '0')}`}>
+    {entry.data.question}
+  </HeroTitle>
+
+  {entry.data.short && (
+    <div class="container-prose mt-8 fade-up">
+      <div class="border-l-2 border-accent/70 pl-4 md:pl-5">
+        <p class="caps text-ink/55 text-xs md:text-sm mb-2 md:mb-3">Short answer</p>
+        <p class="font-display font-bold text-lg sm:text-xl md:text-2xl text-balance leading-snug">
+          {entry.data.short}
+        </p>
+      </div>
+    </div>
+  )}
+
+  <article class="container-prose mt-10 prose dark:prose-invert font-body text-pretty fade-up faq-answer">
+    <Content />
+  </article>
+
+  <div class="container-prose">
+    <ShareRow title={entry.data.question} />
+
+    <nav class="mt-12 mb-12 grid sm:grid-cols-2 gap-4 text-sm" aria-label="Other FAQs">
+      {prev ? (
+        <a class="block border border-ink/15 p-4 hover:border-accent hover:text-accent" href={link(`/faqs/${prev.id.replace(/\.mdx?$/, '')}/`)}>
+          <span class="caps text-xs text-ink/55 block mb-1">← Previous</span>
+          <span class="font-body text-pretty">{prev.data.question}</span>
+        </a>
+      ) : <span></span>}
+      {next ? (
+        <a class="block border border-ink/15 p-4 hover:border-accent hover:text-accent text-right" href={link(`/faqs/${next.id.replace(/\.mdx?$/, '')}/`)}>
+          <span class="caps text-xs text-ink/55 block mb-1">Next →</span>
+          <span class="font-body text-pretty">{next.data.question}</span>
+        </a>
+      ) : <span></span>}
+    </nav>
+
+    <p class="mt-12 mb-12"><a class="caps text-xs text-accent" href={link('/faqs')}>← All FAQs</a></p>
+  </div>
+
+  <StickyAction />
+</BaseLayout>

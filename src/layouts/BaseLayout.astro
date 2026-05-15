@@ -118,5 +118,40 @@ const blocks: JsonLd[] = [website(), org(), ...(Array.isArray(jsonLd) ? jsonLd :
       <slot />
     </main>
     <SiteFooter />
+    <script is:inline>
+      // Lazy-load Twitter widgets.js the first time a `.twitter-tweet`
+      // approaches the viewport. Pages with no tweets pay nothing; pages
+      // with tweets load the script exactly once even if there are many
+      // embeds. View-transitions re-run this on every `astro:page-load`
+      // since the observer state doesn't survive a swap.
+      (function () {
+        function init() {
+          var nodes = document.querySelectorAll('.twitter-tweet');
+          if (!nodes.length) return;
+          // Already loaded? Nudge widgets to re-scan after a transition.
+          if (window.twttr && window.twttr.widgets) {
+            window.twttr.widgets.load();
+            return;
+          }
+          if (document.querySelector('script[data-twttr-loader]')) return;
+          var io = new IntersectionObserver(function (entries, obs) {
+            for (var i = 0; i < entries.length; i++) {
+              if (!entries[i].isIntersecting) continue;
+              obs.disconnect();
+              var s = document.createElement('script');
+              s.src = 'https://platform.twitter.com/widgets.js';
+              s.async = true;
+              s.charset = 'utf-8';
+              s.setAttribute('data-twttr-loader', '1');
+              document.body.appendChild(s);
+              return;
+            }
+          }, { rootMargin: '400px 0px' });
+          for (var j = 0; j < nodes.length; j++) io.observe(nodes[j]);
+        }
+        init();
+        document.addEventListener('astro:page-load', init);
+      })();
+    </script>
   </body>
 </html>

@@ -7,6 +7,7 @@ import { link } from '~/lib/link';
 const URL_PREFIX = {
   update: '/blog/',
   exclusion: '/testimonials/',
+  faq: '/faqs/',
   page: '/',
 } as const;
 

@@ -14,12 +14,12 @@ sourceUrl: "https://rethinkaadhaar.in/blog/2018/5/13/rti-reveals-no-evidence-to-
 <p>Not to be outdone, UIDAI tweeted the YourStory article from their official handle.</p>
 
 <blockquote><p lang="en" dir="ltr">This is how Aadhaar helped to catch over 80000 teachers who work in multiple colleges. <a href="https://twitter.com/hashtag/AadhaarInNews?src=hash&amp;ref_src=twsrc%5Etfw">#AadhaarInNews</a> <a href="https://t.co/ysisf2fxYm">https://t.co/ysisf2fxYm</a></p>— Aadhaar (@UIDAI) <a href="https://twitter.com/UIDAI/status/950689670702055424?ref_src=twsrc%5Etfw">January 9, 2018</a></blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
 <p>Stalwarts like TVS Mohandas Pai used the opportunity to bash "leftist malcontents":</p>
 
 <blockquote><p lang="en" dir="ltr">Frauds exposed by Aadhar, great work <a href="https://twitter.com/rsprasad?ref_src=twsrc%5Etfw">@rsprasad</a> <a href="https://twitter.com/NandanNilekani?ref_src=twsrc%5Etfw">@NandanNilekani</a> <a href="https://twitter.com/PMOIndia?ref_src=twsrc%5Etfw">@PMOIndia</a> Leftist malcontents do not want this to happen  <a href="https://t.co/NHbV6giOgV">https://t.co/NHbV6giOgV</a></p>— Mohandas Pai (@TVMohandasPai) <a href="https://twitter.com/TVMohandasPai/status/952222379270332416?ref_src=twsrc%5Etfw">January 13, 2018</a></blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><hr />
+<hr />
 
 <h2>Help us help you</h2>
 
@@ -28,6 +28,6 @@ sourceUrl: "https://rethinkaadhaar.in/blog/2018/5/13/rti-reveals-no-evidence-to-
 <h2><strong>RTI suggests that claim had no factual basis</strong></h2><p>However, in response to an RTI application, the HRD ministry was unable to furnish any evidence to back the claim. It could not provide the names of bogus teachers or details of institutions where they were employed. The RTI application and reply are attached.<br /><br />In response to another RTI application, the HRD ministry stated that it had no information on whether any inquiry had been set up to probe into the matter &amp; whether any disciplinary action was taken against those involved in this fraud. The relevant RTI application and reply are attached.</p><ol dir="ltr"><li><a target="_blank" href="/s/RTI-2018-MHRD-Bogus-teachers-RTI-Reply.pdf">RTI 2018 MHRD Bogus teachers- RTI &amp; Reply - 1</a></li><li><a target="_blank" href="/s/RTI-2018-MHRD-Bogus-teachers-Inquiry-RTI-reply.pdf">RTI 2018 MHRD Bogus teachers- RTI &amp; Reply - 2</a></li></ol><p><strong>Of course, this is not the first time: similar stories about detection of "bogus" ration cards, NREGA job cards, inflated savings due to Aadhaar and so on have been time and time again disproved with data by activists and concerned citizens.</strong></p><p>Anjali Bhardwaj of Right To Food explains how the government claims are bogus:</p>
 
 <blockquote><p lang="en" dir="ltr">Yet another false claim of savings due to Aadhaar? <a href="https://twitter.com/PrakashJavdekar?ref_src=twsrc%5Etfw">@PrakashJavdekar</a> said 80,000 bogus teachers detected through Aadhaar. Reply to RTI shows MHRD unable to furnish any evidence to back the claim. Unable to provide names of bogus teachers &amp; institutions where they were employed 1/2 <a href="https://t.co/FhGC8cubk7">pic.twitter.com/FhGC8cubk7</a></p>— Anjali Bhardwaj (@AnjaliB_) <a href="https://twitter.com/AnjaliB_/status/994849582684270595?ref_src=twsrc%5Etfw">May 11, 2018</a></blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><hr />
+<hr />
 
 <p><strong>Engage with us on Twitter:</strong></p>
