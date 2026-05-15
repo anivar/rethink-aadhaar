@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import rehypeBaseHref from './src/lib/rehype-base-href.mjs';
+import remarkYoutube from './src/lib/remark-youtube.mjs';
 
 // Site URL + base path are overridden in CI for GH Pages (see .github/workflows/deploy.yml).
 const SITE = process.env.SITE_URL ?? 'https://rethinkaadhaar.in';
@@ -14,6 +15,7 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
   markdown: {
+    remarkPlugins: [remarkYoutube],
     rehypePlugins: [[rehypeBaseHref, { base: BASE }]],
   },
   integrations: [

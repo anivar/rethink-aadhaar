@@ -4,6 +4,8 @@ date: 2017-04-11
 summary: "Babu Singh, a construction worker in Jawaja block in Ajmer, and his wife Punni Devi, who has polio, have been \"locked out\" of food grains because of errors in Aadhaar numbers."
 sourceUrl: "https://rethinkaadhaar.in/testimonials/2017/4/11/is-anyone-accountable-for-aadhaar-errors"
 ---
-Babu Singh, a construction worker in Jawaja block in Ajmer, and his wife Punni Devi, who has polio, have been "locked out" of food grains because of errors in Aadhaar numbers.
 
-<img src="/media/1491977957325-CXLPT84MJXCRSFBKXE61-jawaja2.jpeg" alt="" loading="lazy" />
+<iframe src="//www.youtube.com/embed/zZ7tLybPbl8?wmode=opaque&amp;enablejsapi=1" scrolling="no" allowfullscreen="" height="480" frameborder="0" width="854">
+</iframe>
+
+  <p>Babu Singh, a construction worker in Jawaja block in Ajmer, and his wife Punni Devi, who has polio, have been "locked out" of food grains because of errors in Aadhaar numbers.</p>
