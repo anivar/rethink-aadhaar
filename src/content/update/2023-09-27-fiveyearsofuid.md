@@ -11,4 +11,7 @@ sourceUrl: "https://rethinkaadhaar.in/blog/fiveyearsofuid"
   
 
   
-       [caption id="" align="alignnone" width="1266"]<a href="https://www.astrobin.com/5zus41/" ><img src="/media/6454952e-dc0d-4a06-b87b-12f0f89d8cbf-Screenshot-2023-09-27-at-9.58.28-AM.png" alt="  Images of the Hercules cluster by astrophotographer Rajat Kumar  "/></a>   Images of the Hercules cluster by astrophotographer Rajat Kumar  [/caption]
+<figure>
+<a href="https://www.astrobin.com/5zus41/" ><img loading="lazy" src="/media/6454952e-dc0d-4a06-b87b-12f0f89d8cbf-Screenshot-2023-09-27-at-9.58.28-AM.png" alt="  Images of the Hercules cluster by astrophotographer Rajat Kumar  "/></a>
+<figcaption>Images of the Hercules cluster by astrophotographer Rajat Kumar</figcaption>
+</figure>

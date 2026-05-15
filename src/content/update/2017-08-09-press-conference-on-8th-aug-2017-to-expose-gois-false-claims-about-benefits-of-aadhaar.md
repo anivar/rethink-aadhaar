@@ -13,7 +13,10 @@ sourceUrl: "https://rethinkaadhaar.in/blog/2017/8/9/press-conference-on-8th-aug-
 <p>The material from today's press conference is available in this folder:&nbsp;<a target="_blank" href="https://drive.google.com/open?id=0B3oQ77E3KGKBbzF1Z0tLTW9MWWc">https://drive.google.com/open?id=0B3oQ77E3KGKBbzF1Z0tLTW9MWWc</a></p>
 
   
-       [caption id="" align="alignnone" width="600"]<img src="/media/1503040937692-BYWV886UEELEAXXVBMBL-exclusion-1.jpg" alt=" Cover photo: Anita and Bismillah had attended the press conferences to share their problems on record with press. "/>  Cover photo: Anita and Bismillah had attended the press conferences to share their problems on record with press. [/caption] 
+<figure>
+<img loading="lazy" src="/media/1503040937692-BYWV886UEELEAXXVBMBL-exclusion-1.jpg" alt=" Cover photo: Anita and Bismillah had attended the press conferences to share their problems on record with press. "/>
+<figcaption>Cover photo: Anita and Bismillah had attended the press conferences to share their problems on record with press.</figcaption>
+</figure>
   
 
 <hr />

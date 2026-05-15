@@ -11,4 +11,7 @@ sourceUrl: "https://rethinkaadhaar.in/blog/fiveyearsofuidhindi"
   
 
   
-       [caption id="" align="alignnone" width="1048"]<a href="https://www.astrobin.com/1nbzti/" ><img src="/media/953ad1e9-b412-4043-b335-1f77a9d26e92-Screenshot-2023-10-04-at-11.45.16-AM.png" alt="  Image of the Hercules Globular Cluster by Astrophotographer Rajat Kumar  "/></a>   Image of the Hercules Globular Cluster by Astrophotographer Rajat Kumar  [/caption]
+<figure>
+<a href="https://www.astrobin.com/1nbzti/" ><img loading="lazy" src="/media/953ad1e9-b412-4043-b335-1f77a9d26e92-Screenshot-2023-10-04-at-11.45.16-AM.png" alt="  Image of the Hercules Globular Cluster by Astrophotographer Rajat Kumar  "/></a>
+<figcaption>Image of the Hercules Globular Cluster by Astrophotographer Rajat Kumar</figcaption>
+</figure>
