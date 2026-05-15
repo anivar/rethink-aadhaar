@@ -3,12 +3,12 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import MythCard from '~/components/MythCard.astro';
-import { byOrder } from '~/lib/entries';
+import { byOrder, notDraft } from '~/lib/entries';
 import { itemList, claimReview } from '~/lib/seo';
 import { link } from '~/lib/link';
 import { mythSlug } from '~/lib/myth-slug';
 
-const myths = (await getCollection('myth')).sort(byOrder);
+const myths = (await getCollection('myth')).filter(notDraft).sort(byOrder);
 const rendered = await Promise.all(myths.map(async (m) => ({ ...m, ...(await render(m)) })));
 
 const mythsUrl = new URL('/myths', Astro.site).toString();

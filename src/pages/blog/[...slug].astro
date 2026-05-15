@@ -5,13 +5,13 @@ import HeroTitle from '~/components/HeroTitle.astro';
 import Picture from '~/components/Picture.astro';
 import ShareRow from '~/components/ShareRow.astro';
 import StickyAction from '~/components/StickyAction.astro';
-import { entryHref } from '~/lib/entries';
+import { entryHref, notDraft } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
 import { article, breadcrumb, MENTIONS } from '~/lib/seo';
 import { link } from '~/lib/link';
 
 export async function getStaticPaths() {
-  const items = await getCollection('update');
+  const items = (await getCollection('update')).filter(notDraft);
   return items.map((entry) => ({
     params: { slug: entry.id.replace(/\.md$/, '') },
     props: { entry },

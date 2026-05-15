@@ -23,6 +23,18 @@ backend:
 # Merging the PR triggers .github/workflows/deploy.yml → live in ~2 min.
 publish_mode: editorial_workflow
 
+# Why every collection has `delete: false`:
+# Decap's published-entry delete commits directly to `main`, bypassing
+# editorial_workflow. Branch protection on main blocks that, so the UI
+# button would silently 403 for editors. Two PR-routed alternatives:
+#   - To UNPUBLISH (most cases): toggle `Draft` to true and save. The
+#     entry is excluded from indexes, sitemap, RSS, JSON-LD, llms.txt
+#     and its own page is no longer generated. Goes through the normal
+#     editorial_workflow PR.
+#   - To permanently DELETE the file: trigger
+#     .github/workflows/delete-entry.yml from the Actions tab. It opens
+#     a `cms/delete/<slug>` PR which auto-merges.
+
 # Image uploads land in public/media/ and become publicly visible the
 # moment the PR is merged. Editors must NOT upload anything sensitive.
 media_folder: public/media
@@ -49,7 +61,7 @@ collections:
     extension: md
     format: yaml-frontmatter
     create: true
-    delete: true
+    delete: false
     slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
     summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{title}}{{#draft}} (DRAFT){{/draft}}'
     sortable_fields: [date, title]
@@ -63,7 +75,7 @@ collections:
       - { name: excerpt,   label: Excerpt,         widget: text,    required: false, hint: 'Short summary used on cards and OG tags.' }
       - { name: hero,      label: Hero image,      widget: image,   required: false, choose_url: false }
       - { name: sourceUrl, label: Original URL,    widget: string,  required: false, pattern: ['^https?://', 'Must be a full http(s) URL'], hint: 'If this re-publishes a post from rethinkaadhaar.in or elsewhere, paste the canonical URL.' }
-      - { name: draft,     label: Draft,           widget: boolean, default: true,    hint: 'Drafts are excluded from the home page, blog index, and RSS feed.' }
+      - { name: draft,     label: Draft,           widget: boolean, default: false,   hint: 'Leave OFF to publish. Toggle ON to keep as a draft (excluded from home, blog index, RSS, sitemap, JSON-LD, llms.txt — entry page not generated) or to UNPUBLISH a previously-live entry.' }
       - { name: body,      label: Body,            widget: markdown }
 
   # ---- EXCLUSION STORIES (testimonials) -------------------------------
@@ -74,7 +86,7 @@ collections:
     extension: md
     format: yaml-frontmatter
     create: true
-    delete: true
+    delete: false
     slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
     summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{title}}'
     sortable_fields: [date, title, location]
@@ -95,7 +107,7 @@ collections:
     extension: md
     format: yaml-frontmatter
     create: true
-    delete: true
+    delete: false
     slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
     summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{publication}} — {{title}}'
     sortable_fields: [date, publication, title]
@@ -104,6 +116,7 @@ collections:
       - { name: publication, label: Publication,    widget: string,  hint: 'e.g. "The Wire", "Scroll", "The Hindu".' }
       - { name: date,        label: Date,           widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
       - { name: href,        label: Article URL,    widget: string,  pattern: ['^https?://', 'Must be a full http(s) URL'] }
+      - { name: draft,       label: Draft,          widget: boolean, default: false, required: false, hint: 'Drafts are excluded from the press-coverage page, sitemap, ItemList JSON-LD, and llms.txt. Toggle on to UNPUBLISH.' }
       # No body field — press is link-only by editorial decision (we do
       # not mirror third-party article text).
 
@@ -115,7 +128,7 @@ collections:
     extension: md
     format: yaml-frontmatter
     create: true
-    delete: true
+    delete: false
     slug: '{{order | int}}-{{slug}}'
     summary: 'Myth {{order}} — {{myth}}'
     sortable_fields: [order]
@@ -123,6 +136,7 @@ collections:
       - { name: order, label: Order,           widget: number, value_type: int, min: 1, hint: 'Sequence position on /myths.' }
       - { name: myth,  label: Myth (claim),    widget: string }
       - { name: fact,  label: Fact (rebuttal), widget: string, required: false }
+      - { name: draft, label: Draft,           widget: boolean, default: false, required: false, hint: 'Drafts are excluded from /myths, sitemap, ItemList + ClaimReview JSON-LD, and llms.txt — and the entry page itself is not generated. Toggle on to UNPUBLISH.' }
       - { name: body,  label: Long-form body,  widget: markdown }
 
   # ---- FAQs ----------------------------------------------------------
@@ -133,7 +147,7 @@ collections:
     extension: md
     format: yaml-frontmatter
     create: true
-    delete: true
+    delete: false
     slug: '{{order | int}}-{{slug}}'
     summary: 'FAQ {{order}} — {{question}}'
     sortable_fields: [order]
@@ -141,6 +155,7 @@ collections:
       - { name: order,    label: Order,         widget: number, value_type: int, min: 1 }
       - { name: question, label: Question,      widget: string }
       - { name: short,    label: Short answer,  widget: string,  required: false, hint: 'One-line summary used in llms.txt.' }
+      - { name: draft,    label: Draft,         widget: boolean, default: false, required: false, hint: 'Drafts are excluded from /faqs, sitemap, FAQPage JSON-LD, and llms.txt — and the entry page itself is not generated. Toggle on to UNPUBLISH.' }
       - { name: body,     label: Full answer,   widget: markdown }
 
   # ---- RESOURCES (typed link list) -----------------------------------
@@ -151,7 +166,7 @@ collections:
     extension: md
     format: yaml-frontmatter
     create: true
-    delete: true
+    delete: false
     summary: '{{section}} — {{title}}'
     sortable_fields: [section, order, title]
     fields:

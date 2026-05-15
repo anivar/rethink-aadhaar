@@ -9,6 +9,7 @@ const myth = defineCollection({
     myth: z.string(),
     fact: z.string().optional(),
     order: z.number(),
+    draft: z.boolean().optional().default(false),
   }),
 });
 
@@ -42,6 +43,7 @@ const faq = defineCollection({
     question: z.string(),
     short: z.string().optional(),
     order: z.number(),
+    draft: z.boolean().optional().default(false),
   }),
 });
 
@@ -92,6 +94,7 @@ const press = defineCollection({
     publication: z.string(),
     date: z.coerce.date(),
     href: z.string().url(),
+    draft: z.boolean().optional().default(false),
   }),
 });
 

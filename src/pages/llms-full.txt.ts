@@ -11,8 +11,8 @@ import { formatDate } from '~/lib/format';
 
 export async function GET(_: APIContext) {
   const pages = await getCollection('page');
-  const myths = (await getCollection('myth')).sort(byOrder);
-  const faqs = (await getCollection('faq')).sort(byOrder);
+  const myths = (await getCollection('myth')).filter(notDraft).sort(byOrder);
+  const faqs = (await getCollection('faq')).filter(notDraft).sort(byOrder);
   const updates = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
   const exclusions = (await getCollection('exclusion')).sort(byDateDesc);
 

@@ -1,0 +1,82 @@
+name: Delete entry (PR)
+
+# Manually-triggered alternative to the CMS delete button (which Decap
+# routes as a direct commit to main and branch protection blocks).
+#
+# Run from the Actions tab. The workflow validates the path, creates a
+# `cms/delete/<sanitised>` branch with the file removed, opens a PR, and
+# the existing cms-automerge workflow squash-merges it after the
+# `pr-check` status passes.
+#
+# Allowed paths: anything inside `src/content/` or `public/media/`. Any
+# other path is rejected — you can't use this workflow to nuke
+# `astro.config.mjs` or workflow files.
+
+on:
+  workflow_dispatch:
+    inputs:
+      path:
+        description: 'Path to delete, relative to repo root (e.g. src/content/update/2024-…md, public/media/foo.jpg). One file per run.'
+        required: true
+        type: string
+      reason:
+        description: 'Why? Goes in the PR body (optional but encouraged).'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  open-delete-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate path
+        env:
+          P: ${{ inputs.path }}
+        run: |
+          set -euo pipefail
+          case "$P" in
+            /*|*..*|*'*'*|*'?'*|*'['*) echo "::error::path must be repo-relative and free of .. or globs"; exit 1 ;;
+          esac
+          case "$P" in
+            src/content/*|public/media/*) ;;
+            *) echo "::error::path must start with src/content/ or public/media/"; exit 1 ;;
+          esac
+          if [ ! -f "$P" ]; then
+            echo "::error::file does not exist: $P"; exit 1
+          fi
+
+      - name: Create branch + commit deletion
+        env:
+          P: ${{ inputs.path }}
+          REASON: ${{ inputs.reason }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          set -euo pipefail
+          slug=$(printf '%s' "$P" | sed 's|/|-|g; s|\.|-|g' | tr -cd 'a-zA-Z0-9_-' | cut -c1-80)
+          branch="cms/delete/$(date -u +%Y%m%d%H%M%S)-${slug}"
+          printf 'BRANCH=%s\n' "$branch" >>"$GITHUB_ENV"
+          git config user.name  "rethink-cms-bot"
+          git config user.email "rethink-cms-bot@users.noreply.github.com"
+          git checkout -b "$branch"
+          git rm -- "$P"
+          msg=$(printf 'Delete %s\n\n%s\n\nTriggered by @%s via delete-entry.yml.' "$P" "${REASON:-}" "$ACTOR")
+          git commit -m "$msg"
+          git push -u origin "$branch"
+
+      - name: Open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          P: ${{ inputs.path }}
+          REASON: ${{ inputs.reason }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          set -euo pipefail
+          body=$(printf 'Permanently removes `%s` from the repo.\n\n**Triggered by:** @%s via the [delete-entry workflow](../actions/workflows/delete-entry.yml).\n**Reason:** %s\n\nAuto-merges via `cms-automerge.yml` once `pr-check` is green.' "$P" "$ACTOR" "${REASON:-_(none provided)_}")
+          gh pr create --base main --head "$BRANCH" --title "Delete: $P" --body "$body"

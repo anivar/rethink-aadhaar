@@ -3,10 +3,10 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import FAQItem from '~/components/FAQItem.astro';
-import { byOrder, entryHref } from '~/lib/entries';
+import { byOrder, entryHref, notDraft } from '~/lib/entries';
 import { faqPage } from '~/lib/seo';
 
-const faqs = (await getCollection('faq')).sort(byOrder);
+const faqs = (await getCollection('faq')).filter(notDraft).sort(byOrder);
 const rendered = await Promise.all(faqs.map(async (f) => ({ ...f, ...(await render(f)) })));
 
 // Build FAQPage JSON-LD from the short answer (or first 280 chars of body if no short).

@@ -3,7 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import Picture from '~/components/Picture.astro';
-import { byDateDesc, groupByYear } from '~/lib/entries';
+import { byDateDesc, groupByYear, notDraft } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
 import { renderMarkdown } from '~/lib/markdown';
 import { itemList } from '~/lib/seo';
@@ -12,7 +12,7 @@ const page = await getEntry('page', 'press-coverage');
 const data = page!.data;
 const { Content } = await render(page!);
 
-const all = (await getCollection('press')).sort(byDateDesc);
+const all = (await getCollection('press')).filter(notDraft).sort(byDateDesc);
 const byYear = groupByYear(all);
 const years = [...byYear.keys()].sort((a, b) => b - a);
 const firstYear = years.length ? years[years.length - 1] : null;

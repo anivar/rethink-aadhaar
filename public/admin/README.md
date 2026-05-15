@@ -167,7 +167,19 @@ is in the critical path.
 To **edit an existing entry**: open it in `/admin/`, change fields, save.
 Same PR flow. Slug never changes (URLs stay stable).
 
-To **delete**: click delete in `/admin/`. Same PR flow.
+To **unpublish** (recommended for retiring content): open the entry,
+toggle **Draft** to true, save. The entry is removed from the home page,
+the collection index, RSS, the sitemap, JSON-LD, and `llms.txt`, and
+its own page is no longer generated. The Markdown stays in the repo as
+an archival record. Goes through the normal CMS PR.
+
+To **permanently delete** a file (rare; for actual mistakes — orphaned
+images, accidental duplicates): the CMS delete button is intentionally
+disabled because Decap routes deletes as direct commits to `main` which
+branch protection blocks. Instead, run the
+[**Delete entry (PR)**](../../actions/workflows/delete-entry.yml)
+workflow from the Actions tab, paste the repo-relative path, click
+**Run workflow**. It opens a `cms/delete/<slug>` PR which auto-merges.
 
 ---
 

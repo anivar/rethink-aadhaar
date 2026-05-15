@@ -16,9 +16,9 @@ export async function GET(context: APIContext) {
   const site = context.site!;
   const updates = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
   const exclusions = (await getCollection('exclusion')).sort(byDateDesc);
-  const myths = (await getCollection('myth')).sort(byOrder);
-  const faqs = (await getCollection('faq')).sort(byOrder);
-  const press = (await getCollection('press')).sort(byDateDesc);
+  const myths = (await getCollection('myth')).filter(notDraft).sort(byOrder);
+  const faqs = (await getCollection('faq')).filter(notDraft).sort(byOrder);
+  const press = (await getCollection('press')).filter(notDraft).sort(byDateDesc);
   const resources = await getCollection('resource');
 
   const lines: string[] = [];

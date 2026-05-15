@@ -4,12 +4,12 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import ShareRow from '~/components/ShareRow.astro';
 import StickyAction from '~/components/StickyAction.astro';
-import { byOrder } from '~/lib/entries';
+import { byOrder, notDraft } from '~/lib/entries';
 import { breadcrumb, faqPage } from '~/lib/seo';
 import { link } from '~/lib/link';
 
 export async function getStaticPaths() {
-  const all = (await getCollection('faq')).sort(byOrder);
+  const all = (await getCollection('faq')).filter(notDraft).sort(byOrder);
   return all.map((entry, idx) => ({
     params: { slug: entry.id.replace(/\.mdx?$/, '') },
     props: {
