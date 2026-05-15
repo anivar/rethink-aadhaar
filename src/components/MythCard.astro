@@ -10,7 +10,10 @@ const { myth, fact, index, href, summary = false } = Astro.props;
 const nn = String(index).padStart(2, '0');
 ---
 <article
-  class="group relative border-t-2 border-ink py-10 md:py-14 grid grid-cols-[2.75rem_minmax(0,1fr)] sm:grid-cols-[3.25rem_minmax(0,1fr)] md:grid-cols-[6rem_minmax(0,1fr)] gap-x-4 sm:gap-x-5 md:gap-x-10 gap-y-2 first:border-t-[3px]"
+  class:list={[
+    'group relative border-t-2 border-ink py-10 md:py-14 grid grid-cols-[2.75rem_minmax(0,1fr)] sm:grid-cols-[3.25rem_minmax(0,1fr)] md:grid-cols-[6rem_minmax(0,1fr)] gap-x-4 sm:gap-x-5 md:gap-x-10 gap-y-2 first:border-t-[3px]',
+    href && 'myth-card',
+  ]}
   id={`myth-${index}`}
 >
   <div class="row-span-2 md:row-span-3 md:pt-2">
@@ -20,7 +23,7 @@ const nn = String(index).padStart(2, '0');
   <div>
     <p class="caps text-accent text-xs md:text-sm mb-2 md:mb-3">Myth</p>
     <p class="font-display font-bold text-xl sm:text-2xl md:text-3xl text-balance leading-snug">
-      {href ? <a href={href} class="hover:text-accent transition-colors">{myth}</a> : myth}
+      {href ? <a href={href} class="myth-card-link group-hover:text-accent transition-colors">{myth}</a> : myth}
     </p>
   </div>
 
@@ -39,8 +42,25 @@ const nn = String(index).padStart(2, '0');
     </div>
     {href && (
       <p class="mt-6">
-        <a class="caps text-xs text-accent hover:underline" href={href}>Read more →</a>
+        <a class="myth-card-cta caps text-xs text-accent hover:underline" href={href}>Read more →</a>
       </p>
     )}
   </div>
 </article>
+
+<style is:global>
+  /* Stretched-link pattern: the title anchor's ::before covers the whole
+     card, so a click anywhere navigates to the detail page. CTA and any
+     inline body links sit above the overlay so they stay independently
+     clickable. Cursor follows the anchor naturally — no extra styling. */
+  .myth-card-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .myth-card a:not(.myth-card-link) {
+    position: relative;
+    z-index: 2;
+  }
+</style>
