@@ -4,9 +4,9 @@ This site uses [Sveltia CMS](https://github.com/sveltia/sveltia-cms), a
 modern static-CMS that edits Markdown files in this Git repository via the
 GitHub API.
 
-- **For editors:** open <https://no2uid.github.io/rethink-aadhaar/admin/>,
-  click **Sign in with GitHub**, write content. Every save creates a pull
-  request — nothing goes live until the PR is reviewed and merged.
+- **For editors:** open <https://rethinkaadhaar.in/admin/>, click **Sign in
+  with GitHub**, write content. Every save creates a pull request — nothing
+  goes live until the PR is reviewed and merged.
 - **For admins:** the rest of this document.
 
 ---
@@ -38,8 +38,8 @@ worker's environment — never in the repo.
        │     │   1. "Sign in with GitHub"  │
        │     ▼                             │
        │  Auth Proxy Worker  ────OAuth────►│
-       │  (Cloudflare /                    │
-       │   Sveltia hosted)                 │
+       │  (No2UID/rethink-cms-auth         │
+       │   on Cloudflare Workers)          │
        │     │                             │
        │     │   2. access_token           │
        │     ◄──────────                   │
@@ -63,94 +63,60 @@ behalf of the CMS and hands the resulting access token back.
 
 ---
 
-## Auth options
+## Auth: OAuth via the campaign's own auth proxy
 
-### Option A — Personal Access Token (no backend) ★ default
+The site uses a custom Cloudflare Worker as its OAuth proxy:
 
-`config.yml` ships with no `backend.base_url` set, which switches Sveltia
-into PAT (Personal Access Token) mode. **No OAuth App, no callback URL,
-no auth proxy, no Cloudflare Worker.**
+- **Source:** <https://github.com/No2UID/rethink-cms-auth>
+- **Endpoint:** `https://rethink-cms-auth.no2uid.workers.dev`
+- **Hosting:** Rethink Aadhaar's Cloudflare account; deploys via GitHub
+  Actions on push to that worker repo's `main`. No editor needs `wrangler
+  login` on their laptop.
 
-**Setup per editor (~2 minutes):**
+The worker is a 270-line, single-file proxy — not the upstream
+`sveltia-cms-auth`. It adds two hard gates **before** the access token
+ever reaches the browser:
 
-1. Editor visits <https://no2uid.github.io/rethink-aadhaar/admin/>.
-2. Clicks **Sign In with Token**.
-3. Follows the GitHub link in the prompt — it lands on the fine-grained
-   PAT page with the required scopes pre-selected (Contents + Pull
-   Requests on this repo only).
-4. Generates the token, copies it, pastes it into Sveltia's dialog.
-5. Token is stored in the editor's browser `localStorage`; subsequent
-   visits sign in automatically until the token expires.
+1. The signed-in GitHub `login` must be in the worker's `ALLOWED_USERS`
+   allowlist (`No2UID`, `anivar`, `srikanthlogic`).
+2. That user's token must have `permissions.push === true` on
+   `No2UID/rethink-aadhaar`.
 
-**Trade-offs:**
-- ✅ Zero infrastructure. No third-party uptime dependency.
-- ✅ Each editor's token is independently revocable at
-  <https://github.com/settings/tokens>.
-- ⚠️ Editors manage their own token rotation (90-day default expiry).
-- ⚠️ Token sits in browser localStorage — a malicious browser extension
-  could exfiltrate it. Editors should use a profile they trust for CMS
-  work; revoke immediately if a browser is compromised.
+A non-collaborator who completes the OAuth dance lands on an error page
+and never receives a token. See the worker repo's `README.md` for the
+full security model.
 
-### Option B — OAuth via self-hosted auth proxy (multi-editor convenience)
+### Adding or removing an editor
 
-> **Note:** the previously-recommended hosted proxy at `auth.sveltia.dev`
-> was decommissioned. The domain now serves an unrelated site. Don't
-> point any new OAuth Apps at that callback URL.
+1. Add/remove the GitHub username on the
+   [collaborators page](https://github.com/No2UID/rethink-aadhaar/settings/access).
+2. In `No2UID/rethink-cms-auth`, edit `wrangler.toml` →
+   `ALLOWED_USERS = "No2UID,anivar,srikanthlogic"`.
+3. Push to that repo's `main` — GitHub Actions redeploys the worker
+   automatically.
 
-You can run Sveltia's auth proxy yourself on Cloudflare Workers, Vercel,
-Netlify Functions, or Deno Deploy — any platform that lets you deploy a
-single serverless function with two secrets (`GITHUB_CLIENT_ID`,
-`GITHUB_CLIENT_SECRET`). Once you have the worker URL, register a
-GitHub OAuth App at <https://github.com/settings/applications/new> with:
+### Rotating the OAuth client_secret
 
-- Homepage URL: `https://no2uid.github.io/rethink-aadhaar/`
-- Authorization callback URL: `https://YOUR-PROXY-URL/callback`
+1. <https://github.com/settings/developers> (as `No2UID`) → the
+   "Rethink Aadhaar CMS" app → **Generate a new client secret**.
+2. In `No2UID/rethink-cms-auth` → Settings → Secrets and variables →
+   Actions, replace `WORKER_OAUTH_CLIENT_SECRET`.
+3. Run the **"Sync worker secrets"** Actions workflow once.
+4. Revoke the old secret on GitHub.
 
-Then add to `config.yml`:
+Both the GitHub OAuth App and the Cloudflare Worker live in accounts
+owned by Rethink Aadhaar — no individual's GitHub or Cloudflare account
+is in the critical path.
 
-```yaml
-backend:
-  base_url: https://your-proxy.example/
-  auth_scope: public_repo
-```
+### Fallback: per-editor PAT mode
 
-Editors then sign in with **Sign in with GitHub** instead of pasting a
-PAT. Only the proxy holds the `client_secret` — never the repo.
-
-#### Worked example: Cloudflare Workers
-
-Run the same proxy on Cloudflare Workers' free tier. Full control, no
-third-party dependency.
-
-**Setup (~30 minutes):**
-
-1. Install the [Cloudflare wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/):
-   `npm install -g wrangler && wrangler login`
-2. Clone Sveltia's auth proxy:
-   ```sh
-   git clone https://github.com/sveltia/sveltia-cms-auth.git
-   cd sveltia-cms-auth
-   ```
-3. **Register a GitHub OAuth App** at
-   <https://github.com/settings/applications/new>:
-   - Homepage URL: `https://no2uid.github.io/rethink-aadhaar/`
-   - Authorization callback URL: `https://YOUR-WORKER.YOUR-CF-SUBDOMAIN.workers.dev/callback`
-     (you'll know the worker URL after step 5).
-4. **Set the secrets** (these live ONLY in Cloudflare, never in the repo):
-   ```sh
-   wrangler secret put GITHUB_CLIENT_ID
-   wrangler secret put GITHUB_CLIENT_SECRET
-   ```
-5. **Deploy**:
-   ```sh
-   wrangler deploy
-   ```
-   You'll get a worker URL like `https://sveltia-cms-auth.<you>.workers.dev`.
-6. **Update the GitHub OAuth App's callback URL** to match the worker URL +
-   `/callback`.
-7. **Edit `public/admin/config.yml`** in this repo, change `base_url:` to
-   your worker URL, open a PR, merge.
-8. Visit `/admin/`, sign in. Done.
+If the worker is ever unavailable, you can temporarily switch back to
+PAT mode by removing `base_url` and `auth_scope` from `backend:` in
+`config.yml`. Editors then click **Sign In with Token** on `/admin/`,
+generate a fine-grained PAT (Contents + Pull Requests on this repo
+only), and paste it. Token sits in browser localStorage; revoke at
+<https://github.com/settings/tokens>. This is documented as a fallback,
+not the steady state.
 
 ---
 
@@ -165,12 +131,10 @@ third-party dependency.
   `gh api repos/No2UID/rethink-aadhaar/branches/main/protection`. If it
   returns 404, see CONTRIBUTING.md for the recommended `gh api -X PUT`
   command.
-- **Minimum token / OAuth scope.** PAT mode prompts for a fine-grained
-  token scoped to *this repo only* (Contents + Pull Requests). OAuth
-  mode (Option B) uses `auth_scope: public_repo` — read/write to public
-  repos only. Either way, editors revoke at
-  <https://github.com/settings/tokens> (PAT) or
-  <https://github.com/settings/applications> (OAuth).
+- **Minimum OAuth scope.** The worker requests `public_repo` — read/write
+  to public repos only, no access to private repos or org admin. Editors
+  revoke at <https://github.com/settings/applications> (Authorized OAuth
+  Apps → Rethink Aadhaar CMS).
 - **Editorial drafts are public.** `chore/cms-edit-*` branches are
   pushed to a public repo. Do not paste private info into in-flight drafts.
 - **Image uploads are immediately public** the moment the PR merges.

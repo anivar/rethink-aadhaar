@@ -7,27 +7,17 @@
 #   - The repo and branch are public information.
 #   - `backend.base_url` is the public address of the OAuth proxy worker.
 #   - The OAuth client_id / client_secret live ONLY in that worker's env.
-#
-# The CMS at /admin/ does nothing useful until base_url is set to a working
-# OAuth proxy and a GitHub OAuth App is registered against it.
 
 backend:
   name: github
   repo: No2UID/rethink-aadhaar
   branch: main
-  # No `base_url` / `auth_scope` set on purpose: that triggers Sveltia's
-  # PAT (Personal Access Token) sign-in flow — the editor clicks
-  # "Sign In with Token" on /admin/, follows the GitHub link with the
-  # required scopes pre-selected, generates a fine-grained PAT, pastes it.
-  # The token is stored in browser localStorage, never reaches the repo.
-  # No backend, no OAuth App, no callback URL, no Cloudflare Worker.
-  #
-  # When you're ready to upgrade to OAuth (avoids per-editor token
-  # management), self-host the Sveltia CMS Authenticator on Cloudflare
-  # Workers / Vercel / Netlify Functions and re-add:
-  #   base_url: https://your-proxy.example/
-  #   auth_scope: public_repo
-  # See README.md → "Auth proxy options" for setup.
+  # OAuth proxy worker — source: https://github.com/No2UID/rethink-cms-auth.
+  # Runs on the campaign's Cloudflare account; secrets in GitHub Actions.
+  # Editors are gated by an explicit allowlist + repo push permission
+  # before any access token reaches the browser. No PATs to rotate.
+  base_url: https://rethink-cms-auth.no2uid.workers.dev
+  auth_scope: public_repo
 
 # Every CMS save creates a PR against `main`, never a direct commit.
 # Merging the PR triggers .github/workflows/deploy.yml → live in ~2 min.
