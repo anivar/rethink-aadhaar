@@ -1,0 +1,44 @@
+# Dependabot — keep package dependencies and pinned action SHAs current.
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates
+#
+# The repo's CI gates (pr-check.yml) run on every Dependabot PR, so the
+# build/typecheck/SEO check filter out anything that doesn't actually
+# work. Minor + patch bumps are grouped per ecosystem to reduce PR
+# noise; majors come through as individual PRs so each can be reviewed.
+
+version: 2
+updates:
+  # JavaScript dependencies (package.json + bun.lock).
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    groups:
+      production:
+        dependency-type: "production"
+        update-types: ["minor", "patch"]
+      development:
+        dependency-type: "development"
+        update-types: ["minor", "patch"]
+
+  # Workflow files — keeps `uses: org/action@<sha>` pins moving with
+  # upstream tags so we get security fixes without un-pinning.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    groups:
+      actions:
+        update-types: ["minor", "patch"]
