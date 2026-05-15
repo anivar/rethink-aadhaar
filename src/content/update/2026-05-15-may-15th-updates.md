@@ -5,7 +5,6 @@ excerpt: |+
   Aadhaar is like a coconut in the hands of a monkey.
 
 hero: /media/1489927205338-JHMXRT6FZQHM03F776JX-image-asset.png
-draft: false
 ---
 Many years ago someone sent [us](https://x.com/no2uid) this message on rethinkaadhaar.in. So many years have passed, and it becomes truer every year. 
 
