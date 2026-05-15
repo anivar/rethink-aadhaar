@@ -1,0 +1,36 @@
+name: Block external PRs
+
+# Public can file issues but not PRs.
+#
+# PRs are accepted only from:
+#   - branches inside this repo (collaborators with push access)
+#   - forks owned by named collaborators
+#
+# Anything else gets a polite "please open an issue" comment + close.
+#
+# Uses pull_request_target so the workflow runs in base-repo context with
+# a writable token (a `pull_request` event from a fork only gets a
+# read-only token). We never check out the PR's code here, so the usual
+# pull_request_target injection risk does not apply.
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.head.repo.full_name != github.repository
+      && !contains(fromJSON('["No2UID","anivar","srikanthlogic"]'), github.event.pull_request.head.repo.owner.login)
+    steps:
+      - env:
+          PR: ${{ github.event.pull_request.html_url }}
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment "$PR" --body "Thanks for your interest! This repository accepts contributions via [issues](https://github.com/${REPO}/issues/new), not pull requests from external forks. Please file an issue describing the change you'd like to see — we'll triage and act on it."
+          gh pr close "$PR"
