@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPathsOptions, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import HeroTitle from '~/components/HeroTitle.astro';
+import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
+import { itemList } from '~/lib/seo';
+import { link } from '~/lib/link';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  // Match upstream Squarespace's ~20-per-page rhythm. Inlined because
+  // module-level constants aren't available inside getStaticPaths.
+  const posts = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
+  return paginate(posts, { pageSize: 20 });
+}
+
+interface Props {
+  page: Page<CollectionEntry<'update'>>;
+}
+const { page } = Astro.props as Props;
+
+const description =
+  'Press releases, statements, news commentary and analysis from the Rethink Aadhaar campaign.';
+
+function firstImage(body: string | undefined): string | undefined {
+  if (!body) return undefined;
+  const m = body.match(/<img\s+[^>]*src="([^"]+)"/i);
+  return m ? m[1] : undefined;
+}
+
+function autoExcerpt(body: string | undefined): string | undefined {
+  if (!body) return undefined;
+  const text = body
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!text) return undefined;
+  return text.length > 280 ? text.slice(0, 280).trimEnd() + '…' : text;
+}
+
+// Upstream Squarespace renders dates as "DD / MM / YYYY".
+function ddmmyyyy(d: Date): string {
+  const dd = String(d.getUTCDate()).padStart(2, '0');
+  const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const yy = d.getUTCFullYear();
+  return `${dd} / ${mm} / ${yy}`;
+}
+
+const pageTitle = page.currentPage === 1 ? 'Updates' : `Updates — page ${page.currentPage}`;
+
+const jsonLd = itemList({
+  name: pageTitle,
+  url: page.url.current,
+  items: page.data.map((p) => ({
+    name: p.data.title,
+    url: entryHref('update', p),
+    description: p.data.excerpt,
+  })),
+});
+---
+
+<BaseLayout title={pageTitle} description={description} jsonLd={jsonLd}>
+  <HeroTitle eyebrow="Statements, press releases, analysis">Updates</HeroTitle>
+
+  <p class="container-prose mt-6 text-lg md:text-xl text-ink/80 font-body text-pretty fade-up">
+    Press releases, statements, news commentary and analysis from the campaign archive — newest first. <a class="text-accent underline" href={link('/rss.xml')}>Subscribe via RSS</a>.
+  </p>
+
+  <p class="container-prose mt-8 caps text-xs text-ink/55 tracking-[0.18em] fade-up delay-1">
+    Page {page.currentPage} of {page.lastPage} · {page.total} entries
+  </p>
+
+  <div class="container-prose mt-10 md:mt-14">
+    {page.data.map((p) => {
+      const img = p.data.hero ?? firstImage(p.body);
+      const detail = entryHref('update', p);
+      const excerpt = p.data.excerpt ?? autoExcerpt(p.body);
+      return (
+        <article class="border-t border-ink/15 first:border-t-2 first:border-ink py-10 md:py-14 grid md:grid-cols-[40%_minmax(0,1fr)] gap-6 md:gap-10 fade-up">
+          {img ? (
+            <a href={detail} class="block overflow-hidden bg-ink/5 group">
+              <img
+                src={link(img)}
+                alt=""
+                loading="lazy"
+                class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              />
+            </a>
+          ) : (
+            <div class="hidden md:block"></div>
+          )}
+
+          <div>
+            <h2 class="font-display font-extrabold uppercase text-2xl md:text-3xl tracking-tight leading-tight text-balance">
+              <a href={detail} class="hover:text-accent transition-colors">{p.data.title}</a>
+            </h2>
+
+            <p class="caps text-xs text-ink/55 mt-3 mb-5 tracking-[0.12em]">
+              <a href={detail} class="hover:text-accent">{ddmmyyyy(p.data.date)}</a>
+            </p>
+
+            {excerpt && (
+              <p class="font-body text-base md:text-lg text-ink/85 leading-relaxed text-pretty">
+                {excerpt}
+              </p>
+            )}
+
+            <p class="mt-6">
+              <a class="caps text-xs text-accent hover:underline tracking-[0.12em]" href={detail}>
+                Read more →
+              </a>
+            </p>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <nav class="container-prose mt-16 mb-24 flex items-center justify-between gap-4 caps text-xs tracking-[0.12em]" aria-label="Pagination">
+    {page.url.prev ? (
+      <a href={page.url.prev} class="text-accent hover:underline" rel="prev">← Newer</a>
+    ) : <span class="text-ink/30">← Newer</span>}
+
+    <span class="text-ink/55">Page {page.currentPage} / {page.lastPage}</span>
+
+    {page.url.next ? (
+      <a href={page.url.next} class="text-accent hover:underline" rel="next">Older →</a>
+    ) : <span class="text-ink/30">Older →</span>}
+  </nav>
+</BaseLayout>

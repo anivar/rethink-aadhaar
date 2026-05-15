@@ -4,8 +4,9 @@ interface Props {
   fact?: string;
   index: number;
   href?: string;
+  summary?: boolean;
 }
-const { myth, fact, index, href } = Astro.props;
+const { myth, fact, index, href, summary = false } = Astro.props;
 const nn = String(index).padStart(2, '0');
 ---
 <article
@@ -33,12 +34,12 @@ const nn = String(index).padStart(2, '0');
   )}
 
   <div class="col-start-2 mt-6 md:mt-8">
-    <div class="prose font-body text-pretty">
+    <div class:list={['prose font-body text-pretty', summary && 'myth-summary']}>
       <slot />
     </div>
     {href && (
       <p class="mt-6">
-        <a class="caps text-xs text-accent hover:underline" href={href}>Read myth #{nn} →</a>
+        <a class="caps text-xs text-accent hover:underline" href={href}>Read more →</a>
       </p>
     )}
   </div>

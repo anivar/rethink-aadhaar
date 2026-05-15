@@ -67,9 +67,18 @@ const jsonLd = [
         fact={m.data.fact}
         index={i + 1}
         href={link(`/myths/${mythSlug(m.data.myth)}/`)}
+        summary
       >
         <m.Content />
       </MythCard>
     ))}
   </section>
 </BaseLayout>
+
+<style is:global>
+  /* Summary mode on /myths listing: show only the first paragraph from the
+     source body (the natural break point), hide everything after it. The
+     full content lives on /myths/<slug>/. Targets the prose container's
+     direct children — first child stays, all subsequent siblings hide. */
+  .myth-summary > * + * { display: none; }
+</style>

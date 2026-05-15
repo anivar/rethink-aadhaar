@@ -48,7 +48,10 @@ const jsonLd = breadcrumb([
      sibling-selector overrides that broke the v1 design. */
   .actions-list {
     counter-reset: action;
-    max-width: none;
+    /* Override .prose's narrower max-width (65ch) without nuking the
+       container-prose 56rem cap — `none` lets the article spill the
+       full viewport width and breaks alignment. */
+    max-width: var(--max-width-content);
   }
   .actions-list > p:first-of-type {
     font-size: 1.125rem;
