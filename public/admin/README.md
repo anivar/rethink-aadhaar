@@ -19,7 +19,7 @@ to the underlying engine (version pin, upstream docs, etc.).
 | File | Purpose | Contains secrets? |
 |---|---|---|
 | `index.html`  | One-line CMS shell, loads Decap from jsDelivr CDN.   | No |
-| `config.yml`  | Collection schema. Mirrors `src/content/config.ts`.  | No |
+| `config.yml`  | Collection schema. Mirrors `src/content.config.ts`. | No |
 | `README.md`   | This file.                                           | No |
 
 **Nothing in `/public/admin/` is a secret.** The only secret in the whole

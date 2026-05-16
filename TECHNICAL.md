@@ -74,7 +74,7 @@ The `sync.yml` workflow runs `bun run sync -- --write` weekly and opens a PR tit
 
 ### By hand
 
-Drop a Markdown file into the right collection directory. Front-matter is validated by `src/content/config.ts` at build — wrong shape fails the build.
+Drop a Markdown file into the right collection directory. Front-matter is validated by `src/content.config.ts` at build — wrong shape fails the build.
 
 ```md
 ---
@@ -85,7 +85,7 @@ order: 6
 Optional Markdown body.
 ```
 
-See existing files in each collection for the exact field shape, or read `src/content/config.ts`.
+See existing files in each collection for the exact field shape, or read `src/content.config.ts`.
 
 ## SEO architecture
 

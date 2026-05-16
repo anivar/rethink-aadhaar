@@ -88,7 +88,7 @@ it in the upstream-sync report.
 
 ## Frontmatter reference
 
-Match `src/content/config.ts` (Zod) exactly — `astro check` will reject
+Match `src/content.config.ts` (Zod) exactly — `astro check` will reject
 mismatches. Quick reference:
 
 | Collection  | Required fields                                         | Optional fields |
