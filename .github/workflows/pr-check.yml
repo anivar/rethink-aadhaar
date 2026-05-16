@@ -11,6 +11,14 @@ on:
 permissions:
   contents: read
 
+# Iterative CMS edits push new commits to the same PR repeatedly. Cancel
+# a still-running check the moment a newer commit supersedes it — only
+# the latest commit's `check` gates the merge anyway, so the in-flight
+# build is wasted minutes. Scoped per-PR; other PRs are unaffected.
+concurrency:
+  group: pr-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest

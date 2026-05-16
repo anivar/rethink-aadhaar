@@ -24,6 +24,34 @@ inputs:
 runs:
   using: composite
   steps:
+    # Astro's content layer keeps a per-entry digest store in .astro/.
+    # Restoring it lets `astro build` re-load only changed/added/removed
+    # entries instead of all ~277. Key on content + config so any change
+    # rolls the key; restore-keys still hands back the previous warm store
+    # to update incrementally. astro check + the SEO/GEO gate below catch
+    # any cache-staleness regression before merge.
+    - uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # v4.2.4
+      with:
+        path: .astro
+        key: astro-${{ runner.os }}-${{ hashFiles('src/content/**', 'src/content.config.ts', 'astro.config.mjs') }}
+        restore-keys: |
+          astro-${{ runner.os }}-
+    # The single biggest CI cost: scripts/optimize-images.ts regenerates a
+    # .webp (and .avif for heroes) for ~281 sources with sharp on EVERY
+    # run — the derivatives are gitignored, never committed. Cache them
+    # keyed on the exact content of all source images + the script/options.
+    # NO restore-keys on purpose: a partial restore could hand back a
+    # stale derivative for an image changed in place (the script's skip
+    # check is mtime-based, and cache restore lands newer than checkout).
+    # Exact-key only → unchanged images = full skip (~0s, the normal
+    # editor workflow); any image add/change = one clean full regen, then
+    # re-cached. Correct by construction, no stale output.
+    - uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # v4.2.4
+      with:
+        path: |
+          public/media/**/*.webp
+          public/media/**/*.avif
+        key: media-${{ runner.os }}-${{ hashFiles('public/media/**/*.jpg', 'public/media/**/*.jpeg', 'public/media/**/*.png', 'scripts/optimize-images.ts') }}
     - name: Build + SEO/GEO gate
       shell: bash
       # Inputs arrive via env (never interpolated into the script body —

@@ -19,5 +19,18 @@ runs:
     - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
       with:
         node-version: '24'
+    # Cache the Bun global download cache + resolved node_modules, keyed on
+    # the lockfile. Exact-hash hit → install is near-instant; a restore-key
+    # partial hit still warms most of it. `--frozen-lockfile` guarantees the
+    # restored tree is reconciled to the lockfile, so a stale cache cannot
+    # drift the dependency set.
+    - uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809  # v4.2.4
+      with:
+        path: |
+          ~/.bun/install/cache
+          node_modules
+        key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+        restore-keys: |
+          bun-${{ runner.os }}-
     - run: bun install --frozen-lockfile
       shell: bash
