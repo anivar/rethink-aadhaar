@@ -17,18 +17,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      # Pinned to commit SHA — tag in comment is the human-readable version.
+      # Checkout must precede the local composite action: the runner only
+      # resolves ./.github/actions/* once the repo is on disk. Pinned to
+      # commit SHA — tag in comment is the human-readable version.
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6  # v2.2.0
-        with:
-          bun-version: latest
-      # Astro itself runs under Node (its `#!/usr/bin/env node` shebang is much
-      # faster than forcing the Bun runtime via `bun --bun`). Bun handles
-      # install + the `bun scripts/*.ts` steps in the build script.
-      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
-        with:
-          node-version: '24'
-      - run: bun install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - name: Lint + format check
         run: bun run check
       - name: Build
