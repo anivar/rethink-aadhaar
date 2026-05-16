@@ -97,6 +97,7 @@ collections:
       - { name: summary,    label: Summary,         widget: text,     required: false }
       - { name: shareImage, label: Share image,     widget: image,    required: false, choose_url: false }
       - { name: sourceUrl,  label: Original URL,    widget: string,   required: false, pattern: ['^https?://', 'Must be a full http(s) URL'] }
+      - { name: draft,      label: Draft,           widget: boolean,  default: false, required: false, hint: 'Leave OFF to publish. Toggle ON to keep as a draft (excluded from the testimonials page, sitemap, JSON-LD, llms.txt — entry page not generated) or to UNPUBLISH a previously-live story.' }
       - { name: body,       label: Body,            widget: markdown }
 
   # ---- PRESS COVERAGE (link-only entries; no body) --------------------

@@ -34,6 +34,7 @@ const exclusion = defineCollection({
     summary: z.string().optional(),
     shareImage: z.string().optional(),
     sourceUrl: z.string().url().optional(),
+    draft: z.boolean().optional().default(false),
   }),
 });
 

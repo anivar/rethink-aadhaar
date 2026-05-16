@@ -4,13 +4,13 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
 import ShareRow from '~/components/ShareRow.astro';
 import StickyAction from '~/components/StickyAction.astro';
-import { entryHref } from '~/lib/entries';
+import { entryHref, notDraft } from '~/lib/entries';
 import { formatDate } from '~/lib/format';
 import { article, breadcrumb, MENTIONS, place } from '~/lib/seo';
 import { link } from '~/lib/link';
 
 export async function getStaticPaths() {
-  const items = await getCollection('exclusion');
+  const items = (await getCollection('exclusion')).filter(notDraft);
   return items.map((entry) => ({
     params: { slug: entry.id.replace(/\.md$/, '') },
     props: { entry },

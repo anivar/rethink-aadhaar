@@ -14,7 +14,7 @@ export async function GET(_: APIContext) {
   const myths = (await getCollection('myth')).filter(notDraft).sort(byOrder);
   const faqs = (await getCollection('faq')).filter(notDraft).sort(byOrder);
   const updates = (await getCollection('update')).filter(notDraft).sort(byDateDesc);
-  const exclusions = (await getCollection('exclusion')).sort(byDateDesc);
+  const exclusions = (await getCollection('exclusion')).filter(notDraft).sort(byDateDesc);
 
   const out: string[] = [];
   out.push('# Rethink Aadhaar — full content');

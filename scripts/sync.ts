@@ -123,6 +123,7 @@ async function syncCategory(catKey: CategoryKey) {
         if (desc) fm.push(`summary: ${JSON.stringify(desc.slice(0, 320))}`);
         if (image) fm.push(`shareImage: ${JSON.stringify(image)}`);
         fm.push(`sourceUrl: ${JSON.stringify(sourceUrl)}`);
+        fm.push('draft: true');
       }
       fm.push('---', '');
       fm.push(desc || `<!-- Migrated stub. Read the original at ${sourceUrl} -->`);

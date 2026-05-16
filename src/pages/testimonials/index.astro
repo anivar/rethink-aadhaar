@@ -2,11 +2,11 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import HeroTitle from '~/components/HeroTitle.astro';
-import { byDateDesc, entryHref } from '~/lib/entries';
+import { byDateDesc, entryHref, notDraft } from '~/lib/entries';
 import { itemList } from '~/lib/seo';
 import { formatDate } from '~/lib/format';
 
-const stories = (await getCollection('exclusion')).sort(byDateDesc);
+const stories = (await getCollection('exclusion')).filter(notDraft).sort(byDateDesc);
 const description = 'Stories from the ground: what Aadhaar exclusion looks like in practice.';
 
 // Render each entry's full body inline so videos and prose show as a feed,

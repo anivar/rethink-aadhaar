@@ -38,5 +38,5 @@ jobs:
 
             New entries land as **drafts** under `src/content/update/` and
             `src/content/exclusion/`. Review each, edit the body, then flip
-            `draft: true` → `draft: false` on update entries to publish.
+            `draft: true` → `draft: false` (or remove the line) to publish.
           delete-branch: true
