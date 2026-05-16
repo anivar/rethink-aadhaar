@@ -47,7 +47,7 @@ logo_url: /brand/logo-mark.png
 
 # ----------------------------------------------------------------------
 # COLLECTIONS
-# Field names + types must match src/content/config.ts (Zod) exactly.
+# Field names + types must match src/content.config.ts (Zod) exactly.
 # Astro's astro check fails the CI build if anything mismatches —
 # belt-and-braces validation.
 # ----------------------------------------------------------------------
@@ -62,7 +62,7 @@ collections:
     format: yaml-frontmatter
     create: true
     delete: false
-    slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
+    slug: '{{fields.date | date(''YYYY-MM-DD'')}}-{{slug}}'
     summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [date, title]
     view_filters:
@@ -87,9 +87,13 @@ collections:
     format: yaml-frontmatter
     create: true
     delete: false
-    slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
+    slug: '{{fields.date | date(''YYYY-MM-DD'')}}-{{slug}}'
     summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [date, title, location]
+    view_filters:
+      - label: Drafts only
+        field: draft
+        pattern: true
     fields:
       - { name: title,      label: Title,           widget: string }
       - { name: date,       label: Date,            widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
@@ -109,9 +113,13 @@ collections:
     format: yaml-frontmatter
     create: true
     delete: false
-    slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
+    slug: '{{fields.date | date(''YYYY-MM-DD'')}}-{{slug}}'
     summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{publication}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [date, publication, title]
+    view_filters:
+      - label: Drafts only
+        field: draft
+        pattern: true
     fields:
       - { name: title,       label: Headline,       widget: string }
       - { name: publication, label: Publication,    widget: string,  hint: 'e.g. "The Wire", "Scroll", "The Hindu".' }
@@ -130,9 +138,14 @@ collections:
     format: yaml-frontmatter
     create: true
     delete: false
-    slug: '{{order | int}}-{{slug}}'
+    identifier_field: myth
+    slug: '{{order}}-{{slug}}'
     summary: 'Myth {{order}} — {{myth}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [order]
+    view_filters:
+      - label: Drafts only
+        field: draft
+        pattern: true
     fields:
       - { name: order, label: Order,           widget: number, value_type: int, min: 1, hint: 'Sequence position on /myths.' }
       - { name: myth,  label: Myth (claim),    widget: string }
@@ -149,9 +162,14 @@ collections:
     format: yaml-frontmatter
     create: true
     delete: false
-    slug: '{{order | int}}-{{slug}}'
+    identifier_field: question
+    slug: '{{slug}}'
     summary: 'FAQ {{order}} — {{question}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [order]
+    view_filters:
+      - label: Drafts only
+        field: draft
+        pattern: true
     fields:
       - { name: order,    label: Order,         widget: number, value_type: int, min: 1 }
       - { name: question, label: Question,      widget: string }
