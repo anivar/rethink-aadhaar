@@ -7,9 +7,11 @@ refer to it everywhere user-facing as the **Rethink Aadhaar CMS**; the
 rest of this document calls out "Decap" only when something is specific
 to the underlying engine (version pin, upstream docs, etc.).
 
-- **For editors:** open <https://rethinkaadhaar.in/admin/>, click **Sign in
-  with GitHub**, write content. Every save creates a pull request — nothing
-  goes live until the PR is reviewed and merged.
+- **For editors:** see the one-screen
+  [**editor runbook** (`COLLABORATOR.md`)](../../COLLABORATOR.md) — sign in,
+  write, Save, then Publish. There is no human review step: publishing
+  runs an automated check and the page is live in ~2 minutes. Editors
+  never deal with SEO or GEO — the build generates all of that.
 - **For admins:** the rest of this document.
 
 ---
