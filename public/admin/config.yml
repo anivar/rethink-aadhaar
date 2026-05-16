@@ -148,7 +148,7 @@ collections:
         pattern: true
     fields:
       - { name: order, label: Order,           widget: number, value_type: int, min: 1, hint: 'Sequence position on /myths.' }
-      - { name: myth,  label: Myth (claim),    widget: string }
+      - { name: myth,  label: Myth (claim),    widget: string, hint: 'The public /myths/ URL is derived from this text. Re-wording an existing myth changes its URL — the old link will 404. Fix typos freely on new myths; avoid rewording long-published ones.' }
       - { name: fact,  label: Fact (rebuttal), widget: string, required: false }
       - { name: draft, label: Draft,           widget: boolean, default: false, required: false, hint: 'Drafts are excluded from /myths, sitemap, ItemList + ClaimReview JSON-LD, and llms.txt — and the entry page itself is not generated. Toggle on to UNPUBLISH.' }
       - { name: body,  label: Long-form body,  widget: markdown }
@@ -191,7 +191,7 @@ collections:
     fields:
       - { name: title,       label: Title,       widget: string }
       - { name: section,     label: Section,     widget: select, options: ['Primers', 'Government documents', 'Hunger deaths 2015–18', 'Case documents', 'Templates', 'Articles archive', 'Posters for online and print', 'Leaflets and advisories', '2017 Day of Action posters', 'Protest and event posters'] }
-      - { name: href,        label: URL or download path, widget: string, hint: 'Full https URL for documents, or "/media/filename.png" for poster downloads.' }
+      - { name: href,        label: URL or download path, widget: string, pattern: ['^(/|https?://)', 'Full http(s) URL for documents, or a /media/… path for downloads'], hint: 'Full https URL for documents, or "/media/filename.png" for poster downloads.' }
       - { name: image,       label: Poster image, widget: image,  required: false, choose_url: false, hint: 'Upload here for poster sections; leave blank for document/link entries.' }
       - { name: description, label: Description, widget: text,   required: false }
       - { name: order,       label: Order,       widget: number, value_type: int, default: 0, hint: 'Lower numbers appear first in their section.' }
