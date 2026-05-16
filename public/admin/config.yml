@@ -63,7 +63,7 @@ collections:
     create: true
     delete: false
     slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
-    summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{title}}{{#draft}} (DRAFT){{/draft}}'
+    summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [date, title]
     view_filters:
       - label: Drafts only
@@ -88,7 +88,7 @@ collections:
     create: true
     delete: false
     slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
-    summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{title}}'
+    summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [date, title, location]
     fields:
       - { name: title,      label: Title,           widget: string }
@@ -110,7 +110,7 @@ collections:
     create: true
     delete: false
     slug: '{{fields.date | date(\"YYYY-MM-DD\")}}-{{slug}}'
-    summary: '{{fields.date | date(\"YYYY-MM-DD\")}} — {{publication}} — {{title}}'
+    summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{publication}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [date, publication, title]
     fields:
       - { name: title,       label: Headline,       widget: string }
@@ -131,7 +131,7 @@ collections:
     create: true
     delete: false
     slug: '{{order | int}}-{{slug}}'
-    summary: 'Myth {{order}} — {{myth}}'
+    summary: 'Myth {{order}} — {{myth}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [order]
     fields:
       - { name: order, label: Order,           widget: number, value_type: int, min: 1, hint: 'Sequence position on /myths.' }
@@ -150,7 +150,7 @@ collections:
     create: true
     delete: false
     slug: '{{order | int}}-{{slug}}'
-    summary: 'FAQ {{order}} — {{question}}'
+    summary: 'FAQ {{order}} — {{question}}{{draft | ternary('' (DRAFT)'','''')}}'
     sortable_fields: [order]
     fields:
       - { name: order,    label: Order,         widget: number, value_type: int, min: 1 }
