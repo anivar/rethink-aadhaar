@@ -1,0 +1,39 @@
+name: Build and verify
+description: >-
+  The single source of truth for how the site is built and what
+  "shippable" means. Runs `bun run build`, whose final step is the
+  post-build SEO/GEO gate (`bun scripts/check-seo.ts` — sitemap, llms.txt,
+  canonical, OG, JSON-LD). Assumes the toolchain is already installed; run
+  ./.github/actions/setup first.
+
+inputs:
+  site-url:
+    description: >-
+      Astro `site` origin (e.g. https://no2uid.github.io). Leave empty to
+      let astro.config.mjs use its default — astro.config reads this with
+      `??`, so it must stay UNSET (not ""), hence the conditional export.
+    required: false
+    default: ''
+  base-path:
+    description: >-
+      Astro `base` sub-path (e.g. /rethink-aadhaar, or / at the apex).
+      Same UNSET-not-empty contract as site-url.
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Build + SEO/GEO gate
+      shell: bash
+      # Inputs arrive via env (never interpolated into the script body —
+      # no injection surface) and are exported ONLY when non-empty.
+      # astro.config.mjs uses `process.env.X ?? default`, so an exported
+      # empty string would override the default with "". Unset is correct.
+      env:
+        IN_SITE_URL: ${{ inputs.site-url }}
+        IN_BASE_PATH: ${{ inputs.base-path }}
+      run: |
+        [ -n "$IN_SITE_URL" ] && export SITE_URL="$IN_SITE_URL"
+        [ -n "$IN_BASE_PATH" ] && export BASE_PATH="$IN_BASE_PATH"
+        bun run build

@@ -24,7 +24,6 @@ jobs:
       - uses: ./.github/actions/setup
       - name: Lint + format check
         run: bun run check
-      - name: Build
-        run: bun run build
-      - name: SEO check
-        run: bun scripts/check-seo.ts
+      # No site-url/base-path: PR builds use astro.config.mjs defaults,
+      # exactly as before. The composite's final step is the SEO/GEO gate.
+      - uses: ./.github/actions/build-and-verify

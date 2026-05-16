@@ -39,15 +39,13 @@ jobs:
           echo "base_path=$BASE_PATH" >> "$GITHUB_OUTPUT"
           echo "origin=$ORIGIN"      >> "$GITHUB_OUTPUT"
           echo "Origin=$ORIGIN  Base=$BASE_PATH"
-      - name: Build
-        env:
-          # Astro `site` is the origin; `base` is the sub-path. JSON-LD,
-          # canonical, sitemap and og:image all derive from these.
-          SITE_URL:  ${{ steps.base.outputs.origin }}
-          BASE_PATH: ${{ steps.base.outputs.base_path }}
-        run: bun run build
-      - name: SEO check (post-build)
-        run: bun scripts/check-seo.ts
+      # Astro `site` is the origin; `base` is the sub-path. JSON-LD,
+      # canonical, sitemap and og:image all derive from these. The build
+      # ends with the SEO/GEO gate (see the composite).
+      - uses: ./.github/actions/build-and-verify
+        with:
+          site-url:  ${{ steps.base.outputs.origin }}
+          base-path: ${{ steps.base.outputs.base_path }}
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
         with:
           path: dist
