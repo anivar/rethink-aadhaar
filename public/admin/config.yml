@@ -64,7 +64,11 @@ collections:
     delete: false
     slug: '{{fields.date | date(''YYYY-MM-DD'')}}-{{slug}}'
     summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
-    sortable_fields: [date, title]
+    sortable_fields:
+      fields: [date, title]
+      default:
+        field: date
+        direction: Descending
     view_filters:
       - label: Drafts only
         field: draft
@@ -89,7 +93,11 @@ collections:
     delete: false
     slug: '{{fields.date | date(''YYYY-MM-DD'')}}-{{slug}}'
     summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
-    sortable_fields: [date, title, location]
+    sortable_fields:
+      fields: [date, title, location]
+      default:
+        field: date
+        direction: Descending
     view_filters:
       - label: Drafts only
         field: draft
@@ -115,7 +123,11 @@ collections:
     delete: false
     slug: '{{fields.date | date(''YYYY-MM-DD'')}}-{{slug}}'
     summary: '{{fields.date | date(''YYYY-MM-DD'')}} — {{publication}} — {{title}}{{draft | ternary('' (DRAFT)'','''')}}'
-    sortable_fields: [date, publication, title]
+    sortable_fields:
+      fields: [date, publication, title]
+      default:
+        field: date
+        direction: Descending
     view_filters:
       - label: Drafts only
         field: draft
