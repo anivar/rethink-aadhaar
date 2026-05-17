@@ -176,12 +176,22 @@ its own page is no longer generated. The Markdown stays in the repo as
 an archival record. Goes through the normal CMS PR.
 
 To **permanently delete** a file (rare; for actual mistakes — orphaned
-images, accidental duplicates): the CMS delete button is intentionally
-disabled because Decap routes deletes as direct commits to `main` which
-branch protection blocks. Instead, run the
+images, accidental duplicates): run the
 [**Delete entry (PR)**](../../actions/workflows/delete-entry.yml)
 workflow from the Actions tab, paste the repo-relative path, click
 **Run workflow**. It opens a `cms/delete/<slug>` PR which auto-merges.
+
+> **Why there is no delete button in the CMS.** `delete: false` on
+> every collection only hides delete for a published, *unchanged*
+> entry; Decap 3.12.2 still shows a "Delete unpublished changes/entry"
+> button for any entry with in-flight changes, with no config flag to
+> disable it. In this repo that button is always dead — `cms-automerge`
+> squash-merges the draft PR and deletes its branch within ~2 min, so
+> by the time it is clicked Decap has no open PR to act on and the
+> click silently errors. A small `MutationObserver` in
+> `public/admin/index.html` removes the control so editors are not
+> misled. If you ever upgrade Decap, re-check whether the toolbar
+> labels still match that script's regex.
 
 ---
 

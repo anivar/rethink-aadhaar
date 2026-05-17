@@ -26,5 +26,40 @@
       integrity="sha384-Vwwn7nyPZTJRhuncX5Dci57xwjBjzTzQLSJefKuvOaT3x952fh4vT96UuHDi34zb"
       crossorigin="anonymous"
     ></script>
+    <script>
+      // Hide Decap's editorial-workflow delete control.
+      //
+      // Every collection sets `delete: false`, but in Decap 3.12.2 that
+      // only suppresses delete for a published, unchanged entry. As soon
+      // as an entry has unpublished changes (e.g. after toggling Draft and
+      // Save) the toolbar shows a "Delete unpublished changes/entry"
+      // button regardless — and there is no config flag to turn it off.
+      //
+      // In this repo that button is always dead: cms-automerge squash-
+      // merges the draft PR and deletes its branch within ~1-2 min, so by
+      // the time anyone clicks delete there is no open PR for Decap to act
+      // on and it silently errors. Deletion is meant to go through the
+      // "Delete entry (PR)" Action; unpublishing through the Draft toggle
+      // (see ../../COLLABORATOR.md). Remove the misleading control.
+      (function () {
+        var pending = false;
+        function sweep() {
+          pending = false;
+          var nodes = document.querySelectorAll('button,[role="button"]');
+          for (var i = 0; i < nodes.length; i++) {
+            var t = (nodes[i].textContent || '').trim();
+            if (/^Delete (unpublished changes|unpublished entry|published entry)$/.test(t)) {
+              nodes[i].style.display = 'none';
+            }
+          }
+        }
+        new MutationObserver(function () {
+          if (pending) return;
+          pending = true;
+          requestAnimationFrame(sweep);
+        }).observe(document.body, { childList: true, subtree: true });
+        sweep();
+      })();
+    </script>
   </body>
 </html>
