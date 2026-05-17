@@ -32,6 +32,14 @@ const TWEET =
   /^https?:\/\/(?:mobile\.)?(?:www\.)?(?:twitter\.com|x\.com)\/([A-Za-z0-9_]{1,15})\/status\/(\d{5,25})(?:[/?#].*)?$/;
 const FB_POST =
   /^https?:\/\/(?:www\.|m\.)?facebook\.com\/([^/]+)\/(posts|videos)\/([0-9A-Za-z]+)(?:[/?#].*)?$/;
+// Pasted iframe embeds (YouTube "Share → Embed", Vimeo embed code). We
+// keep only the video ID and re-emit the canonical privacy embed —
+// discarding tracking params, fixed width/height, wrapper divs and any
+// player.js. Editors get the same clean result whether they paste the
+// plain link or the full embed box.
+const IFRAME_YT =
+  /<iframe\b[^>]*\bsrc=["']https?:\/\/(?:www\.)?youtube(?:-nocookie)?\.com\/embed\/([A-Za-z0-9_-]{11})/i;
+const IFRAME_VIMEO = /<iframe\b[^>]*\bsrc=["']https?:\/\/player\.vimeo\.com\/video\/(\d+)/i;
 
 function urlOfSoloParagraph(node) {
   if (node.type !== 'paragraph' || node.children.length === 0) return null;
@@ -114,8 +122,18 @@ const TWITTER_WIDGETS_TAG =
 export default function remarkEmbeds() {
   return (tree) => {
     visit(tree, 'html', (node) => {
-      if (typeof node.value === 'string' && /platform\.twitter\.com\/widgets\.js/i.test(node.value)) {
+      if (typeof node.value !== 'string') return;
+      if (/platform\.twitter\.com\/widgets\.js/i.test(node.value)) {
         node.value = node.value.replace(TWITTER_WIDGETS_TAG, '').trim();
+      }
+      let m = node.value.match(IFRAME_YT);
+      if (m) {
+        node.value = youtubeEmbed(m[1], `https://www.youtube.com/watch?v=${m[1]}`);
+        return;
+      }
+      m = node.value.match(IFRAME_VIMEO);
+      if (m) {
+        node.value = vimeoEmbed(m[1], `https://vimeo.com/${m[1]}`);
       }
     });
     visit(tree, 'paragraph', (node, index, parent) => {

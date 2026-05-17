@@ -5,6 +5,8 @@ import sitemap from '@astrojs/sitemap';
 import rehypeBaseHref from './src/lib/rehype-base-href.mjs';
 import remarkEmbeds from './src/lib/remark-embeds.mjs';
 import rehypeTwitterUpgrade from './src/lib/rehype-twitter-upgrade.mjs';
+import rehypeSanitizeBody from './src/lib/rehype-sanitize-body.mjs';
+import rehypeInlineImages from './src/lib/rehype-inline-images.mjs';
 
 // Site URL + base path are overridden in CI for GH Pages (see .github/workflows/deploy.yml).
 const SITE = process.env.SITE_URL ?? 'https://rethinkaadhaar.in';
@@ -17,7 +19,16 @@ export default defineConfig({
   trailingSlash: 'ignore',
   markdown: {
     remarkPlugins: [remarkEmbeds],
-    rehypePlugins: [rehypeTwitterUpgrade, [rehypeBaseHref, { base: BASE }]],
+    // Order matters: twitter-upgrade restores tweet blockquotes →
+    // sanitize strips the executable surface (script/on*/js: urls) →
+    // base-href makes /media srcs base-aware → inline-images then wraps
+    // those (now base-prefixed) <img>s in WebP <picture> with dimensions.
+    rehypePlugins: [
+      rehypeTwitterUpgrade,
+      rehypeSanitizeBody,
+      [rehypeBaseHref, { base: BASE }],
+      [rehypeInlineImages, { base: BASE }],
+    ],
   },
   integrations: [
     mdx(),

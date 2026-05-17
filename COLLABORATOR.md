@@ -65,6 +65,36 @@ In almost every case you want **Unpublish (3)**, not delete.
 
 ---
 
+## Adding video, tweets, and images
+
+**Pictures:** use the image button in the body toolbar. It uploads the
+file and inserts it for you. It becomes public when the entry publishes,
+so never upload anything private.
+
+**Video and social posts — paste the plain link, on its own line:**
+
+```
+Some paragraph of text.
+
+https://www.youtube.com/watch?v=XXXXXXXXXXX
+
+The next paragraph.
+```
+
+A bare link on its own line to **YouTube, Vimeo, X/Twitter, or
+Facebook** turns into a proper, privacy-respecting embed automatically.
+That is the whole trick — one link, its own line, blank line above and
+below.
+
+If you do paste **YouTube or Vimeo "Embed" code** by mistake, don't
+worry — the site automatically strips the tracking and rebuilds it as
+the same clean, phone-friendly embed. For **Twitter/X and Facebook**,
+and to keep life simple everywhere, just paste the plain link: it is
+better in every way and less typing. Never paste `<script>` code — it
+is removed for safety and won't do anything.
+
+---
+
 ## If something looks wrong
 
 - **Published but not live after ~5 min?** The automated check may have

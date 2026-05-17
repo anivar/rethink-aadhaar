@@ -80,7 +80,7 @@ collections:
       - { name: hero,      label: Hero image,      widget: image,   required: false, choose_url: false }
       - { name: sourceUrl, label: Original URL,    widget: string,  required: false, pattern: ['^https?://', 'Must be a full http(s) URL'], hint: 'If this re-publishes an existing post, paste the original link.' }
       - { name: draft,     label: Draft,           widget: boolean, default: false,   hint: 'OFF = goes live. ON = hidden everywhere on the site. Use ON to keep a draft, or to unpublish something already live.' }
-      - { name: body,      label: Body,            widget: markdown }
+      - { name: body,      label: Body,            widget: markdown, hint: 'To add a video or tweet, paste its plain link on its own line (YouTube, Vimeo, X/Twitter, Facebook). Pasting YouTube or Vimeo embed code also works — it is cleaned up automatically. Use the image button for pictures.' }
 
   # ---- EXCLUSION STORIES (testimonials) -------------------------------
   - name: exclusion
@@ -110,7 +110,7 @@ collections:
       - { name: shareImage, label: Share image,     widget: image,    required: false, choose_url: false }
       - { name: sourceUrl,  label: Original URL,    widget: string,   required: false, pattern: ['^https?://', 'Must be a full http(s) URL'] }
       - { name: draft,      label: Draft,           widget: boolean,  default: false, required: false, hint: 'OFF = goes live. ON = hidden everywhere on the site. Use ON to keep a draft, or to unpublish a live story.' }
-      - { name: body,       label: Body,            widget: markdown }
+      - { name: body,       label: Body,            widget: markdown, hint: 'To add a video or tweet, paste its plain link on its own line (YouTube, Vimeo, X/Twitter, Facebook). Pasting YouTube or Vimeo embed code also works — it is cleaned up automatically. Use the image button for pictures.' }
 
   # ---- PRESS COVERAGE (link-only entries; no body) --------------------
   - name: press
@@ -163,7 +163,7 @@ collections:
       - { name: myth,  label: Myth (claim),    widget: string, hint: 'The public link for this myth is built from this text. Re-wording a long-published myth breaks its old link. Fix typos freely on new myths; avoid rewording old ones.' }
       - { name: fact,  label: Fact (rebuttal), widget: string, required: false }
       - { name: draft, label: Draft,           widget: boolean, default: false, required: false, hint: 'OFF = goes live. ON = hidden from the Myths page. Use ON to unpublish.' }
-      - { name: body,  label: Long-form body,  widget: markdown }
+      - { name: body,  label: Long-form body,  widget: markdown, hint: 'To add a video or tweet, paste its plain link on its own line (YouTube, Vimeo, X/Twitter, Facebook). Pasting YouTube or Vimeo embed code also works — it is cleaned up automatically. Use the image button for pictures.' }
 
   # ---- FAQs ----------------------------------------------------------
   - name: faq
@@ -187,7 +187,7 @@ collections:
       - { name: question, label: Question,      widget: string }
       - { name: short,    label: Short answer,  widget: string,  required: false, hint: 'One-line summary of the answer.' }
       - { name: draft,    label: Draft,         widget: boolean, default: false, required: false, hint: 'OFF = goes live. ON = hidden from the FAQ page. Use ON to unpublish.' }
-      - { name: body,     label: Full answer,   widget: markdown }
+      - { name: body,     label: Full answer,   widget: markdown, hint: 'To add a video or tweet, paste its plain link on its own line (YouTube, Vimeo, X/Twitter, Facebook). Pasting YouTube or Vimeo embed code also works — it is cleaned up automatically. Use the image button for pictures.' }
 
   # ---- RESOURCES (typed link list) -----------------------------------
   - name: resource
@@ -247,21 +247,21 @@ collections:
         fields:
           - { name: title, label: Title, widget: string }
           - { name: intro, label: Intro, widget: string,   required: false }
-          - { name: body,  label: Body,  widget: markdown }
+          - { name: body,  label: Body,  widget: markdown, hint: 'To add a video or tweet, paste its plain link on its own line (YouTube, Vimeo, X/Twitter, Facebook). Pasting YouTube or Vimeo embed code also works — it is cleaned up automatically. Use the image button for pictures.' }
       - name: home_statement
         label: Home — collective statement
         file: src/content/page/home-statement.md
         fields:
           - { name: title, label: Title, widget: string }
           - { name: intro, label: Intro, widget: string,   required: false }
-          - { name: body,  label: Body,  widget: markdown }
+          - { name: body,  label: Body,  widget: markdown, hint: 'To add a video or tweet, paste its plain link on its own line (YouTube, Vimeo, X/Twitter, Facebook). Pasting YouTube or Vimeo embed code also works — it is cleaned up automatically. Use the image button for pictures.' }
       - name: take_action
         label: Take Action
         file: src/content/page/take-action.md
         fields:
           - { name: title, label: Title, widget: string }
           - { name: intro, label: Intro, widget: string,   required: false }
-          - { name: body,  label: Body,  widget: markdown }
+          - { name: body,  label: Body,  widget: markdown, hint: 'To add a video or tweet, paste its plain link on its own line (YouTube, Vimeo, X/Twitter, Facebook). Pasting YouTube or Vimeo embed code also works — it is cleaned up automatically. Use the image button for pictures.' }
       - name: press_coverage
         label: Press coverage
         file: src/content/page/press-coverage.md
