@@ -1,0 +1,84 @@
+name: Deploy after CMS merge
+
+# Why this exists:
+#
+# cms-automerge.yml enables GitHub auto-merge using the default
+# GITHUB_TOKEN. When auto-merge later squash-merges a CMS PR, the push
+# to `main` is attributed to github-actions[bot]. GitHub deliberately
+# does NOT start new workflow runs from GITHUB_TOKEN-authored events
+# (recursion prevention) — so deploy.yml's `on: push: [main]` never
+# fires for CMS publishes. Result: CMS posts merge but never go live.
+#
+# workflow_dispatch and repository_dispatch are the only documented
+# exceptions to that suppression rule. So: react to pr-check completing
+# on a cms/* branch, wait for auto-merge to actually land the squash on
+# main, then explicitly workflow_dispatch deploy.yml (which DOES start,
+# even from GITHUB_TOKEN). Human/feature PRs are merged by a human, so
+# their push triggers deploy.yml the normal way and are skipped here.
+#
+# workflow_run reads the workflow definition from the DEFAULT branch, so
+# this only takes effect once merged to main — and only for CMS PRs
+# opened afterwards (existing merged-but-unpublished PRs need one manual
+# `gh workflow run deploy.yml --ref main` to flush the backlog).
+
+on:
+  workflow_run:
+    workflows: [pr-check]
+    types: [completed]
+
+# Least privilege: read PR state, dispatch the deploy. No write to
+# contents — the merge itself is still cms-automerge's job.
+permissions:
+  contents: read
+  pull-requests: read
+  actions: write
+
+concurrency:
+  group: cms-deploy-dispatch-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  dispatch:
+    # Only: pr-check that SUCCEEDED, from a same-repo cms/* PR branch.
+    # Forks can't auto-merge anyway; the head_repository guard makes the
+    # intent explicit. Non-cms branches deploy via their human merge.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      startsWith(github.event.workflow_run.head_branch, 'cms/') &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for auto-merge, then dispatch deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+          pr=$(gh pr list --repo "$REPO" --head "$BRANCH" --state all \
+                 --json number --jq '.[0].number // empty')
+          if [ -z "${pr:-}" ]; then
+            echo "No PR for branch $BRANCH; nothing to deploy."
+            exit 0
+          fi
+          echo "Watching PR #$pr ($BRANCH) for auto-merge to land…"
+          # Auto-merge fires within seconds of the required check going
+          # green; 4 min cap is generous headroom, and we exit the
+          # instant it merges so the common case costs only a few sec.
+          for _ in $(seq 1 24); do
+            state=$(gh pr view "$pr" --repo "$REPO" --json state --jq .state)
+            case "$state" in
+              MERGED)
+                echo "PR #$pr merged. Dispatching deploy.yml on main."
+                gh workflow run deploy.yml --repo "$REPO" --ref main
+                exit 0
+                ;;
+              CLOSED)
+                echo "PR #$pr closed without merge; no deploy."
+                exit 0
+                ;;
+            esac
+            sleep 10
+          done
+          echo "::warning::PR #$pr not merged within timeout; deploy not dispatched."
