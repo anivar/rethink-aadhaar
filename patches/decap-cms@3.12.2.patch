@@ -1,0 +1,13 @@
+diff --git a/packages/decap-cms-core/src/components/Editor/EditorToolbar.js b/packages/decap-cms-core/src/components/Editor/EditorToolbar.js
+index a08d0c0..32102fe 100644
+--- a/packages/decap-cms-core/src/components/Editor/EditorToolbar.js
++++ b/packages/decap-cms-core/src/components/Editor/EditorToolbar.js
+@@ -648,7 +648,7 @@ export class EditorToolbar extends React.Component {
+               })}
+             </React.Fragment>
+           ),
+-      (!showDelete || useOpenAuthoring) && !hasUnpublishedChanges && !isModification ? null : (
++      !showDelete || (useOpenAuthoring && !hasUnpublishedChanges && !isModification) ? null : (
+         <DeleteButton
+           key="delete-button"
+           onClick={hasUnpublishedChanges ? onDeleteUnpublishedChanges : onDelete}

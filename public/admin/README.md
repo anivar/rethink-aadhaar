@@ -190,8 +190,10 @@ workflow from the Actions tab, paste the repo-relative path, click
 > by the time it is clicked Decap has no open PR to act on and the
 > click silently errors. A small `MutationObserver` in
 > `public/admin/index.html` removes the control so editors are not
-> misled. If you ever upgrade Decap, re-check whether the toolbar
-> labels still match that script's regex.
+> misled. The same fix expressed properly against Decap source —
+> upstream-ready, and for any future self-hosted build — is kept in
+> [`patches/`](../../patches/). If you ever upgrade Decap, re-check
+> both the shim's label regex and that patch (see `patches/README.md`).
 
 ---
 
